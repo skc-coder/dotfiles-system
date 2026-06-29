@@ -201,7 +201,8 @@ def generate_commit_message(diff_summary):
         return f"auto: {datetime.now().strftime('%Y-%m-%d %H:%M')} | system backup"
         
     try:
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={api_key}"
+        model = CONFIG.get("gemini", {}).get("model", "gemini-2.0-flash")
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={api_key}"
         prompt = (
             "Generate a clean conventional commit message (e.g., 'feat: add mako config', 'fix: correct hosts file') "
             "for the following git changes summary. Return ONLY the commit message text, with no markdown formatting or extra text:\n\n"
@@ -571,6 +572,45 @@ def restore():
     else:
         console.print("[red]Error: bootstrap.sh not found inside dotfiles directory.[/red]")
 
+def ensure_git_repo(repo_path):
+    if os.path.exists(os.path.join(repo_path, ".git")):
+        return True
+        
+    github_token = CONFIG.get("github", {}).get("token", "")
+    github_username = CONFIG.get("github", {}).get("username", "")
+    
+    if not github_token:
+        console.print(f"[yellow]Warning: Cannot auto-initialize Git/GitHub for '{repo_path}' - GitHub token missing in config.toml[/yellow]")
+        return False
+        
+    repo_name = os.path.basename(repo_path)
+    console.print(f"[cyan]Auto-initializing Git repository for '{repo_name}'...[/cyan]")
+    
+    try:
+        # Initialize local git
+        subprocess.run(["git", "init"], cwd=repo_path, check=True)
+        subprocess.run(["git", "branch", "-M", "main"], cwd=repo_path, check=True)
+        
+        # Create GitHub repo
+        from github import Github
+        g = Github(github_token)
+        user = g.get_user()
+        
+        console.print(f"[cyan]Creating private GitHub repository '{repo_name}'...[/cyan]")
+        repo = user.create_repo(
+            name=repo_name,
+            private=True,
+            description="Automatically created by dotfiles backup system"
+        )
+        
+        # Set remote
+        remote_url = repo.clone_url.replace("https://github.com/", f"https://{github_token}@github.com/")
+        subprocess.run(["git", "remote", "add", "origin", remote_url], cwd=repo_path, check=True)
+        return True
+    except Exception as e:
+        console.print(f"[red]Failed to auto-initialize Git/GitHub for '{repo_path}': {e}[/red]")
+        return False
+
 def run_git_backup(dry_run=False, message=None):
     # Dotfiles repository backup
     # Check if dotfiles repo itself has modifications
@@ -591,16 +631,24 @@ def run_git_backup(dry_run=False, message=None):
         
     # Obsidian Vault
     obsidian_path = os.path.expanduser("~/Documents/vault")
-    if os.path.exists(os.path.join(obsidian_path, ".git")):
-        run_single_git_backup(obsidian_path, dry_run)
+    if os.path.exists(obsidian_path):
+        if ensure_git_repo(obsidian_path):
+            run_single_git_backup(obsidian_path, dry_run)
         
-    # Dev folders (all projects in ~/dev/ that have a .git folder)
+    # Additional configured repos
+    extra_repos = CONFIG.get("backup", {}).get("repos", [])
+    for repo_path_str in extra_repos:
+        repo_path = os.path.abspath(os.path.expanduser(repo_path_str))
+        if os.path.exists(repo_path):
+            if ensure_git_repo(repo_path):
+                run_single_git_backup(repo_path, dry_run)
+                
+    # Dev folders (all projects in ~/dev/ that don't start with a dot)
     dev_dir = os.path.expanduser(CONFIG["paths"].get("dev_dir", "~/dev"))
     if os.path.exists(dev_dir):
         for entry in os.scandir(dev_dir):
-            if entry.is_dir():
-                git_path = os.path.join(entry.path, ".git")
-                if os.path.exists(git_path):
+            if entry.is_dir() and not entry.name.startswith("."):
+                if ensure_git_repo(entry.path):
                     run_single_git_backup(entry.path, dry_run)
 
 def run_single_git_backup(repo_path, dry_run):
