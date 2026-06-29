@@ -1,5 +1,6 @@
-# Configuration (sensitive)
-config.toml
+# Configuration (sensitive keys are delegated to Documents folder)
+# config.toml is tracked
+
 
 # Python virtual environment
 .venv/

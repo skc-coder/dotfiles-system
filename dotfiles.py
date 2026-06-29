@@ -194,40 +194,77 @@ def stow_file(file_path, pkg_name):
 
 # Git backup helper
 def generate_commit_message(diff_summary):
-    api_key = CONFIG.get("gemini", {}).get("api_key", "")
     enabled = CONFIG.get("gemini", {}).get("enabled", True)
-    
-    if not enabled or not api_key:
+    if not enabled:
         return f"auto: {datetime.now().strftime('%Y-%m-%d %H:%M')} | system backup"
-        
-    try:
-        model = CONFIG.get("gemini", {}).get("model", "gemini-2.0-flash")
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={api_key}"
-        prompt = (
-            "Generate a clean conventional commit message (e.g., 'feat: add mako config', 'fix: correct hosts file') "
-            "for the following git changes summary. Return ONLY the commit message text, with no markdown formatting or extra text:\n\n"
-            f"{diff_summary}"
-        )
-        payload = {
-            "contents": [{
-                "parts": [{
-                    "text": prompt
-                }]
-            }]
-        }
-        res = httpx.post(url, json=payload, timeout=10.0)
-        if res.status_code == 200:
-            content = res.json()
-            message = content["contents"][0]["parts"][0]["text"].strip()
-            # Clean up backticks/quotes if AI wrapped it
-            if message.startswith("`") and message.endswith("`"):
-                message = message.strip("`")
-            if "\n" in message:
-                message = message.split("\n")[0]
-            return message
-    except Exception as e:
-        console.print(f"[yellow]Warning: Gemini API failed ({e}). Falling back to default message.[/yellow]")
-        
+
+    # Try to load API keys and custom models from ~/Documents/api_keys.toml
+    keys_path = os.path.expanduser("~/Documents/api_keys.toml")
+    api_keys = []
+    model_list = [
+        "gemini-2.5-flash-lite",
+        "gemini-3.1-flash-lite",
+        "gemini-2.5-flash",
+        "gemini-3-flash",
+        "gemini-3.5-flash",
+        "gemini-2.0-flash",
+    ]
+
+    if os.path.exists(keys_path):
+        try:
+            import tomllib
+            with open(keys_path, "rb") as f:
+                keys_data = tomllib.load(f)
+                api_keys = keys_data.get("gemini_api_keys", [])
+                if not api_keys and "api_key" in keys_data:
+                    api_keys = [keys_data["api_key"]]
+                if "models" in keys_data:
+                    model_list = keys_data["models"]
+        except Exception:
+            pass
+
+    # Fallback to config.toml if no keys found in Documents
+    if not api_keys:
+        config_key = CONFIG.get("gemini", {}).get("api_key", "")
+        if config_key:
+            api_keys = [config_key]
+
+    if not api_keys:
+        return f"auto: {datetime.now().strftime('%Y-%m-%d %H:%M')} | system backup"
+
+    # Roll over models (lightest first) and multiple keys
+    for model in model_list:
+        for api_key in api_keys:
+            if not api_key:
+                continue
+            try:
+                url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={api_key}"
+                prompt = (
+                    "Generate a clean conventional commit message (e.g., 'feat: add mako config', 'fix: correct hosts file') "
+                    "for the following git changes summary. Return ONLY the commit message text, with no markdown formatting or extra text:\n\n"
+                    f"{diff_summary}"
+                )
+                payload = {
+                    "contents": [{
+                        "parts": [{
+                            "text": prompt
+                        }]
+                    }]
+                }
+                res = httpx.post(url, json=payload, timeout=10.0)
+                if res.status_code == 200:
+                    content = res.json()
+                    message = content["contents"][0]["parts"][0]["text"].strip()
+                    if message.startswith("`") and message.endswith("`"):
+                        message = message.strip("`")
+                    if "\n" in message:
+                        message = message.split("\n")[0]
+                    return message
+                else:
+                    console.print(f"[yellow]Warning: Model {model} failed (HTTP {res.status_code}). Trying next combination...[/yellow]")
+            except Exception as e:
+                console.print(f"[yellow]Warning: Model {model} request failed ({e}). Trying next combination...[/yellow]")
+
     return f"auto: {datetime.now().strftime('%Y-%m-%d %H:%M')} | system backup"
 
 @app.command(rich_help_panel="Backup & Review")
@@ -573,11 +610,29 @@ def restore():
         console.print("[red]Error: bootstrap.sh not found inside dotfiles directory.[/red]")
 
 def ensure_git_repo(repo_path):
-    github_token = CONFIG.get("github", {}).get("token", "")
-    github_username = CONFIG.get("github", {}).get("username", "")
+    github_token = ""
+    github_username = ""
+    
+    # Try to load GitHub credentials from ~/Documents/api_keys.toml
+    keys_path = os.path.expanduser("~/Documents/api_keys.toml")
+    if os.path.exists(keys_path):
+        try:
+            import tomllib
+            with open(keys_path, "rb") as f:
+                keys_data = tomllib.load(f)
+                github_token = keys_data.get("github_token", "")
+                github_username = keys_data.get("github_username", "")
+        except Exception:
+            pass
+
+    # Fallback to config.toml
+    if not github_token:
+        github_token = CONFIG.get("github", {}).get("token", "")
+    if not github_username:
+        github_username = CONFIG.get("github", {}).get("username", "")
     
     if not github_token:
-        console.print(f"[yellow]Warning: Cannot auto-initialize Git/GitHub for '{repo_path}' - GitHub token missing in config.toml[/yellow]")
+        console.print(f"[yellow]Warning: Cannot auto-initialize Git/GitHub for '{repo_path}' - GitHub token missing in config.toml or ~/Documents/api_keys.toml[/yellow]")
         return False
         
     repo_name = os.path.basename(repo_path)

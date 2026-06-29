@@ -8,9 +8,7 @@ eza
 flameshot
 fzf
 gh
-ghostscript
 git
-google-chrome-stable
 grim
 htop
 kitty
