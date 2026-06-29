@@ -2,7 +2,7 @@
 Active=true
 Name=Compress PDF
 Comment=Reduce resolution and size of PDF
-Exec=bash -c "/home/skc/dev/dotfiles/scripts/nemo_pdf_tools.sh compress %F"
+Exec=bash -c "/home/skc/.local/share/nemo/actions/action_scripts/nemo_pdf_tools.sh compress %F"
 Icon-Name=document-properties
 Selection=Any
 Mimetypes=application/pdf;

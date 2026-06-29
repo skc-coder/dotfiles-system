@@ -1,0 +1,7 @@
+[Nemo Action]
+Active=true
+Name=Sentry Tools
+Comment=Sentry custom utility actions
+Icon-Name=system-run
+Selection=None
+Extensions=any;

@@ -2,7 +2,7 @@
 Active=true
 Name=Split PDF Pages
 Comment=Extract pages from PDF
-Exec=bash -c "/home/skc/dev/dotfiles/scripts/nemo_pdf_tools.sh split %F"
+Exec=bash -c "/home/skc/.local/share/nemo/actions/action_scripts/nemo_pdf_tools.sh split %F"
 Icon-Name=format-justify-fill
 Selection=Single
 Mimetypes=application/pdf;
