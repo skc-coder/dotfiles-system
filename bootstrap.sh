@@ -169,4 +169,10 @@ for rc_file in "$HOME/.bashrc" "$HOME/.zshrc"; do
     fi
 done
 
+# 11. Restore browser policies and special applications
+if [ -f "${DOTFILES_DIR}/scripts/setup_system_configs.sh" ]; then
+    echo "Running system configurations and special application installs..."
+    bash "${DOTFILES_DIR}/scripts/setup_system_configs.sh"
+fi
+
 echo "=== Sentry/Dotfiles Restoration completed successfully! ==="
