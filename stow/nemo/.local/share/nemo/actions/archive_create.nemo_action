@@ -1,9 +1,0 @@
-[Nemo Action]
-Active=true
-Name=Create Archive...
-Comment=Compress files into an archive
-Exec=bash -c "/home/skc/.local/share/nemo/actions/action_scripts/nemo_archive_tools.sh create %F"
-Icon-Name=package-x-generic
-Selection=Any
-Extensions=any;
-Submenu=Sentry Tools

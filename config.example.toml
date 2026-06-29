@@ -71,4 +71,4 @@ paths = [
 ".config/mako" = "mako"
 ".config/waybar" = "waybar"
 ".local/share/fonts" = "fonts"
-".local/share/nemo/actions" = "nemo"
+".config/Thunar" = "thunar"

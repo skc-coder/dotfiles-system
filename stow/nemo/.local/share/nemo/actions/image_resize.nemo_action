@@ -1,9 +1,0 @@
-[Nemo Action]
-Active=true
-Name=Resize Images
-Comment=Reduce resolution of images
-Exec=bash -c "/home/skc/.local/share/nemo/actions/action_scripts/nemo_image_tools.sh resize %F"
-Icon-Name=zoom-fit-best
-Selection=Any
-Mimetypes=image/*;
-Submenu=Sentry Tools

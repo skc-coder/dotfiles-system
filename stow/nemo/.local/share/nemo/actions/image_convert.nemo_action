@@ -1,9 +1,0 @@
-[Nemo Action]
-Active=true
-Name=Convert Image Format
-Comment=Convert selected image to png/jpg/webp
-Exec=bash -c "/home/skc/.local/share/nemo/actions/action_scripts/nemo_image_tools.sh convert %F"
-Icon-Name=image-x-generic
-Selection=Any
-Mimetypes=image/*;
-Submenu=Sentry Tools

@@ -1,9 +1,0 @@
-[Nemo Action]
-Active=true
-Name=Extract Archive Here
-Comment=Decompress archive into a folder
-Exec=bash -c "/home/skc/.local/share/nemo/actions/action_scripts/nemo_archive_tools.sh extract %F"
-Icon-Name=package-x-generic
-Selection=Any
-Mimetypes=application/zip;application/x-tar;application/x-gzip;application/x-bzip2;application/x-xz;application/x-7z-compressed;application/x-rar;
-Submenu=Sentry Tools
