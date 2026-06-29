@@ -1,22 +1,30 @@
 # dnf.txt - List of DNF packages to install during system restoration.
 # Add package names here (one per line).
+ImageMagick
 bat
 cosmic-edit
 exaile
 eza
 flameshot
 fzf
+ghostscript
 git
 google-chrome-stable
+grim
 htop
 kitty
 mako
 mpv
 neovim
+p7zip
+p7zip-plugins
 pandoc-cli
+poppler-utils
 rofi
+slurp
 stow
 sway
+tesseract
 tmux
 tmux-powerline
 tree
@@ -24,5 +32,6 @@ uv
 vlc
 waybar
 wev
+wl-clipboard
 zoxide
 zsh
