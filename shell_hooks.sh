@@ -132,8 +132,8 @@ _sentry_parse_uv() {
 # Wrappers
 dnf() {
     command dnf "$@"
-    local status=$?
-    if [ $status -eq 0 ]; then
+    local exit_code=$?
+    if [ $exit_code -eq 0 ]; then
         for arg in "$@"; do
             if [[ "$arg" == "install" || "$arg" == "reinstall" ]]; then
                 _sentry_parse_and_log "dnf" "install" "$@"
@@ -144,13 +144,13 @@ dnf() {
             fi
         done
     fi
-    return $status
+    return $exit_code
 }
 
 flatpak() {
     command flatpak "$@"
-    local status=$?
-    if [ $status -eq 0 ]; then
+    local exit_code=$?
+    if [ $exit_code -eq 0 ]; then
         local is_inst=0
         local is_uninst=0
         for arg in "$@"; do
@@ -166,13 +166,13 @@ flatpak() {
             _sentry_parse_flatpak "uninstall" "$@"
         fi
     fi
-    return $status
+    return $exit_code
 }
 
 pip() {
     command pip "$@"
-    local status=$?
-    if [ $status -eq 0 ]; then
+    local exit_code=$?
+    if [ $exit_code -eq 0 ]; then
         local is_inst=0
         local is_uninst=0
         for arg in "$@"; do
@@ -188,13 +188,13 @@ pip() {
             _sentry_parse_pip "uninstall" "$@"
         fi
     fi
-    return $status
+    return $exit_code
 }
 
 pipx() {
     command pipx "$@"
-    local status=$?
-    if [ $status -eq 0 ]; then
+    local exit_code=$?
+    if [ $exit_code -eq 0 ]; then
         local is_inst=0
         local is_uninst=0
         for arg in "$@"; do
@@ -210,23 +210,23 @@ pipx() {
             _sentry_parse_pipx "uninstall" "$@"
         fi
     fi
-    return $status
+    return $exit_code
 }
 
 uv() {
     command uv "$@"
-    local status=$?
-    if [ $status -eq 0 ]; then
+    local exit_code=$?
+    if [ $exit_code -eq 0 ]; then
         _sentry_parse_uv "$@"
     fi
-    return $status
+    return $exit_code
 }
 
 sudo() {
     if [[ "$1" == "dnf" ]]; then
         command sudo "$@"
-        local status=$?
-        if [ $status -eq 0 ]; then
+        local exit_code=$?
+        if [ $exit_code -eq 0 ]; then
             # Parse starting from the next argument
             shift
             for arg in "$@"; do
@@ -239,7 +239,7 @@ sudo() {
                 fi
             done
         fi
-        return $status
+        return $exit_code
     else
         command sudo "$@"
     fi
