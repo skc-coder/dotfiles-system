@@ -1,3 +1,12 @@
 # Sentry / Dotfiles Changelog
 # Log format: [YYYY-MM-DD HH:MM] ACTION: DETAILS
 [2026-06-29 07:43] REJECTED_PACKAGE: gedit (dnf)
+[2026-06-29 07:49] CONFIG: Imported systemd into stow package systemd
+[2026-06-29 07:49] CONFIG: Imported mate into stow package mate
+[2026-06-29 07:49] CONFIG: Imported nemo into stow package nemo
+[2026-06-29 07:49] CONFIG: Imported kitty into stow package kitty
+[2026-06-29 07:49] CONFIG: Imported gtk-3.0 into stow package gtk-3.0
+[2026-06-29 07:49] CONFIG: Imported waybar into stow package waybar
+[2026-06-29 07:49] CONFIG: Imported keybind codes.txt into stow package keybind codes.txt
+[2026-06-29 07:50] CONFIG: Imported rofi into stow package rofi
+[2026-06-29 07:50] CONFIG: Imported cosmic into stow package cosmic
