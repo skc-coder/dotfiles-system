@@ -5,6 +5,8 @@
 # Your Gemini API Key (e.g. from Google AI Studio)
 api_key = "YOUR_GEMINI_API_KEY"
 enabled = true
+# Choose Gemini model: e.g. "gemini-2.0-flash", "gemini-2.5-flash", "gemini-2.5-flash-lite"
+model = "gemini-2.0-flash"
 
 # Per-repository override for Gemini-generated commit messages.
 # Key is the absolute path to the repository, value is a boolean (true to enable, false to disable).
@@ -29,6 +31,10 @@ dotfiles_dir = "~/dotfiles"
 schedule = "daily"
 # Time of backup trigger (24-hour format)
 time = "03:00"
+# List of additional repositories/folders outside dev_dir to backup
+repos = [
+    # "~/Documents/my-notes",
+]
 # Destination directory for heavy folder sync (e.g. an external drive)
 heavy_dest = "/run/media/skc/BackupDrive/heavy_backup"
 # Folders too heavy for git to be rsynced to heavy_dest
