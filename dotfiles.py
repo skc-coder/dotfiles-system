@@ -573,9 +573,6 @@ def restore():
         console.print("[red]Error: bootstrap.sh not found inside dotfiles directory.[/red]")
 
 def ensure_git_repo(repo_path):
-    if os.path.exists(os.path.join(repo_path, ".git")):
-        return True
-        
     github_token = CONFIG.get("github", {}).get("token", "")
     github_username = CONFIG.get("github", {}).get("username", "")
     
@@ -584,32 +581,63 @@ def ensure_git_repo(repo_path):
         return False
         
     repo_name = os.path.basename(repo_path)
-    console.print(f"[cyan]Auto-initializing Git repository for '{repo_name}'...[/cyan]")
     
-    try:
-        # Initialize local git
-        subprocess.run(["git", "init"], cwd=repo_path, check=True)
-        subprocess.run(["git", "branch", "-M", "main"], cwd=repo_path, check=True)
-        
-        # Create GitHub repo
-        from github import Github
-        g = Github(github_token)
-        user = g.get_user()
-        
-        console.print(f"[cyan]Creating private GitHub repository '{repo_name}'...[/cyan]")
-        repo = user.create_repo(
-            name=repo_name,
-            private=True,
-            description="Automatically created by dotfiles backup system"
-        )
-        
-        # Set remote
-        remote_url = repo.clone_url.replace("https://github.com/", f"https://{github_token}@github.com/")
-        subprocess.run(["git", "remote", "add", "origin", remote_url], cwd=repo_path, check=True)
-        return True
-    except Exception as e:
-        console.print(f"[red]Failed to auto-initialize Git/GitHub for '{repo_path}': {e}[/red]")
-        return False
+    # 1. Local git check / init
+    git_exists = os.path.exists(os.path.join(repo_path, ".git"))
+    if not git_exists:
+        console.print(f"[cyan]Initializing local Git repository for '{repo_name}'...[/cyan]")
+        try:
+            subprocess.run(["git", "init"], cwd=repo_path, check=True)
+            subprocess.run(["git", "branch", "-M", "main"], cwd=repo_path, check=True)
+        except Exception as e:
+            console.print(f"[red]Failed to initialize local Git repo: {e}[/red]")
+            return False
+            
+    # 2. Remote check / configuration
+    remote_proc = subprocess.run(["git", "remote", "get-url", "origin"], cwd=repo_path, capture_output=True, text=True)
+    remote_url = remote_proc.stdout.strip()
+    
+    if not remote_url:
+        console.print(f"[cyan]No remote configured for '{repo_name}'. Configuring with GitHub...[/cyan]")
+        try:
+            # Login/auth to gh CLI
+            subprocess.run(
+                f"echo {github_token} | gh auth login --with-token",
+                shell=True,
+                cwd=repo_path,
+                check=True,
+                capture_output=True
+            )
+            # Setup git credential helper
+            subprocess.run(["gh", "auth", "setup-git"], cwd=repo_path, check=True, capture_output=True)
+            
+            # Create repo on GitHub
+            console.print(f"[cyan]Creating private GitHub repository '{repo_name}'...[/cyan]")
+            res = subprocess.run(
+                ["gh", "repo", "create", repo_name, "--private", "--source=.", "--remote=origin"],
+                cwd=repo_path,
+                capture_output=True,
+                text=True
+            )
+            
+            if res.returncode != 0:
+                # If creation failed (probably already exists), manually add remote URL using token
+                console.print(f"[yellow]Warning: 'gh repo create' failed: {res.stderr.strip().splitlines()[0] if res.stderr else 'unknown error'}. Setting remote manually...[/yellow]")
+                manual_url = f"https://{github_token}@github.com/{github_username}/{repo_name}.git"
+                subprocess.run(["git", "remote", "remove", "origin"], cwd=repo_path, capture_output=True)
+                subprocess.run(["git", "remote", "add", "origin", manual_url], cwd=repo_path, check=True)
+                
+            # Perform initial push of the branch to main
+            subprocess.run(["git", "add", "."], cwd=repo_path)
+            subprocess.run(["git", "commit", "-m", "initial commit"], cwd=repo_path, capture_output=True)
+            subprocess.run(["git", "push", "-u", "origin", "main"], cwd=repo_path, capture_output=True)
+            
+            console.print(f"[green]Successfully configured remote for '{repo_name}' on GitHub.[/green]")
+        except Exception as e:
+            console.print(f"[red]Failed to configure remote/GitHub for '{repo_path}': {e}[/red]")
+            return False
+            
+    return True
 
 def run_git_backup(dry_run=False, message=None):
     # Dotfiles repository backup
