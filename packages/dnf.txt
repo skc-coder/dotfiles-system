@@ -6,6 +6,8 @@ cosmic-edit
 exaile
 eza
 flameshot
+fuse
+fuse-libs
 fzf
 gh
 git

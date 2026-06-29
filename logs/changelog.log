@@ -25,3 +25,5 @@
 [2026-06-29 10:44] INSTALLED: jq (dnf)
 [2026-06-29 10:44] INSTALLED: libnotify (dnf)
 [2026-06-29 10:44] REJECTED_PACKAGE: /home/skc/megasync-Fedora_43.x86_64.rpm (dnf)
+[2026-06-29 15:06] INSTALLED: fuse (dnf)
+[2026-06-29 15:06] INSTALLED: fuse-libs (dnf)
