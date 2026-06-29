@@ -4,6 +4,6 @@ Name=Copy Path to Clipboard
 Comment=Copy selected file paths to Wayland clipboard
 Exec=wl-copy %F
 Icon-Name=edit-copy
-Selection=any
+Selection=Any
 Extensions=any;
 Submenu=Sentry Tools

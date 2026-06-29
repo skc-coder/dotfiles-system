@@ -4,6 +4,6 @@ Name=Paste Clipboard to File
 Comment=Create a file from clipboard text with auto-detected type
 Exec=bash -c "/home/skc/dev/dotfiles/scripts/nemo_paste_file.sh %P"
 Icon-Name=edit-paste
-Selection=none
+Selection=None
 Extensions=any;
 Submenu=Sentry Tools

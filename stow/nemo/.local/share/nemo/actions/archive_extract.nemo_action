@@ -4,6 +4,6 @@ Name=Extract Archive Here
 Comment=Decompress archive into a folder
 Exec=bash -c "/home/skc/dev/dotfiles/scripts/nemo_archive_tools.sh extract %F"
 Icon-Name=package-x-generic
-Selection=any
+Selection=Any
 Mimetypes=application/zip;application/x-tar;application/x-gzip;application/x-bzip2;application/x-xz;application/x-7z-compressed;application/x-rar;
 Submenu=Sentry Tools

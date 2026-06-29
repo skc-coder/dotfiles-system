@@ -1,0 +1,20 @@
+{
+  "toplevel": [
+    {
+      "user-label": "Sentry Tools",
+      "children": [
+        { "user-label": "Copy Path to Clipboard" },
+        { "user-label": "Paste Clipboard to File" },
+        { "user-label": "Compress PDF" },
+        { "user-label": "Split PDF Pages" },
+        { "user-label": "Convert PDF to Images" },
+        { "user-label": "Merge PDFs" },
+        { "user-label": "Convert Image Format" },
+        { "user-label": "Resize Images" },
+        { "user-label": "Compress Images" },
+        { "user-label": "Extract Archive Here" },
+        { "user-label": "Create Archive..." }
+      ]
+    }
+  ]
+}

@@ -4,6 +4,6 @@ Name=Merge PDFs
 Comment=Combine multiple PDF files into one
 Exec=bash -c "/home/skc/dev/dotfiles/scripts/nemo_pdf_tools.sh merge %F"
 Icon-Name=add
-Selection=m
+Selection=Multiple
 Mimetypes=application/pdf;
 Submenu=Sentry Tools
