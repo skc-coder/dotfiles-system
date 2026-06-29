@@ -14,10 +14,12 @@ sudo mkdir -p /etc/firefox/policies
 sudo cp "${DOTFILES_DIR}/system/firefox_policies.json" /etc/firefox/policies/policies.json
 echo "Firefox policies installed."
 
-# Chrome
+# Chrome / Chromium
 sudo mkdir -p /etc/opt/chrome/policies/managed
 sudo cp "${DOTFILES_DIR}/system/chrome_policies.json" /etc/opt/chrome/policies/managed/policy.json
-echo "Chrome policies installed."
+sudo mkdir -p /etc/chromium/policies/managed
+sudo cp "${DOTFILES_DIR}/system/chrome_policies.json" /etc/chromium/policies/managed/policy.json
+echo "Chrome and Chromium policies installed."
 
 # Brave
 sudo mkdir -p /etc/brave/policies/managed

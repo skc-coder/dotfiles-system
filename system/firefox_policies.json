@@ -17,7 +17,7 @@
         "installation_mode": "force_installed",
         "install_url": "https://addons.mozilla.org/firefox/downloads/latest/old-reddit-redirect/latest.xpi"
       },
-      "youtube-redux@guus.guru": {
+      "{2d4c0962-e9ff-4cad-8039-9a8b80d9b8b6}": {
         "installation_mode": "force_installed",
         "install_url": "https://addons.mozilla.org/firefox/downloads/latest/youtube-redux/latest.xpi"
       }
