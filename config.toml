@@ -27,11 +27,10 @@ schedule = "daily"
 # Time of backup trigger (24-hour format)
 time = "03:00"
 # Destination directory for heavy folder sync (e.g. an external drive)
-heavy_dest = "/run/media/skc/BackupDrive/heavy_backup"
+heavy_dest = "/mnt/storage/"
 # Folders too heavy for git to be rsynced to heavy_dest
 heavy_folders = [
     "~/.config/BraveSoftware",
-    "~/.mozilla"
 ]
 # RSync exclude patterns
 rsync_exclude = [
