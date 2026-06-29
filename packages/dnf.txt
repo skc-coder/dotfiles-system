@@ -1,5 +1,5 @@
-# dnf.txt - List of DNF packages to install during system restoration.
 # Add package names here (one per line).
+# dnf.txt - List of DNF packages to install during system restoration.
 ImageMagick
 bat
 cosmic-edit
@@ -7,6 +7,7 @@ exaile
 eza
 flameshot
 fzf
+gh
 ghostscript
 git
 google-chrome-stable
