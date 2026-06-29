@@ -1,0 +1,1 @@
+# pipx.txt - List of Python CLI tools to install via pipx.

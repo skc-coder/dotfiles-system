@@ -1,0 +1,2 @@
+# flatpak.txt - List of Flatpak applications to install.
+# Format: flatpak application ref (e.g. org.gimp.GIMP)

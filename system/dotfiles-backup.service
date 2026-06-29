@@ -1,0 +1,6 @@
+[Unit]
+Description=Sentry Dotfiles Scheduled Backup Service
+
+[Service]
+Type=oneshot
+ExecStart=%h/dotfiles/.venv/bin/python %h/dotfiles/backup.py

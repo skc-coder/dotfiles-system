@@ -1,0 +1,5 @@
+# install.txt - List of Git repositories to clone on reinstall/bootstrap.
+# Format: <repo_url> <target_directory_path>
+# Lines starting with # are ignored.
+# Example:
+# https://github.com/username/my-project.git ~/dev/my-project

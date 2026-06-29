@@ -1,0 +1,13 @@
+# Configuration (sensitive)
+config.toml
+
+# Python virtual environment
+.venv/
+__pycache__/
+*.pyc
+
+# Local runtime logs & state
+logs/pending.json
+*.swp
+*.tmp
+*~

@@ -1,0 +1,12 @@
+[Unit]
+Description=Sentry Dev Folder Repository Watcher
+After=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=%h/dotfiles/.venv/bin/python %h/dotfiles/dev_watcher.py
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=default.target

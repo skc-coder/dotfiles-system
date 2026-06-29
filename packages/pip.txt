@@ -1,0 +1,2 @@
+# pip.txt - List of pip Python packages to install globally.
+# Use standard requirements.txt syntax.

@@ -1,0 +1,8 @@
+# dnf.txt - List of DNF packages to install during system restoration.
+# Add package names here (one per line).
+git
+kitty
+stow
+mako
+waybar
+sway

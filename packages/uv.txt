@@ -1,0 +1,2 @@
+# uv.txt - List of tools to install via 'uv tool install'.
+# One package name per line.
