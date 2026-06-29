@@ -20,3 +20,8 @@
 [2026-06-29 08:47] CONFIG: Imported Thunar into stow package thunar
 [2026-06-29 08:47] CONFIG: Imported gtk-4.0 into stow package gtk-4.0
 [2026-06-29 08:47] CONFIG: Imported gh into stow package gh
+[2026-06-29 10:44] INSTALLED: kate (dnf)
+[2026-06-29 10:44] INSTALLED: wireguard-tools (dnf)
+[2026-06-29 10:44] INSTALLED: jq (dnf)
+[2026-06-29 10:44] INSTALLED: libnotify (dnf)
+[2026-06-29 10:44] REJECTED_PACKAGE: /home/skc/megasync-Fedora_43.x86_64.rpm (dnf)

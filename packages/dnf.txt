@@ -11,7 +11,10 @@ gh
 git
 grim
 htop
+jq
+kate
 kitty
+libnotify
 mako
 mpv
 neovim
@@ -32,6 +35,7 @@ uv
 vlc
 waybar
 wev
+wireguard-tools
 wl-clipboard
 zoxide
 zsh
