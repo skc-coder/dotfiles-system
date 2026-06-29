@@ -1,0 +1,11 @@
+[Unit]
+Description=Browser Start Page Local Server
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 /home/skc/dev/startpage/server.py
+WorkingDirectory=/home/skc/dev/startpage
+Restart=always
+
+[Install]
+WantedBy=default.target
