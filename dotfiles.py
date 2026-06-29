@@ -230,7 +230,7 @@ def generate_commit_message(diff_summary):
         
     return f"auto: {datetime.now().strftime('%Y-%m-%d %H:%M')} | system backup"
 
-@app.command()
+@app.command(rich_help_panel="Backup & Review")
 def review():
     """Open TUI reviewer to review pending changes."""
     console.print(Panel("[bold green]Dotfiles / Sentry TUI Reviewer[/bold green]\nStarting review session...", expand=False))
@@ -438,7 +438,7 @@ def review():
     else:
         console.print("[yellow]No actual changes to commit after review.[/yellow]")
 
-@app.command()
+@app.command(rich_help_panel="Backup & Review")
 def status():
     """Show pending changes without acting."""
     pending = load_pending()
@@ -467,7 +467,7 @@ def status():
         console.print(f"\n[bold]Total pending changes: {pkg_count + file_count}[/bold]")
         console.print("Run [cyan]dotfiles review[/cyan] to process them.")
 
-@app.command()
+@app.command(rich_help_panel="Backup & Review")
 def backup():
     """Run full backup now (Git repositories and heavy folders)."""
     console.print("[cyan]Running full backup...[/cyan]")
@@ -479,7 +479,7 @@ def backup():
     run_heavy_backup()
     console.print("[bold green]Backup complete![/bold green]")
 
-@app.command()
+@app.command(rich_help_panel="Imports & Migration")
 def add(path: str):
     """Manually flag a file/directory to add to backup review."""
     abs_path = os.path.abspath(os.path.expanduser(path))
@@ -514,7 +514,7 @@ def add(path: str):
     save_pending(pending)
     console.print(f"[green]Added {abs_path} ({ftype}) to pending changes list.[/green]")
 
-@app.command()
+@app.command(rich_help_panel="Imports & Migration")
 def log(msg: str = typer.Argument(None), pkg: str = typer.Option(None, "--pkg", help="Add package name to pending list")):
     """Add a manual changelog entry or manually log a package install/uninstall."""
     if pkg:
@@ -539,7 +539,7 @@ def log(msg: str = typer.Argument(None), pkg: str = typer.Option(None, "--pkg", 
         console.print("[red]Error: Either MSG or --pkg must be provided.[/red]")
         raise typer.Exit(1)
 
-@app.command("remove-pkg")
+@app.command("remove-pkg", rich_help_panel="Imports & Migration")
 def remove_pkg(manager: str, name: str):
     """Log a package removal (removes from pending and from package list)."""
     # 1. Remove from pending
@@ -562,7 +562,7 @@ def remove_pkg(manager: str, name: str):
             console.print(f"[green]Removed {name} from {list_file}[/green]")
             log_changelog("UNINSTALLED", f"{name} ({manager})")
 
-@app.command()
+@app.command(rich_help_panel="Utility")
 def restore():
     """Run bootstrap restoration (fresh install mode)."""
     console.print("[bold yellow]Initiating restoration/bootstrap...[/bold yellow]")
@@ -718,7 +718,7 @@ def run_heavy_backup():
         else:
             console.print(f"[red]Rsync failed for {src}: {res.stderr}[/red]")
 
-@app.command("import-configs")
+@app.command("import-configs", rich_help_panel="Imports & Migration")
 def import_configs():
     """Scan watch paths for existing non-stowed configurations and import them."""
     console.print("[cyan]Scanning watch paths for existing non-stowed configurations...[/cyan]")
@@ -796,7 +796,7 @@ def import_configs():
                 if stow_file(cand, pkg):
                     log_changelog("CONFIG", f"Imported {os.path.basename(cand)} into stow package {pkg}")
 
-@app.command("import-packages")
+@app.command("import-packages", rich_help_panel="Imports & Migration")
 def import_packages():
     """Scan manually installed DNF packages and import them to the tracked list."""
     console.print("[cyan]Querying manually installed DNF packages...[/cyan]")

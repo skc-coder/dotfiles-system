@@ -2,7 +2,7 @@
 Active=true
 Name=Extract Archive Here
 Comment=Decompress archive into a folder
-Exec=bash -c "~/.local/bin/nemo_archive_tools.sh extract %F"
+Exec=bash -c "/home/skc/dev/dotfiles/scripts/nemo_archive_tools.sh extract %F"
 Icon-Name=package-x-generic
 Selection=any
 Extensions=zip;tar;gz;tgz;xz;txz;bz2;tbz2;7z;rar;

@@ -70,6 +70,5 @@ paths = [
 ".config/kitty" = "kitty"
 ".config/mako" = "mako"
 ".config/waybar" = "waybar"
-".local/bin" = "scripts"
 ".local/share/fonts" = "fonts"
 ".local/share/nemo/actions" = "nemo"
