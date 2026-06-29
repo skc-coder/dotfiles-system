@@ -12,3 +12,11 @@
 [2026-06-29 07:50] CONFIG: Imported cosmic into stow package cosmic
 [2026-06-29 08:21] INSTALLED: thunar (dnf)
 [2026-06-29 08:30] INSTALLED: gh (dnf)
+[2026-06-29 08:46] CONFIG: Imported mimeapps.list into stow package mimeapps.list
+[2026-06-29 08:47] CONFIG: Imported gtk-3.0 into stow package gtk-3.0
+[2026-06-29 08:47] CONFIG: Imported waybar into stow package waybar
+[2026-06-29 08:47] CONFIG: Imported keybind codes.txt into stow package keybind codes.txt
+[2026-06-29 08:47] CONFIG: Imported rofi into stow package rofi
+[2026-06-29 08:47] CONFIG: Imported Thunar into stow package thunar
+[2026-06-29 08:47] CONFIG: Imported gtk-4.0 into stow package gtk-4.0
+[2026-06-29 08:47] CONFIG: Imported gh into stow package gh

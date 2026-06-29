@@ -1,17 +1,1 @@
-| Fn Key | Keysym | Function |
-|--------|--------|----------|
-| Fn+F12 | `XF86RFKill` | WiFi toggle (AIRPLANE MODE) | 
-| Fn+F6 | `XF86ScreenSaver` | Lock screen |
-| Fn+F10 | `XF86TouchpadToggle` | Touchpad on/off |
-| Fn+F6 | `XF86MonBrightnessDown` | Brightness down |
-| Fn+F7 | `XF86MonBrightnessUp` | Brightness up |
-| Fn+F4 | `XF86AudioMicMute` | Mic mute |
-| Fn+F2 | `XF86AudioLowerVolume` | Volume down |
-| Fn+F3 | `XF86AudioRaiseVolume` | Volume up |
-| Fn+1 | `XF86AudioMute` | Mute |
-| Fn+11 | `XF86Sleep` | Suspend |
-| Fn+F5 | none | Fan mode |
-
-Fan mode values are 0 = Normal, 1 = Performance (Boost), 2 = Silent. You can write to it too: sudo tee /sys/devices/platform/asus-nb-wmi/fan_boost_mode)  
-
-
+../dev/dotfiles/stow/keybind codes.txt/.config/keybind codes.txt

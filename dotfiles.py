@@ -168,14 +168,40 @@ def stow_file(file_path, pkg_name):
                     sub_dest = os.path.join(dest_path, rel_sub) if rel_sub != "." else dest_path
                     os.makedirs(sub_dest, exist_ok=True)
                     for f in files:
-                        os.replace(os.path.join(root, f), os.path.join(sub_dest, f))
+                        src_f = os.path.join(root, f)
+                        dst_f = os.path.join(sub_dest, f)
+                        try:
+                            os.replace(src_f, dst_f)
+                        except PermissionError:
+                            subprocess.run(["sudo", "mv", src_f, dst_f], check=True)
                 # remove original dir
-                os.rmdir(file_path)
+                try:
+                    os.rmdir(file_path)
+                except PermissionError:
+                    subprocess.run(["sudo", "rm", "-rf", file_path], check=True)
             else:
-                os.remove(dest_path)
-                os.rename(file_path, dest_path)
+                try:
+                    os.remove(dest_path)
+                except FileNotFoundError:
+                    pass
+                try:
+                    os.rename(file_path, dest_path)
+                except PermissionError:
+                    subprocess.run(["sudo", "mv", file_path, dest_path], check=True)
         else:
-            os.rename(file_path, dest_path)
+            try:
+                os.rename(file_path, dest_path)
+            except PermissionError:
+                subprocess.run(["sudo", "mv", file_path, dest_path], check=True)
+                
+        # Fix ownership inside stow folder if it was moved with sudo (owned by root)
+        try:
+            import pwd, grp
+            user = pwd.getpwuid(os.getuid()).pw_name
+            group = grp.getgrgid(os.getgid()).gr_name
+            subprocess.run(["sudo", "chown", "-R", f"{user}:{group}", os.path.join(STOW_DIR, pkg_name)], check=True)
+        except Exception:
+            pass
             
         # Run stow
         cmd = ["stow", "-d", STOW_DIR, "-t", home, pkg_name]
@@ -186,7 +212,10 @@ def stow_file(file_path, pkg_name):
         else:
             console.print(f"[red]Stow failed: {res.stderr}[/red]")
             # Attempt to restore
-            os.rename(dest_path, file_path)
+            try:
+                os.rename(dest_path, file_path)
+            except Exception:
+                subprocess.run(["sudo", "mv", dest_path, file_path])
             return False
     except Exception as e:
         console.print(f"[red]Failed to move and stow file: {e}[/red]")
@@ -823,6 +852,14 @@ def import_configs():
                     if os.path.islink(entry_path):
                         target = os.readlink(entry_path)
                         if STOW_DIR in os.path.abspath(target):
+                            # Clean broken symlink if target doesn't exist
+                            if not os.path.exists(entry_path):
+                                console.print(f"[yellow]Found broken/dangling stow symlink: {entry_path}. Cleaning up...[/yellow]")
+                                try:
+                                    os.unlink(entry_path)
+                                except Exception:
+                                    subprocess.run(["sudo", "rm", "-f", entry_path])
+                                continue
                             continue
                     candidates.append(entry_path)
             except Exception as e:
@@ -832,6 +869,14 @@ def import_configs():
                 if os.path.islink(abs_path):
                     target = os.readlink(abs_path)
                     if STOW_DIR in os.path.abspath(target):
+                        # Clean broken symlink if target doesn't exist
+                        if not os.path.exists(abs_path):
+                            console.print(f"[yellow]Found broken/dangling stow symlink: {abs_path}. Cleaning up...[/yellow]")
+                            try:
+                                os.unlink(abs_path)
+                            except Exception:
+                                subprocess.run(["sudo", "rm", "-f", abs_path])
+                            continue
                         continue
                 candidates.append(abs_path)
                 
