@@ -12,9 +12,9 @@ enabled = true
 # "/home/skc/dev/secret-project" = false
 
 [github]
-username = "YOUR_GITHUB_USERNAME"
+username = "skc-coder"
 # GitHub Personal Access Token with repo scope (needed to create dev repos)
-token = "YOUR_GITHUB_PERSONAL_ACCESS_TOKEN"
+token = "YOUR_GITHUB_PAT"
 
 [paths]
 # Directory where new code repositories are created/watched
