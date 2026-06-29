@@ -633,13 +633,12 @@ def remove_pkg(manager: str, name: str):
 def restore():
     """Run bootstrap restoration (fresh install mode)."""
     console.print("[bold yellow]Initiating restoration/bootstrap...[/bold yellow]")
-    bootstrap_script = os.path.join(DOTFILES_DIR, "bootstrap.sh")
     if os.path.exists(bootstrap_script):
         subprocess.run(["bash", bootstrap_script])
     else:
         console.print("[red]Error: bootstrap.sh not found inside dotfiles directory.[/red]")
 
-def ensure_git_repo(repo_path):
+def load_github_credentials():
     github_token = ""
     github_username = ""
     
@@ -660,16 +659,20 @@ def ensure_git_repo(repo_path):
         github_token = CONFIG.get("github", {}).get("token", "")
     if not github_username:
         github_username = CONFIG.get("github", {}).get("username", "")
-    
-    if not github_token:
-        console.print(f"[yellow]Warning: Cannot auto-initialize Git/GitHub for '{repo_path}' - GitHub token missing in config.toml or ~/Documents/api_keys.toml[/yellow]")
-        return False
         
+    return github_token, github_username
+
+def ensure_git_repo(repo_path):
     repo_name = os.path.basename(repo_path)
     
     # 1. Local git check / init
     git_exists = os.path.exists(os.path.join(repo_path, ".git"))
     if not git_exists:
+        github_token, github_username = load_github_credentials()
+        if not github_token:
+            console.print(f"[yellow]Warning: Cannot auto-initialize Git/GitHub for '{repo_path}' - GitHub token missing in config.toml or ~/Documents/api_keys.toml[/yellow]")
+            return False
+            
         console.print(f"[cyan]Initializing local Git repository for '{repo_name}'...[/cyan]")
         try:
             subprocess.run(["git", "init"], cwd=repo_path, check=True)
@@ -683,6 +686,11 @@ def ensure_git_repo(repo_path):
     remote_url = remote_proc.stdout.strip()
     
     if not remote_url:
+        github_token, github_username = load_github_credentials()
+        if not github_token:
+            console.print(f"[yellow]Warning: Cannot auto-initialize Git/GitHub for '{repo_path}' - GitHub token missing in config.toml or ~/Documents/api_keys.toml[/yellow]")
+            return False
+            
         console.print(f"[cyan]No remote configured for '{repo_name}'. Configuring with GitHub...[/cyan]")
         try:
             # Login/auth to gh CLI
@@ -719,7 +727,7 @@ def ensure_git_repo(repo_path):
             
             console.print(f"[green]Successfully configured remote for '{repo_name}' on GitHub.[/green]")
         except Exception as e:
-            console.print(f"[red]Failed to configure remote/GitHub for '{repo_path}': {e}[/red]")
+            console.print(f"[red]Failed to setup remote for '{repo_name}' on GitHub: {e}[/red]")
             return False
             
     return True
