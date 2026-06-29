@@ -1,0 +1,8 @@
+[Nemo Action]
+Active=true
+Name=Compress Images
+Comment=Optimize quality and file size
+Exec=bash -c "~/.local/bin/nemo_image_tools.sh compress %F"
+Icon-Name=document-properties
+Selection=any
+Extensions=png;jpg;jpeg;webp;bmp;gif;

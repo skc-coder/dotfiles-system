@@ -1,0 +1,8 @@
+[Nemo Action]
+Active=true
+Name=Compress PDF
+Comment=Reduce resolution and size of PDF
+Exec=bash -c "~/.local/bin/nemo_pdf_tools.sh compress %F"
+Icon-Name=document-properties
+Selection=any
+Extensions=pdf;

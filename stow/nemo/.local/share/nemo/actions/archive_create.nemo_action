@@ -1,0 +1,8 @@
+[Nemo Action]
+Active=true
+Name=Create Archive...
+Comment=Compress files into an archive
+Exec=bash -c "~/.local/bin/nemo_archive_tools.sh create %F"
+Icon-Name=package-x-generic
+Selection=any
+Extensions=any;

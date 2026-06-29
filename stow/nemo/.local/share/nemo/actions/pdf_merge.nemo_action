@@ -1,0 +1,8 @@
+[Nemo Action]
+Active=true
+Name=Merge PDFs
+Comment=Combine multiple PDF files into one
+Exec=bash -c "~/.local/bin/nemo_pdf_tools.sh merge %F"
+Icon-Name=add
+Selection=m
+Extensions=pdf;

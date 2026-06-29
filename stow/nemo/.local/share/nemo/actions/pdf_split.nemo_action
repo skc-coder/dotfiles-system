@@ -1,0 +1,8 @@
+[Nemo Action]
+Active=true
+Name=Split PDF Pages
+Comment=Extract pages from PDF
+Exec=bash -c "~/.local/bin/nemo_pdf_tools.sh split %F"
+Icon-Name=format-justify-fill
+Selection=any
+Extensions=pdf;

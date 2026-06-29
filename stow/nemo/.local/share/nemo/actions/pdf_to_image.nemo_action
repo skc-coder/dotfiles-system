@@ -1,0 +1,8 @@
+[Nemo Action]
+Active=true
+Name=Convert PDF to Images
+Comment=Export PDF pages to png/jpg/webp
+Exec=bash -c "~/.local/bin/nemo_pdf_tools.sh to_image %F"
+Icon-Name=image-x-generic
+Selection=any
+Extensions=pdf;
