@@ -1,0 +1,74 @@
+# config.example.toml - Template configuration file for sentry/dotfiles
+# Copy this to config.toml and configure your keys and paths.
+
+[gemini]
+# Your Gemini API Key (e.g. from Google AI Studio)
+api_key = "YOUR_GEMINI_API_KEY"
+enabled = true
+# Choose Gemini model: e.g. "gemini-2.0-flash", "gemini-2.5-flash", "gemini-2.5-flash-lite"
+model = "gemini-2.0-flash"
+
+# Per-repository override for Gemini-generated commit messages.
+# Key is the absolute path to the repository, value is a boolean (true to enable, false to disable).
+[gemini.repos]
+# "/home/skc/dev/secret-project" = false
+
+[github]
+username = "YOUR_GITHUB_USERNAME"
+# GitHub Personal Access Token with repo scope (needed to create dev repos)
+token = "YOUR_GITHUB_PAT"
+
+[paths]
+# Directory where new code repositories are created/watched
+dev_dir = "~/dev"
+# Directory where AppImages are stored
+applications_dir = "~/Applications"
+# Directory of this dotfiles repository
+dotfiles_dir = "~/dotfiles"
+
+[backup]
+# Trigger schedule: "daily" or "weekly"
+schedule = "daily"
+# Time of backup trigger (24-hour format)
+time = "03:00"
+# List of additional repositories/folders outside dev_dir to backup
+repos = [
+    # "~/Documents/my-notes",
+]
+# Destination directory for heavy folder sync (e.g. an external drive)
+heavy_dest = "/run/media/skc/BackupDrive/heavy_backup"
+# Folders too heavy for git to be rsynced to heavy_dest
+heavy_folders = [
+    "~/.config/BraveSoftware",
+    "~/.mozilla"
+]
+# RSync exclude patterns
+rsync_exclude = [
+    "**/Cache**",
+    "**/Crash Reports**",
+    "**/.git**"
+]
+
+[appimage]
+# Mode for new AppImages: "log_only" (just log path) or "backup_copy" (copy to dotfiles/AppImages)
+mode = "log_only"
+
+# List of folders to watch with inotify-simple (relative to ~ is supported)
+[watch]
+paths = [
+    "~/.config",
+    "~/.local/bin",
+    "~/Applications",
+    "~/.local/share/fonts",
+    "/etc/hosts"
+]
+
+# Mapping of source directories (relative to ~) to GNU Stow package names
+# For example, when ~/.config/sway is backed up, it will be placed inside stow/sway/.config/sway
+[stow.package_map]
+".config/sway" = "sway"
+".config/kitty" = "kitty"
+".config/mako" = "mako"
+".config/waybar" = "waybar"
+".local/share/fonts" = "fonts"
+".config/Thunar" = "thunar"
