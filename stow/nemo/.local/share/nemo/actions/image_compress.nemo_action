@@ -5,4 +5,5 @@ Comment=Optimize quality and file size
 Exec=bash -c "/home/skc/dev/dotfiles/scripts/nemo_image_tools.sh compress %F"
 Icon-Name=document-properties
 Selection=any
-Extensions=png;jpg;jpeg;webp;bmp;gif;
+Mimetypes=image/*;
+Submenu=Sentry Tools

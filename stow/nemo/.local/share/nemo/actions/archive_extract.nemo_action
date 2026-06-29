@@ -5,4 +5,5 @@ Comment=Decompress archive into a folder
 Exec=bash -c "/home/skc/dev/dotfiles/scripts/nemo_archive_tools.sh extract %F"
 Icon-Name=package-x-generic
 Selection=any
-Extensions=zip;tar;gz;tgz;xz;txz;bz2;tbz2;7z;rar;
+Mimetypes=application/zip;application/x-tar;application/x-gzip;application/x-bzip2;application/x-xz;application/x-7z-compressed;application/x-rar;
+Submenu=Sentry Tools

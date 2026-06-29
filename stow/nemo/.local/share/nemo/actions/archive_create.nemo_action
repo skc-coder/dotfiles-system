@@ -6,3 +6,4 @@ Exec=bash -c "/home/skc/dev/dotfiles/scripts/nemo_archive_tools.sh create %F"
 Icon-Name=package-x-generic
 Selection=any
 Extensions=any;
+Submenu=Sentry Tools

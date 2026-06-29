@@ -5,4 +5,5 @@ Comment=Convert selected image to png/jpg/webp
 Exec=bash -c "/home/skc/dev/dotfiles/scripts/nemo_image_tools.sh convert %F"
 Icon-Name=image-x-generic
 Selection=any
-Extensions=png;jpg;jpeg;webp;bmp;gif;
+Mimetypes=image/*;
+Submenu=Sentry Tools

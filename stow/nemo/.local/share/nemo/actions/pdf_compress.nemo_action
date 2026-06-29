@@ -5,4 +5,5 @@ Comment=Reduce resolution and size of PDF
 Exec=bash -c "/home/skc/dev/dotfiles/scripts/nemo_pdf_tools.sh compress %F"
 Icon-Name=document-properties
 Selection=any
-Extensions=pdf;
+Mimetypes=application/pdf;
+Submenu=Sentry Tools

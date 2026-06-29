@@ -6,3 +6,4 @@ Exec=wl-copy %F
 Icon-Name=edit-copy
 Selection=any
 Extensions=any;
+Submenu=Sentry Tools

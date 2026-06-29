@@ -5,4 +5,5 @@ Comment=Export PDF pages to png/jpg/webp
 Exec=bash -c "/home/skc/dev/dotfiles/scripts/nemo_pdf_tools.sh to_image %F"
 Icon-Name=image-x-generic
 Selection=any
-Extensions=pdf;
+Mimetypes=application/pdf;
+Submenu=Sentry Tools

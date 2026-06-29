@@ -5,4 +5,5 @@ Comment=Reduce resolution of images
 Exec=bash -c "/home/skc/dev/dotfiles/scripts/nemo_image_tools.sh resize %F"
 Icon-Name=zoom-fit-best
 Selection=any
-Extensions=png;jpg;jpeg;webp;bmp;gif;
+Mimetypes=image/*;
+Submenu=Sentry Tools
