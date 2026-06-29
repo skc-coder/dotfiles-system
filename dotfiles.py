@@ -55,7 +55,16 @@ def load_config():
 CONFIG = load_config()
 
 # Resolve dotfiles paths from config
-DOTFILES_DIR = os.path.abspath(os.path.expanduser(CONFIG["paths"].get("dotfiles_dir", "~/dotfiles")))
+configured_dotfiles_dir = os.path.abspath(os.path.expanduser(CONFIG["paths"].get("dotfiles_dir", "~/dotfiles")))
+DOTFILES_DIR = configured_dotfiles_dir
+
+# Self-healing fallback if configured path is not a git repository
+if not os.path.exists(os.path.join(DOTFILES_DIR, ".git")):
+    if os.path.exists(os.path.join(SCRIPT_DIR, ".git")):
+        DOTFILES_DIR = SCRIPT_DIR
+        console.print(f"[yellow]Warning: Configured dotfiles_dir '{configured_dotfiles_dir}' is not a git repository. "
+                      f"Falling back to script repository at '{DOTFILES_DIR}'.[/yellow]")
+
 LOGS_DIR = os.path.join(DOTFILES_DIR, "logs")
 PENDING_FILE = os.path.join(LOGS_DIR, "pending.json")
 CHANGELOG_FILE = os.path.join(LOGS_DIR, "changelog.log")
