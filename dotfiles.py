@@ -105,10 +105,11 @@ def log_changelog(entry_type, details):
 # Ignore patterns checks
 def is_ignored(path_str):
     filename = os.path.basename(path_str)
-    # Check basic ignore list
+    # Check basic ignore list (excluding sensitive credential files)
     ignore_substrings = [
         ".git", "__pycache__", ".pyc", "pending.json", "changelog.log",
-        ".swp", ".tmp", ".obsidian", ".trash"
+        ".swp", ".tmp", ".obsidian", ".trash", "hosts.yml", "api_keys.toml",
+        "id_rsa", "id_ed25519", "credentials", ".env"
     ]
     if any(sub in path_str for sub in ignore_substrings):
         return True
