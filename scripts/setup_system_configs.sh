@@ -32,13 +32,22 @@ echo "Installing special applications..."
 
 # MEGAsync
 echo "Installing MEGAsync..."
-if curl -sI https://mega.nz/linux/repo/Fedora_44/x86_64/megasync-Fedora_44.x86_64.rpm | grep -q "200 OK"; then
-    wget -q https://mega.nz/linux/repo/Fedora_44/x86_64/megasync-Fedora_44.x86_64.rpm -O /tmp/megasync.rpm
+if rpm -q megasync &>/dev/null; then
+    echo "MEGAsync is already installed."
 else
-    wget -q https://mega.nz/linux/repo/Fedora_43/x86_64/megasync-Fedora_43.x86_64.rpm -O /tmp/megasync.rpm
+    if curl --connect-timeout 5 --max-time 5 -sI https://mega.nz/linux/repo/Fedora_44/x86_64/megasync-Fedora_44.x86_64.rpm | grep -q "200 OK"; then
+        wget --connect-timeout=5 --timeout=10 -q https://mega.nz/linux/repo/Fedora_44/x86_64/megasync-Fedora_44.x86_64.rpm -O /tmp/megasync.rpm || true
+    else
+        wget --connect-timeout=5 --timeout=10 -q https://mega.nz/linux/repo/Fedora_43/x86_64/megasync-Fedora_43.x86_64.rpm -O /tmp/megasync.rpm || true
+    fi
+    
+    if [ -f /tmp/megasync.rpm ]; then
+        sudo dnf install -y /tmp/megasync.rpm
+        rm -f /tmp/megasync.rpm
+    else
+        echo "Warning: Failed to download MEGAsync RPM. Skipping."
+    fi
 fi
-sudo dnf install -y /tmp/megasync.rpm
-rm -f /tmp/megasync.rpm
 
 # Brave Browser
 echo "Installing Brave Browser..."
