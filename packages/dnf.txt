@@ -1,5 +1,5 @@
-# dnf.txt - List of DNF packages to install during system restoration.
 # Add package names here (one per line).
+# dnf.txt - List of DNF packages to install during system restoration.
 ImageMagick
 bat
 cosmic-edit
@@ -25,6 +25,7 @@ slurp
 stow
 sway
 tesseract
+thunar
 tmux
 tmux-powerline
 tree
