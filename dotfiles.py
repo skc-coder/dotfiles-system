@@ -670,5 +670,159 @@ def run_heavy_backup():
         else:
             console.print(f"[red]Rsync failed for {src}: {res.stderr}[/red]")
 
+@app.command("import-configs")
+def import_configs():
+    """Scan watch paths for existing non-stowed configurations and import them."""
+    console.print("[cyan]Scanning watch paths for existing non-stowed configurations...[/cyan]")
+    watch_paths = CONFIG.get("watch", {}).get("paths", [])
+    candidates = []
+    
+    for p in watch_paths:
+        abs_path = os.path.abspath(os.path.expanduser(p))
+        if not os.path.exists(abs_path):
+            continue
+            
+        if os.path.isdir(abs_path):
+            try:
+                for entry in os.scandir(abs_path):
+                    entry_path = entry.path
+                    if is_ignored(entry_path):
+                        continue
+                    # Check if already a symlink pointing to stow
+                    if os.path.islink(entry_path):
+                        target = os.readlink(entry_path)
+                        if STOW_DIR in os.path.abspath(target):
+                            continue
+                    candidates.append(entry_path)
+            except Exception as e:
+                console.print(f"[yellow]Warning: Failed to scan {abs_path}: {e}[/yellow]")
+        else:
+            if not is_ignored(abs_path):
+                if os.path.islink(abs_path):
+                    target = os.readlink(abs_path)
+                    if STOW_DIR in os.path.abspath(target):
+                        continue
+                candidates.append(abs_path)
+                
+    if not candidates:
+        console.print("[green]No unstowed configurations found in watch paths![/green]")
+        return
+        
+    console.print(f"[bold]Found {len(candidates)} unstowed configurations.[/bold]\n")
+    
+    yes_to_all = False
+    skip_all = False
+    
+    for idx, cand in enumerate(candidates):
+        if skip_all:
+            break
+            
+        console.print(Panel(f"[yellow]Unstowed Configuration ({idx+1}/{len(candidates)})[/yellow]\nPath: [bold]{cand}[/bold]"))
+        
+        if yes_to_all:
+            ans = "y"
+        else:
+            ans = Prompt.ask(
+                "Stow this configuration?",
+                choices=["y", "n", "a", "s", "q"],
+                default="y"
+            ).lower()
+            
+        if ans == "q":
+            break
+        elif ans == "s":
+            skip_all = True
+            break
+        elif ans == "a":
+            yes_to_all = True
+            ans = "y"
+            
+        if ans == "y":
+            pkg = find_stow_package(cand)
+            if not pkg:
+                basename = os.path.basename(cand)
+                if basename.startswith("."):
+                    basename = basename[1:]
+                pkg = Prompt.ask(f"Enter stow package name for '{os.path.basename(cand)}'", default=basename)
+            if pkg:
+                if stow_file(cand, pkg):
+                    log_changelog("CONFIG", f"Imported {os.path.basename(cand)} into stow package {pkg}")
+
+@app.command("import-packages")
+def import_packages():
+    """Scan manually installed DNF packages and import them to the tracked list."""
+    console.print("[cyan]Querying manually installed DNF packages...[/cyan]")
+    try:
+        cmd = ["dnf", "repoquery", "--userinstalled", "--queryformat", "%{name}\n"]
+        res = subprocess.run(cmd, capture_output=True, text=True)
+        if res.returncode != 0:
+            console.print(f"[red]Failed to query DNF: {res.stderr}[/red]")
+            return
+            
+        installed = [line.strip() for line in res.stdout.split("\n") if line.strip()]
+    except Exception as e:
+        console.print(f"[red]Failed to run DNF: {e}[/red]")
+        return
+        
+    list_file = os.path.join(PACKAGES_DIR, "dnf.txt")
+    existing = []
+    if os.path.exists(list_file):
+        with open(list_file, "r") as f:
+            existing = [line.strip() for line in f if line.strip() and not line.strip().startswith("#")]
+            
+    untracked = [p for p in installed if p not in existing]
+    
+    if not untracked:
+        console.print("[green]All manually installed DNF packages are already tracked in dnf.txt![/green]")
+        return
+        
+    console.print(f"[bold]Found {len(untracked)} manually installed packages not yet tracked in dnf.txt.[/bold]\n")
+    from rich.columns import Columns
+    console.print(Columns(untracked[:100], equal=True, expand=True))
+    if len(untracked) > 100:
+        console.print(f"... and {len(untracked) - 100} more packages.")
+        
+    ans = Prompt.ask(
+        "\nTrack all of these packages? [y] Yes to all  [n] No  [i] Interactive selection  [q] Quit",
+        choices=["y", "n", "i", "q"],
+        default="y"
+    ).lower()
+    
+    if ans == "q" or ans == "n":
+        return
+        
+    to_add = []
+    if ans == "y":
+        to_add = untracked
+    elif ans == "i":
+        yes_to_all = False
+        for idx, pkg in enumerate(untracked):
+            if yes_to_all:
+                to_add.append(pkg)
+                continue
+            ans_pkg = Prompt.ask(
+                f"Track package {pkg} ({idx+1}/{len(untracked)})?",
+                choices=["y", "n", "a", "q"],
+                default="y"
+            ).lower()
+            if ans_pkg == "q":
+                break
+            elif ans_pkg == "a":
+                yes_to_all = True
+                to_add.append(pkg)
+            elif ans_pkg == "y":
+                to_add.append(pkg)
+                
+    if to_add:
+        updated = sorted(list(set(existing + to_add)))
+        with open(list_file, "w") as f:
+            f.write("# dnf.txt - List of DNF packages to install during system restoration.\n")
+            f.write("# Add package names here (one per line).\n")
+            for p in updated:
+                f.write(f"{p}\n")
+        console.print(f"[green]Successfully added {len(to_add)} packages to {list_file}[/green]")
+        for p in to_add:
+            log_changelog("IMPORTED_PACKAGE", f"{p} (dnf)")
+
 if __name__ == "__main__":
     app()
