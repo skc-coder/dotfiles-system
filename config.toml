@@ -62,3 +62,4 @@ paths = [
 ".config/waybar" = "waybar"
 ".local/share/fonts" = "fonts"
 ".config/Thunar" = "thunar"
+".config/xfce4" = "thunar"

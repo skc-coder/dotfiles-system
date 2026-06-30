@@ -159,6 +159,7 @@ def stow_file(file_path, pkg_name):
     os.makedirs(os.path.dirname(dest_path), exist_ok=True)
     
     # Move the file/folder to stow directory
+    requires_sudo = False
     try:
         if os.path.exists(dest_path):
             console.print(f"[yellow]Warning: Destination {dest_path} already exists. Merging/Replacing.[/yellow]")
@@ -175,11 +176,13 @@ def stow_file(file_path, pkg_name):
                             os.replace(src_f, dst_f)
                         except PermissionError:
                             subprocess.run(["sudo", "mv", src_f, dst_f], check=True)
+                            requires_sudo = True
                 # remove original dir
                 try:
                     os.rmdir(file_path)
                 except PermissionError:
                     subprocess.run(["sudo", "rm", "-rf", file_path], check=True)
+                    requires_sudo = True
             else:
                 try:
                     os.remove(dest_path)
@@ -189,20 +192,23 @@ def stow_file(file_path, pkg_name):
                     os.rename(file_path, dest_path)
                 except PermissionError:
                     subprocess.run(["sudo", "mv", file_path, dest_path], check=True)
+                    requires_sudo = True
         else:
             try:
                 os.rename(file_path, dest_path)
             except PermissionError:
                 subprocess.run(["sudo", "mv", file_path, dest_path], check=True)
+                requires_sudo = True
                 
         # Fix ownership inside stow folder if it was moved with sudo (owned by root)
-        try:
-            import pwd, grp
-            user = pwd.getpwuid(os.getuid()).pw_name
-            group = grp.getgrgid(os.getgid()).gr_name
-            subprocess.run(["sudo", "chown", "-R", f"{user}:{group}", os.path.join(STOW_DIR, pkg_name)], check=True)
-        except Exception:
-            pass
+        if requires_sudo:
+            try:
+                import pwd, grp
+                user = pwd.getpwuid(os.getuid()).pw_name
+                group = grp.getgrgid(os.getgid()).gr_name
+                subprocess.run(["sudo", "chown", "-R", f"{user}:{group}", os.path.join(STOW_DIR, pkg_name)], check=True)
+            except Exception:
+                pass
             
         # Run stow
         cmd = ["stow", "-d", STOW_DIR, "-t", home, pkg_name]
