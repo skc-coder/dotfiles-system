@@ -757,11 +757,10 @@ def ensure_git_repo(repo_path):
                 if user_proc.returncode == 0:
                     github_username = user_proc.stdout.strip()
                     
-        # Setup git credential helper
+        # Setup git credential helper and create repository on GitHub
         try:
-            subprocess.run(["gh", "auth", "setup-git"], cwd=repo_path, check=True, capture_output=True)
-        except Exception:
-            pass
+            # We ignore failures of setup-git as git credential helpers might be set up globally
+            subprocess.run(["gh", "auth", "setup-git"], cwd=repo_path, capture_output=True)
             
             # Create repo on GitHub
             console.print(f"[cyan]Creating private GitHub repository '{repo_name}'...[/cyan]")
@@ -773,7 +772,7 @@ def ensure_git_repo(repo_path):
             )
             
             if res.returncode != 0:
-                # If creation failed (probably already exists), manually add remote URL using token
+                # If creation failed, manually add remote URL using token
                 console.print(f"[yellow]Warning: 'gh repo create' failed: {res.stderr.strip().splitlines()[0] if res.stderr else 'unknown error'}. Setting remote manually...[/yellow]")
                 manual_url = f"https://{github_token}@github.com/{github_username}/{repo_name}.git"
                 subprocess.run(["git", "remote", "remove", "origin"], cwd=repo_path, capture_output=True)
