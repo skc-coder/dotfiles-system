@@ -13,6 +13,7 @@ application/x-extension-xht=brave-browser;
 text/markdown=kate;
 text/plain=nvim.desktop;
 application/x-zerosize=libreoffice-calc.desktop;
+application/toml=org.kde.kate.desktop;
 
 [Default Applications]
 text/html=brave-browser.desktop
