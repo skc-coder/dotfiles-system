@@ -713,13 +713,23 @@ def ensure_git_repo(repo_path):
     remote_proc = subprocess.run(["git", "remote", "get-url", "origin"], cwd=repo_path, capture_output=True, text=True)
     remote_url = remote_proc.stdout.strip()
     
-    if not remote_url:
+    remote_exists = False
+    if remote_url:
+        ls_remote = subprocess.run(["git", "ls-remote", "origin"], cwd=repo_path, capture_output=True)
+        if ls_remote.returncode == 0:
+            remote_exists = True
+            
+    if not remote_url or not remote_exists:
         github_token, github_username = load_github_credentials()
         if not github_token:
             console.print(f"[yellow]Warning: Cannot auto-initialize Git/GitHub for '{repo_path}' - GitHub token missing in config.toml or ~/Documents/api_keys.toml[/yellow]")
             return False
             
-        console.print(f"[cyan]No remote configured for '{repo_name}'. Configuring with GitHub...[/cyan]")
+        if remote_url and not remote_exists:
+            console.print(f"[yellow]Warning: Remote configured but repository does not exist on GitHub. Re-initializing...[/yellow]")
+            subprocess.run(["git", "remote", "remove", "origin"], cwd=repo_path, capture_output=True)
+            
+        console.print(f"[cyan]Configuring remote for '{repo_name}' with GitHub...[/cyan]")
         try:
             # Login/auth to gh CLI
             subprocess.run(
