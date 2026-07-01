@@ -64,8 +64,34 @@ if ! command -v code &> /dev/null; then
     sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\nautorefresh=1\ntype=rpm-md\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
     sudo dnf check-update || true
     sudo dnf install -y code
-else
-    echo "VS Code is already installed."
+fi
+
+# 3. Handle Manual Installations (AppImages and manual RPMs)
+MANUAL_FILE="${DOTFILES_DIR}/packages/manual_install.txt"
+if [ -f "$MANUAL_FILE" ]; then
+    echo ""
+    echo "=== MANUAL INSTALLATIONS REQUIRED ==="
+    echo "The following items must be installed manually:"
+    
+    # Read the file and output items
+    while IFS= read -r line || [ -n "$line" ]; do
+        # Skip empty lines or comments
+        if [[ "$line" =~ ^[[:space:]]*# ]] || [[ -z "$line" ]]; then
+            continue
+        fi
+        
+        echo " - $line"
+        
+        # Clean the name for search query
+        # Remove prefixes like "AppImage: " or "RPM: "
+        clean_name=$(echo "$line" | sed -E 's/^(AppImage|RPM):[[:space:]]*//' | sed 's/\.AppImage//' | sed 's/\.rpm//' | tr ' ' '+')
+        
+        # Open in DuckDuckGo search query using xdg-open
+        echo "   Opening download search for '$clean_name'..."
+        xdg-open "https://duckduckgo.com/?q=download+${clean_name}" &>/dev/null &
+        sleep 0.5 # pause slightly to avoid browser window spam issues
+    done < "$MANUAL_FILE"
+    echo "====================================="
 fi
 
 echo "=== System setup completed successfully! ==="

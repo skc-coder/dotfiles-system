@@ -146,6 +146,41 @@ def find_stow_package(file_path):
             return pkg
     return None
 
+def robust_move(src, dst):
+    import shutil
+    # If destination exists and both are directories, merge recursively
+    if os.path.exists(dst) and os.path.isdir(dst) and os.path.isdir(src):
+        requires_sudo = False
+        for entry in os.scandir(src):
+            sub_src = entry.path
+            sub_dst = os.path.join(dst, entry.name)
+            if robust_move(sub_src, sub_dst):
+                requires_sudo = True
+        # remove original empty directory
+        try:
+            os.rmdir(src)
+        except Exception:
+            subprocess.run(["sudo", "rm", "-rf", src], check=True)
+            requires_sudo = True
+        return requires_sudo
+
+    # Otherwise, move/replace file or directory
+    if os.path.exists(dst):
+        try:
+            if os.path.isdir(dst):
+                shutil.rmtree(dst)
+            else:
+                os.remove(dst)
+        except Exception:
+            subprocess.run(["sudo", "rm", "-rf", dst], check=True)
+            
+    try:
+        shutil.move(src, dst)
+        return False
+    except Exception:
+        subprocess.run(["sudo", "mv", src, dst], check=True)
+        return True
+
 def stow_file(file_path, pkg_name):
     home = os.path.expanduser("~")
     if not file_path.startswith(home):
@@ -159,47 +194,9 @@ def stow_file(file_path, pkg_name):
     os.makedirs(os.path.dirname(dest_path), exist_ok=True)
     
     # Move the file/folder to stow directory
-    requires_sudo = False
     try:
-        if os.path.exists(dest_path):
-            console.print(f"[yellow]Warning: Destination {dest_path} already exists. Merging/Replacing.[/yellow]")
-            if os.path.isdir(dest_path) and os.path.isdir(file_path):
-                # Move files recursively
-                for root, dirs, files in os.walk(file_path):
-                    rel_sub = os.path.relpath(root, file_path)
-                    sub_dest = os.path.join(dest_path, rel_sub) if rel_sub != "." else dest_path
-                    os.makedirs(sub_dest, exist_ok=True)
-                    for f in files:
-                        src_f = os.path.join(root, f)
-                        dst_f = os.path.join(sub_dest, f)
-                        try:
-                            os.replace(src_f, dst_f)
-                        except PermissionError:
-                            subprocess.run(["sudo", "mv", src_f, dst_f], check=True)
-                            requires_sudo = True
-                # remove original dir
-                try:
-                    os.rmdir(file_path)
-                except PermissionError:
-                    subprocess.run(["sudo", "rm", "-rf", file_path], check=True)
-                    requires_sudo = True
-            else:
-                try:
-                    os.remove(dest_path)
-                except FileNotFoundError:
-                    pass
-                try:
-                    os.rename(file_path, dest_path)
-                except PermissionError:
-                    subprocess.run(["sudo", "mv", file_path, dest_path], check=True)
-                    requires_sudo = True
-        else:
-            try:
-                os.rename(file_path, dest_path)
-            except PermissionError:
-                subprocess.run(["sudo", "mv", file_path, dest_path], check=True)
-                requires_sudo = True
-                
+        requires_sudo = robust_move(file_path, dest_path)
+        
         # Fix ownership inside stow folder if it was moved with sudo (owned by root)
         if requires_sudo:
             try:
@@ -219,14 +216,32 @@ def stow_file(file_path, pkg_name):
         else:
             console.print(f"[red]Stow failed: {res.stderr}[/red]")
             # Attempt to restore
-            try:
-                os.rename(dest_path, file_path)
-            except Exception:
-                subprocess.run(["sudo", "mv", dest_path, file_path])
+            robust_move(dest_path, file_path)
             return False
     except Exception as e:
         console.print(f"[red]Failed to move and stow file: {e}[/red]")
         return False
+
+def log_manual_installation(type_prefix, name):
+    manual_file = os.path.join(PACKAGES_DIR, "manual_install.txt")
+    existing = []
+    if os.path.exists(manual_file):
+        with open(manual_file, "r") as f:
+            existing = [line.strip() for line in f if line.strip()]
+    
+    entry = f"{type_prefix}: {name}"
+    if entry not in existing:
+        existing.append(entry)
+        header = [
+            "# manual_install.txt - List of applications to install manually during restoration.",
+            "# Add AppImage or manual RPM filenames here."
+        ]
+        non_comments = sorted([line for line in existing if not line.startswith("#")])
+        with open(manual_file, "w") as f:
+            for h in header:
+                f.write(f"{h}\n")
+            for item in non_comments:
+                f.write(f"{item}\n")
 
 # Git backup helper
 def generate_commit_message(diff_summary):
@@ -268,11 +283,21 @@ def generate_commit_message(diff_summary):
     if not api_keys:
         return f"auto: {datetime.now().strftime('%Y-%m-%d %H:%M')} | system backup"
 
+    import time
+    start_time = time.time()
+    total_timeout = 10.0
+
     # Roll over models (lightest first) and multiple keys
     for model in model_list:
         for api_key in api_keys:
             if not api_key:
                 continue
+            
+            elapsed = time.time() - start_time
+            if elapsed >= total_timeout - 1.0:
+                console.print("[yellow]Gemini generation timed out. Using default commit message.[/yellow]")
+                return f"auto: {datetime.now().strftime('%Y-%m-%d %H:%M')} | system backup"
+                
             try:
                 url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={api_key}"
                 prompt = (
@@ -287,7 +312,9 @@ def generate_commit_message(diff_summary):
                         }]
                     }]
                 }
-                res = httpx.post(url, json=payload, timeout=10.0)
+                
+                req_timeout = max(1.0, total_timeout - elapsed)
+                res = httpx.post(url, json=payload, timeout=req_timeout)
                 if res.status_code == 200:
                     content = res.json()
                     message = content["contents"][0]["parts"][0]["text"].strip()
@@ -443,21 +470,16 @@ def review():
                 console.print(f"[red]Skipped stowing {path} (no package name provided).[/red]")
                 
         elif ftype == "appimage":
-            # Either copy or log depending on config setting
-            mode = CONFIG.get("appimage", {}).get("mode", "log_only")
-            if mode == "backup_copy":
-                appimages_dir = os.path.join(DOTFILES_DIR, "AppImages")
-                os.makedirs(appimages_dir, exist_ok=True)
-                dest = os.path.join(appimages_dir, os.path.basename(path))
-                try:
-                    import shutil
-                    shutil.copy2(path, dest)
-                    log_changelog("APPIMAGE", f"Copied {path} to AppImages backup")
-                    console.print(f"[green]Copied AppImage to {dest}[/green]")
-                except Exception as e:
-                    console.print(f"[red]Failed to copy AppImage {path}: {e}[/red]")
-            else:
-                log_changelog("APPIMAGE", f"Logged AppImage path: {path}")
+            basename = os.path.basename(path)
+            log_manual_installation("AppImage", basename)
+            log_changelog("APPIMAGE", f"Logged AppImage path: {path}")
+            console.print(f"[green]Logged AppImage name '{basename}' to packages/manual_install.txt[/green]")
+            
+        elif ftype == "rpm":
+            basename = os.path.basename(path)
+            log_manual_installation("RPM", basename)
+            log_changelog("RPM", f"Logged RPM path: {path}")
+            console.print(f"[green]Logged RPM name '{basename}' to packages/manual_install.txt[/green]")
                 
         elif ftype == "system":
             # Copy file to system folder in dotfiles
@@ -574,6 +596,8 @@ def add(path: str):
         ftype = "script"
     elif "Applications" in abs_path or abs_path.endswith(".AppImage"):
         ftype = "appimage"
+    elif abs_path.endswith(".rpm"):
+        ftype = "rpm"
     elif "fonts" in abs_path:
         ftype = "font"
     elif abs_path.startswith("/etc") or abs_path == "/etc/hosts":

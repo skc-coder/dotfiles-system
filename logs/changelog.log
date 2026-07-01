@@ -28,3 +28,20 @@
 [2026-06-29 15:06] INSTALLED: fuse (dnf)
 [2026-06-29 15:06] INSTALLED: fuse-libs (dnf)
 [2026-06-30 09:26] REJECTED_PACKAGE: ./appimagelauncher_3.0.0-beta-2-gha298.4daf93f_x86_64.rpm (dnf)
+[2026-06-30 20:23] CONFIG: Imported vlc into stow package vlc
+[2026-06-30 20:23] CONFIG: Imported kate into stow package kate
+[2026-06-30 20:23] CONFIG: Imported kate-externaltoolspluginrc into stow package kate-externaltoolspluginrc
+[2026-06-30 20:23] CONFIG: Imported katevirc into stow package katevirc
+[2026-06-30 20:23] CONFIG: Imported Thunar into stow package thunar
+[2026-06-30 20:23] CONFIG: Imported gtk-3.0 into stow package gtk-3.0
+[2026-06-30 20:23] CONFIG: Imported kitty into stow package kitty
+[2026-06-30 20:23] CONFIG: Imported flameshot into stow package flameshot
+[2026-06-30 20:23] CONFIG: Imported rofi into stow package rofi
+[2026-06-30 20:23] CONFIG: Imported obsidian into stow package obsidian
+[2026-06-30 20:23] CONFIG: Imported gtk-4.0 into stow package gtk-4.0
+[2026-06-30 20:23] CONFIG: Imported katerc into stow package katerc
+[2026-06-30 20:24] CONFIG: Imported systemd into stow package systemd
+[2026-06-30 20:24] CONFIG: Imported taurine into stow package taurine
+[2026-06-30 20:24] CONFIG: Imported mimeapps.list into stow package mimeapps.list
+[2026-06-30 20:24] CONFIG: Imported vpn-toggle.sh into stow package vpn-toggle.sh
+[2026-06-30 20:24] CONFIG: Imported Obsidian-1.12.7_da107e373fd47407b646a82094c14331.AppImage into stow package Obsidian-1.12.7_da107e373fd47407b646a82094c14331.AppImage

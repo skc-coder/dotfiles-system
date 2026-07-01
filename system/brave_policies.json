@@ -3,7 +3,18 @@
     "eimadpcalbfghhichcdmndocbbjcedad;https://clients2.google.com/service/update2/crx",
     "jfbecndgopfbofplcojndmbeifbhjdom;https://clients2.google.com/service/update2/crx",
     "dkgjbecoljkegjocbpdeidmgbgboehci;https://clients2.google.com/service/update2/crx",
-    "giejoclgolndlhgldjomedeeokbpejcl;https://clients2.google.com/service/update2/crx"
+    "giejoclgolndlhgldjomedeeokbpejcl;https://clients2.google.com/service/update2/crx",
+    "bofmdaibakehcnekeapgmjmnooioofsn;https://clients2.google.com/service/update2/crx"
+  ],
+  "ExtensionSettings": {
+    "bofmdaibakehcnekeapgmjmnooioofsn": {
+      "installation_mode": "force_installed",
+      "update_url": "https://google.com"
+    }
+  },
+  "RestoreOnStartup": 4,
+  "RestoreOnStartupURLs": [
+    "https://nhk.or.jp"
   ],
   "ManagedBookmarks": [
     {

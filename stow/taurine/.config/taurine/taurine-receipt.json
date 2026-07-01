@@ -1,0 +1,1 @@
+{"binaries":["taurine"],"binary_aliases":{},"cdylibs":[],"cstaticlibs":[],"install_layout":"cargo-home","install_prefix":"/home/skc/.cargo","modify_path":true,"provider":{"source":"cargo-dist","version":"0.31.0"},"source":{"app_name":"taurine","name":"taurine","owner":"ereinaimer","release_type":"github"},"version":"1.0.0-alpha.6"}

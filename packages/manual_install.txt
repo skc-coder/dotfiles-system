@@ -1,0 +1,6 @@
+# manual_install.txt - List of applications to install manually during restoration.
+# Add AppImage or manual RPM filenames here.
+AppImage: Obsidian-1.12.7_da107e373fd47407b646a82094c14331.AppImage
+RPM: appimagelauncher_3.0.0-beta-2-gha298.4daf93f_x86_64.rpm
+RPM: google-chrome-stable_current_x86_64.rpm
+RPM: sklauncher-4.0.29.x86_64.rpm
