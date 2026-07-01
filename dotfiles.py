@@ -516,8 +516,8 @@ def review():
     
     save_pending(pending)
     
-    # 2. After reviewing: commits and pushes accepted changes with a Gemini-generated commit message
-    console.print("[cyan]Generating commit message and pushing accepted changes...[/cyan]")
+    # 2. After reviewing: commits accepted changes locally with a Gemini-generated commit message
+    console.print("[cyan]Generating commit message and committing accepted changes locally...[/cyan]")
     # Run git add and generate a commit message based on diff
     subprocess.run(["git", "add", "."], cwd=DOTFILES_DIR)
     
@@ -528,8 +528,6 @@ def review():
         commit_msg = generate_commit_message(diff_summary)
         console.print(f"[green]Commit message: {commit_msg}[/green]")
         subprocess.run(["git", "commit", "-m", commit_msg], cwd=DOTFILES_DIR)
-        # Push
-        subprocess.run(["git", "push"], cwd=DOTFILES_DIR)
     else:
         console.print("[yellow]No actual changes to commit after review.[/yellow]")
 
