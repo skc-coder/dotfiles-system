@@ -6,6 +6,11 @@
   "DefaultSearchProviderName": "Brave Search",
   "DefaultSearchProviderSearchURL": "https://search.brave.com/search?q=%s",
   "ForceSafeSearch": true,
+  "PinnedTabs": [
+    "https://mail.proton.com",
+    "https://outlook.live.com/mail/",
+    "https://calendar.proton.me"
+  ],
   "ExtensionSettings": {
     "cjpalhdlnbpafiamejdnhcphjbkeiagm": { "installation_mode": "force_installed", "update_url": "https://clients2.google.com/service/update2/crx" },
     "eimadpbcbfnmbkopoojfekhnkhdbieeh": { "installation_mode": "force_installed", "update_url": "https://clients2.google.com/service/update2/crx" },
@@ -15,6 +20,7 @@
     "lckanjgmijmafbedllaakclkaicjfmnk": { "installation_mode": "force_installed", "update_url": "https://clients2.google.com/service/update2/crx" },
     "ldpochfccmkkmhdbclfhpagapcfdljkj": { "installation_mode": "force_installed", "update_url": "https://clients2.google.com/service/update2/crx" },
     "hfjbmagddngcpeloejdejnfgbamkjaeg": { "installation_mode": "force_installed", "update_url": "https://clients2.google.com/service/update2/crx" },
-    "hfjngjjnngpljjlppgbbgkhfnhhphjhk": { "installation_mode": "force_installed", "update_url": "https://clients2.google.com/service/update2/crx" }
+    "hfjngjjnngpljjlppgbbgkhfnhhphjhk": { "installation_mode": "force_installed", "update_url": "https://clients2.google.com/service/update2/crx" },
+    "jnnbaimhjkojbpaeaejjdecpljheogcn": { "installation_mode": "force_installed", "update_url": "https://clients2.google.com/service/update2/crx" }
   }
 }
