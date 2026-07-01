@@ -720,27 +720,48 @@ def ensure_git_repo(repo_path):
             remote_exists = True
             
     if not remote_url or not remote_exists:
-        github_token, github_username = load_github_credentials()
-        if not github_token:
-            console.print(f"[yellow]Warning: Cannot auto-initialize Git/GitHub for '{repo_path}' - GitHub token missing in config.toml or ~/Documents/api_keys.toml[/yellow]")
-            return False
-            
         if remote_url and not remote_exists:
             console.print(f"[yellow]Warning: Remote configured but repository does not exist on GitHub. Re-initializing...[/yellow]")
             subprocess.run(["git", "remote", "remove", "origin"], cwd=repo_path, capture_output=True)
             
-        console.print(f"[cyan]Configuring remote for '{repo_name}' with GitHub...[/cyan]")
+        # Check if gh CLI is already authenticated
+        gh_auth = subprocess.run(["gh", "auth", "status"], capture_output=True)
+        is_gh_logged_in = (gh_auth.returncode == 0)
+        
+        github_token = ""
+        github_username = ""
+        
+        if not is_gh_logged_in:
+            github_token, github_username = load_github_credentials()
+            if not github_token:
+                console.print(f"[yellow]Warning: Cannot auto-initialize Git/GitHub for '{repo_path}' - GitHub token missing in config.toml or ~/Documents/api_keys.toml[/yellow]")
+                return False
+                
+            console.print(f"[cyan]Logging in to GitHub CLI using token from api_keys.toml...[/cyan]")
+            try:
+                subprocess.run(
+                    f"echo {github_token} | gh auth login --with-token",
+                    shell=True,
+                    cwd=repo_path,
+                    check=True,
+                    capture_output=True
+                )
+            except Exception as e:
+                console.print(f"[red]Failed to login to GitHub CLI: {e}[/red]")
+                return False
+        else:
+            # Load credentials if available, or fetch username from active gh session
+            github_token, github_username = load_github_credentials()
+            if not github_username:
+                user_proc = subprocess.run(["gh", "api", "user", "--jq", ".login"], capture_output=True, text=True)
+                if user_proc.returncode == 0:
+                    github_username = user_proc.stdout.strip()
+                    
+        # Setup git credential helper
         try:
-            # Login/auth to gh CLI
-            subprocess.run(
-                f"echo {github_token} | gh auth login --with-token",
-                shell=True,
-                cwd=repo_path,
-                check=True,
-                capture_output=True
-            )
-            # Setup git credential helper
             subprocess.run(["gh", "auth", "setup-git"], cwd=repo_path, check=True, capture_output=True)
+        except Exception:
+            pass
             
             # Create repo on GitHub
             console.print(f"[cyan]Creating private GitHub repository '{repo_name}'...[/cyan]")
