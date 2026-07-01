@@ -33,10 +33,19 @@ fi
 # 2. Install managed policies (requires sudo)
 echo "Installing browser policies..."
 
+# Clean up old/conflicting policy files
+sudo rm -f /etc/firefox/policies/policies.json
+sudo rm -f /etc/brave/policies/managed/policies.json
+
 # Chromium
 sudo mkdir -p /etc/chromium/policies/managed
 sudo cp "$POLICY_DIR/chromium-policy.json" /etc/chromium/policies/managed/policy.json
 echo "Chromium policies installed."
+
+# Google Chrome
+sudo mkdir -p /etc/opt/chrome/policies/managed
+sudo cp "$POLICY_DIR/chromium-policy.json" /etc/opt/chrome/policies/managed/policy.json
+echo "Google Chrome policies installed."
 
 # Brave
 sudo mkdir -p /etc/brave/policies/managed
