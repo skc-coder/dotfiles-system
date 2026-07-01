@@ -779,6 +779,8 @@ def run_git_backup(dry_run=False, message=None):
             console.print(f"[yellow][Dry Run] Would commit dotfiles with: {commit_msg}[/yellow]")
     else:
         console.print("[green]Dotfiles repo is clean.[/green]")
+        if not dry_run:
+            subprocess.run(["git", "push"], cwd=DOTFILES_DIR, capture_output=True)
         
     # Obsidian Vault
     obsidian_path = os.path.expanduser("~/Documents/vault")
@@ -832,6 +834,9 @@ def run_single_git_backup(repo_path, dry_run):
             console.print(f"[green]Pushed repo {os.path.basename(repo_path)}: {commit_msg}[/green]")
         else:
             console.print(f"[yellow][Dry Run] Would commit {os.path.basename(repo_path)} with: {commit_msg}[/yellow]")
+    else:
+        if not dry_run:
+            subprocess.run(["git", "push"], cwd=repo_path, capture_output=True)
 
 def run_heavy_backup():
     heavy_dest = CONFIG.get("backup", {}).get("heavy_dest", "")
