@@ -1,0 +1,10 @@
+[Unit]
+Description=Sentry Dotfiles Daily Backup Timer
+
+[Timer]
+OnCalendar=*-*-* 08:00:00
+Persistent=false
+Unit=dotfiles-backup.service
+
+[Install]
+WantedBy=timers.target

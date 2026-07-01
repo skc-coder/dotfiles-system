@@ -1,0 +1,9 @@
+[Unit]
+Description=Sentry Dotfiles and Projects Daily Backup Service
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/home/skc/dev/dotfiles/.venv/bin/dotfiles backup
+StandardOutput=journal
+StandardError=journal
