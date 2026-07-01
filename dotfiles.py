@@ -771,14 +771,17 @@ def run_git_backup(dry_run=False, message=None):
         commit_msg = message or generate_commit_message(diff_summary)
         if not dry_run:
             subprocess.run(["git", "commit", "-m", commit_msg], cwd=DOTFILES_DIR)
-            subprocess.run(["git", "push"], cwd=DOTFILES_DIR)
-            console.print(f"[green]Pushed dotfiles repo: {commit_msg}[/green]")
+            res = subprocess.run(["git", "push", "-u", "origin", "main"], cwd=DOTFILES_DIR, capture_output=True, text=True)
+            if res.returncode == 0:
+                console.print(f"[green]Pushed dotfiles repo: {commit_msg}[/green]")
+            else:
+                console.print(f"[red]Failed to push dotfiles repo: {res.stderr.strip()}[/red]")
         else:
             console.print(f"[yellow][Dry Run] Would commit dotfiles with: {commit_msg}[/yellow]")
     else:
         console.print("[green]Dotfiles repo is clean.[/green]")
         if not dry_run:
-            subprocess.run(["git", "push"], cwd=DOTFILES_DIR, capture_output=True)
+            subprocess.run(["git", "push", "-u", "origin", "main"], cwd=DOTFILES_DIR, capture_output=True)
         
     # Obsidian Vault
     obsidian_path = os.path.expanduser("~/Documents/vault")
@@ -828,13 +831,16 @@ def run_single_git_backup(repo_path, dry_run):
             
         if not dry_run:
             subprocess.run(["git", "commit", "-m", commit_msg], cwd=repo_path)
-            subprocess.run(["git", "push"], cwd=repo_path)
-            console.print(f"[green]Pushed repo {os.path.basename(repo_path)}: {commit_msg}[/green]")
+            res = subprocess.run(["git", "push", "-u", "origin", "main"], cwd=repo_path, capture_output=True, text=True)
+            if res.returncode == 0:
+                console.print(f"[green]Pushed repo {os.path.basename(repo_path)}: {commit_msg}[/green]")
+            else:
+                console.print(f"[red]Failed to push repo {os.path.basename(repo_path)}: {res.stderr.strip()}[/red]")
         else:
             console.print(f"[yellow][Dry Run] Would commit {os.path.basename(repo_path)} with: {commit_msg}[/yellow]")
     else:
         if not dry_run:
-            subprocess.run(["git", "push"], cwd=repo_path, capture_output=True)
+            subprocess.run(["git", "push", "-u", "origin", "main"], cwd=repo_path, capture_output=True)
 
 def run_heavy_backup():
     heavy_dest = CONFIG.get("backup", {}).get("heavy_dest", "")
