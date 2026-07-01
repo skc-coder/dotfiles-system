@@ -1,0 +1,19 @@
+{
+  "MetricsReportingEnabled": false,
+  "UrlKeyedAnonymizedDataCollectionEnabled": false,
+  "SafeBrowsingExtendedReportingEnabled": false,
+  "DefaultSearchProviderEnabled": true,
+  "DefaultSearchProviderName": "Brave Search",
+  "DefaultSearchProviderSearchURL": "https://search.brave.com/search?q=%s",
+  "ExtensionSettings": {
+    "cjpalhdlnbpafiamejdnhcphjbkeiagm": { "installation_mode": "force_installed", "update_url": "https://clients2.google.com/service/update2/crx" },
+    "eimadpbcbfnmbkopoojfekhnkhdbieeh": { "installation_mode": "force_installed", "update_url": "https://clients2.google.com/service/update2/crx" },
+    "nngceckbapebfimnlniiiahkandclblb": { "installation_mode": "force_installed", "update_url": "https://clients2.google.com/service/update2/crx" },
+    "mnjggcdmjocbbbhaepdhchncahnbgone": { "installation_mode": "force_installed", "update_url": "https://clients2.google.com/service/update2/crx" },
+    "jinjaccalgkegednnccohejagnlnfdag": { "installation_mode": "force_installed", "update_url": "https://clients2.google.com/service/update2/crx" },
+    "lckanjgmijmafbedllaakclkaicjfmnk": { "installation_mode": "force_installed", "update_url": "https://clients2.google.com/service/update2/crx" },
+    "ldpochfccmkkmhdbclfhpagapcfdljkj": { "installation_mode": "force_installed", "update_url": "https://clients2.google.com/service/update2/crx" },
+    "hfjbmagddngcpeloejdejnfgbamkjaeg": { "installation_mode": "force_installed", "update_url": "https://clients2.google.com/service/update2/crx" },
+    "hfjngjjnngpljjlppgbbgkhfnhhphjhk": { "installation_mode": "force_installed", "update_url": "https://clients2.google.com/service/update2/crx" }
+  }
+}
