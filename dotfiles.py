@@ -850,7 +850,9 @@ def run_single_git_backup(repo_path, dry_run):
             console.print(f"[yellow][Dry Run] Would commit {os.path.basename(repo_path)} with: {commit_msg}[/yellow]")
     else:
         if not dry_run:
-            subprocess.run(["git", "push", "-u", "origin", "main"], cwd=repo_path, capture_output=True)
+            res = subprocess.run(["git", "push", "-u", "origin", "main"], cwd=repo_path, capture_output=True, text=True)
+            if res.returncode != 0:
+                console.print(f"[red]Failed to push repo {os.path.basename(repo_path)}: {res.stderr.strip()}[/red]")
 
 def run_heavy_backup():
     heavy_dest = CONFIG.get("backup", {}).get("heavy_dest", "")
