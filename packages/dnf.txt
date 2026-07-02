@@ -2,6 +2,7 @@
 # dnf.txt - List of DNF packages to install during system restoration.
 ImageMagick
 bat
+brightnessctl
 cosmic-edit
 exaile
 eza

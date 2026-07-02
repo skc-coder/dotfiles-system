@@ -47,3 +47,4 @@
 [2026-06-30 20:24] CONFIG: Imported Obsidian-1.12.7_da107e373fd47407b646a82094c14331.AppImage into stow package Obsidian-1.12.7_da107e373fd47407b646a82094c14331.AppImage
 [2026-07-01 07:08] REJECTED_PACKAGE: libreoffice-calc (dnf)
 [2026-07-01 12:07] REJECTED_PACKAGE: kdeconnectd (dnf)
+[2026-07-02 06:32] INSTALLED: brightnessctl (dnf)
