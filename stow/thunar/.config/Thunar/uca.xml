@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <actions>
 <action>
+	<unique-id>16885376510000</unique-id>
+	<name>Open Terminal Here</name>
+	<submenu></submenu>
+	<icon>utilities-terminal</icon>
+	<command>exo-open --working-directory %f --launch TerminalEmulator</command>
+	<description>Open terminal in this directory</description>
+	<patterns>*</patterns>
+	<directories/>
+</action>
+<action>
 	<unique-id>16885376510001</unique-id>
 	<name>Copy Path to Clipboard</name>
 	<submenu>Sentry Tools</submenu>
