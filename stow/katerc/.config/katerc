@@ -129,7 +129,7 @@ SetEditor=false
 
 [MainWindow]
 1920x1080 screen: Height=1022
-1920x1080 screen: Width=623
+1920x1080 screen: Width=1176
 
 [UiSettings]
 ColorScheme=BreezeDark

@@ -1,15 +1,123 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <actions>
 <action>
-	<icon>utilities-terminal</icon>
-	<name>Open Terminal Here</name>
-	<submenu></submenu>
-	<unique-id>1782704398811129-1</unique-id>
-	<command>exo-open --working-directory %f --launch TerminalEmulator</command>
-	<description>Example for a custom action</description>
-	<range></range>
+	<unique-id>16885376510001</unique-id>
+	<name>Copy Path to Clipboard</name>
+	<submenu>Sentry Tools</submenu>
+	<icon>edit-copy</icon>
+	<command>wl-copy %F</command>
+	<description>Copy selected paths to clipboard</description>
 	<patterns>*</patterns>
-	<startup-notify/>
 	<directories/>
+	<audio-files/>
+	<image-files/>
+	<other-files/>
+	<text-files/>
+	<video-files/>
+</action>
+<action>
+	<unique-id>16885376510002</unique-id>
+	<name>Paste Clipboard to File</name>
+	<submenu>Sentry Tools</submenu>
+	<icon>edit-paste</icon>
+	<command>/home/skc/dev/dotfiles/scripts/paste_file.sh %f</command>
+	<description>Create a new file from clipboard text</description>
+	<patterns>*</patterns>
+	<directories/>
+</action>
+<action>
+	<unique-id>16885376510003</unique-id>
+	<name>Compress PDF</name>
+	<submenu>Sentry Tools</submenu>
+	<icon>document-properties</icon>
+	<command>/home/skc/dev/dotfiles/scripts/pdf_tools.sh compress %F</command>
+	<description>Compress PDF file quality</description>
+	<patterns>*.pdf</patterns>
+	<other-files/>
+</action>
+<action>
+	<unique-id>16885376510004</unique-id>
+	<name>Split PDF Pages</name>
+	<submenu>Sentry Tools</submenu>
+	<icon>format-justify-fill</icon>
+	<command>/home/skc/dev/dotfiles/scripts/pdf_tools.sh split %F</command>
+	<description>Extract pages from PDF</description>
+	<patterns>*.pdf</patterns>
+	<other-files/>
+</action>
+<action>
+	<unique-id>16885376510005</unique-id>
+	<name>Convert PDF to Images</name>
+	<submenu>Sentry Tools</submenu>
+	<icon>image-x-generic</icon>
+	<command>/home/skc/dev/dotfiles/scripts/pdf_tools.sh to_image %F</command>
+	<description>Convert PDF pages to png/jpg/webp</description>
+	<patterns>*.pdf</patterns>
+	<other-files/>
+</action>
+<action>
+	<unique-id>16885376510006</unique-id>
+	<name>Merge PDFs</name>
+	<submenu>Sentry Tools</submenu>
+	<icon>list-add</icon>
+	<command>/home/skc/dev/dotfiles/scripts/pdf_tools.sh merge %F</command>
+	<description>Merge multiple PDFs into one</description>
+	<patterns>*.pdf</patterns>
+	<other-files/>
+</action>
+<action>
+	<unique-id>16885376510007</unique-id>
+	<name>Convert Image Format</name>
+	<submenu>Sentry Tools</submenu>
+	<icon>image-x-generic</icon>
+	<command>/home/skc/dev/dotfiles/scripts/image_tools.sh convert %F</command>
+	<description>Convert image to png/jpg/webp</description>
+	<patterns>*.png;*.jpg;*.jpeg;*.webp;*.bmp;*.gif</patterns>
+	<image-files/>
+</action>
+<action>
+	<unique-id>16885376510008</unique-id>
+	<name>Resize Images</name>
+	<submenu>Sentry Tools</submenu>
+	<icon>zoom-fit-best</icon>
+	<command>/home/skc/dev/dotfiles/scripts/image_tools.sh resize %F</command>
+	<description>Change resolution of selected images</description>
+	<patterns>*.png;*.jpg;*.jpeg;*.webp;*.bmp;*.gif</patterns>
+	<image-files/>
+</action>
+<action>
+	<unique-id>16885376510009</unique-id>
+	<name>Compress Images</name>
+	<submenu>Sentry Tools</submenu>
+	<icon>document-properties</icon>
+	<command>/home/skc/dev/dotfiles/scripts/image_tools.sh compress %F</command>
+	<description>Reduce image file size</description>
+	<patterns>*.png;*.jpg;*.jpeg;*.webp;*.bmp;*.gif</patterns>
+	<image-files/>
+</action>
+<action>
+	<unique-id>16885376510010</unique-id>
+	<name>Extract Archive Here</name>
+	<submenu>Sentry Tools</submenu>
+	<icon>package-x-generic</icon>
+	<command>/home/skc/dev/dotfiles/scripts/archive_tools.sh extract %F</command>
+	<description>Decompress archive here</description>
+	<patterns>*.zip;*.tar;*.gz;*.tgz;*.xz;*.txz;*.bz2;*.tbz2;*.7z;*.rar</patterns>
+	<other-files/>
+</action>
+<action>
+	<unique-id>16885376510011</unique-id>
+	<name>Create Archive...</name>
+	<submenu>Sentry Tools</submenu>
+	<icon>package-x-generic</icon>
+	<command>/home/skc/dev/dotfiles/scripts/archive_tools.sh create %F</command>
+	<description>Compress selected files</description>
+	<patterns>*</patterns>
+	<directories/>
+	<audio-files/>
+	<image-files/>
+	<other-files/>
+	<text-files/>
+	<video-files/>
 </action>
 </actions>
