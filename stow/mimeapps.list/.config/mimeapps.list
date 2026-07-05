@@ -20,11 +20,16 @@ inode/directory=dev.zed.Zed.desktop;
 video/mp4=vlc.desktop;
 audio/x-opus+ogg=vlc.desktop;
 text/x-python=org.kde.kate.desktop;
+application/json=dev.zed.Zed.desktop;
+text/x-python3=dev.zed.Zed.desktop;
+text/javascript=dev.zed.Zed.desktop;
+image/jpeg=eom.desktop;
+application/x-rpm=gnome-software-local-file-packagekit.desktop;org.gnome.Terminal.desktop;kitty.desktop;
 
 [Default Applications]
-text/html=brave-browser.desktop
-x-scheme-handler/http=brave-browser.desktop
-x-scheme-handler/https=brave-browser.desktop
+text/html=org.mozilla.firefox.desktop
+x-scheme-handler/http=org.mozilla.firefox.desktop
+x-scheme-handler/https=org.mozilla.firefox.desktop
 x-scheme-handler/about=brave-browser.desktop
 x-scheme-handler/unknown=brave-browser.desktop
 x-scheme-handler/chrome=org.mozilla.firefox.desktop
@@ -36,3 +41,6 @@ application/x-extension-xhtml=org.mozilla.firefox.desktop
 application/x-extension-xht=org.mozilla.firefox.desktop
 video/mp4=vlc.desktop
 application/x-zerosize=dev.zed.Zed.desktop
+application/json=dev.zed.Zed.desktop
+text/x-python3=dev.zed.Zed.desktop
+text/javascript=dev.zed.Zed.desktop
