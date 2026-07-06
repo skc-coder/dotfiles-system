@@ -11,7 +11,7 @@ application/xhtml+xml=brave-browser;
 application/x-extension-xhtml=brave-browser;
 application/x-extension-xht=brave-browser;
 text/markdown=org.kde.kate.desktop;kate;
-text/plain=nvim.desktop;
+text/plain=nvim.desktop;org.x.editor.desktop;
 application/x-zerosize=libreoffice-calc.desktop;dev.zed.Zed.desktop;
 application/toml=org.kde.kate.desktop;
 application/x-tiled-tsx=org.kde.kate.desktop;
@@ -25,6 +25,9 @@ text/x-python3=dev.zed.Zed.desktop;
 text/javascript=dev.zed.Zed.desktop;
 image/jpeg=eom.desktop;
 application/x-rpm=gnome-software-local-file-packagekit.desktop;org.gnome.Terminal.desktop;kitty.desktop;
+text/org=org.x.editor.desktop;
+audio/flac=vlc.desktop;
+application/x-partial-download=vlc.desktop;
 
 [Default Applications]
 text/html=org.mozilla.firefox.desktop
@@ -44,3 +47,5 @@ application/x-zerosize=dev.zed.Zed.desktop
 application/json=dev.zed.Zed.desktop
 text/x-python3=dev.zed.Zed.desktop
 text/javascript=dev.zed.Zed.desktop
+text/plain=org.x.editor.desktop
+application/x-partial-download=vlc.desktop

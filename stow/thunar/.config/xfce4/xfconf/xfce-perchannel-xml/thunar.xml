@@ -15,6 +15,6 @@
     <value type="string" value="computer:///"/>
     <value type="string" value="network:///"/>
   </property>
-  <property name="last-details-view-zoom-level" type="string" value="THUNAR_ZOOM_LEVEL_38_PERCENT"/>
-  <property name="last-details-view-column-widths" type="string" value="50,50,116,50,50,83,50,50,1416,50,50,67,50,100"/>
+  <property name="last-details-view-zoom-level" type="string" value="THUNAR_ZOOM_LEVEL_250_PERCENT"/>
+  <property name="last-details-view-column-widths" type="string" value="50,50,116,50,50,732,50,50,717,50,50,62,50,155"/>
 </channel>
