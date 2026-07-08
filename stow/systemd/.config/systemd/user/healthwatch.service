@@ -1,0 +1,12 @@
+[Unit]
+Description=HealthWatch - Eye & Exercise Notification Daemon
+After=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /home/skc/dev/healthwatch/healthwatch.py --daemon
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=default.target

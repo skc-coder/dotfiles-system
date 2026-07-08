@@ -49,3 +49,4 @@ text/x-python3=dev.zed.Zed.desktop
 text/javascript=dev.zed.Zed.desktop
 text/plain=org.x.editor.desktop
 application/x-partial-download=vlc.desktop
+x-scheme-handler/antigravity=antigravity.desktop
