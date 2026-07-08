@@ -1,0 +1,11 @@
+[Unit]
+Description=Background Game Blocker (Minecraft and Roblox)
+After=default.target
+
+[Service]
+ExecStart=/home/skc/.local/bin/game-blocker.sh
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=default.target
