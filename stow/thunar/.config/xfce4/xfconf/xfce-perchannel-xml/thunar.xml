@@ -15,6 +15,8 @@
     <value type="string" value="computer:///"/>
     <value type="string" value="network:///"/>
   </property>
-  <property name="last-details-view-zoom-level" type="string" value="THUNAR_ZOOM_LEVEL_75_PERCENT"/>
-  <property name="last-details-view-column-widths" type="string" value="50,50,115,50,50,905,50,50,839,50,50,62,50,126"/>
+  <property name="last-details-view-zoom-level" type="string" value="THUNAR_ZOOM_LEVEL_38_PERCENT"/>
+  <property name="last-details-view-column-widths" type="string" value="50,50,115,108,79,1079,50,50,762,50,50,64,50,201"/>
+  <property name="last-sort-column" type="string" value="THUNAR_COLUMN_DATE_MODIFIED"/>
+  <property name="last-sort-order" type="string" value="GTK_SORT_DESCENDING"/>
 </channel>

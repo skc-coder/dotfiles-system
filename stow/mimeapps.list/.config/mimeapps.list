@@ -28,6 +28,12 @@ application/x-rpm=gnome-software-local-file-packagekit.desktop;org.gnome.Termina
 text/org=org.x.editor.desktop;
 audio/flac=vlc.desktop;
 application/x-partial-download=vlc.desktop;
+x-scheme-handler/news=userapp-Thunderbird-K48SR3.desktop;
+x-scheme-handler/snews=userapp-Thunderbird-K48SR3.desktop;
+x-scheme-handler/nntp=userapp-Thunderbird-K48SR3.desktop;
+x-scheme-handler/feed=userapp-Thunderbird-N88NR3.desktop;
+application/rss+xml=userapp-Thunderbird-N88NR3.desktop;
+application/x-extension-rss=userapp-Thunderbird-N88NR3.desktop;
 
 [Default Applications]
 text/html=brave-browser.desktop
@@ -50,3 +56,9 @@ text/javascript=dev.zed.Zed.desktop
 text/plain=org.x.editor.desktop
 application/x-partial-download=vlc.desktop
 x-scheme-handler/antigravity=antigravity.desktop
+x-scheme-handler/news=userapp-Thunderbird-K48SR3.desktop
+x-scheme-handler/snews=userapp-Thunderbird-K48SR3.desktop
+x-scheme-handler/nntp=userapp-Thunderbird-K48SR3.desktop
+x-scheme-handler/feed=userapp-Thunderbird-N88NR3.desktop
+application/rss+xml=userapp-Thunderbird-N88NR3.desktop
+application/x-extension-rss=userapp-Thunderbird-N88NR3.desktop
