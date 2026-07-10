@@ -1,0 +1,14 @@
+[Unit]
+Description=Examforge App Server
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/skc/dev/examforge
+ExecStart=/usr/bin/python3 -m uvicorn backend.main:app --host 127.0.0.1 --port 1024
+Restart=always
+RestartSec=5
+Environment=PYTHONPATH=/home/skc/dev/examforge
+
+[Install]
+WantedBy=default.target
