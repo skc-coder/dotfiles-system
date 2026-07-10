@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# thunderbird - Wrapper script for Thunderbird under Sway
+
+# Check if thunderbird is already running
+if pgrep -x "thunderbird" > /dev/null; then
+    # Toggle scratchpad visibility in Sway
+    swaymsg '[app_id="(?i)thunderbird"] scratchpad show' || swaymsg '[class="(?i)thunderbird"] scratchpad show'
+else
+    # Launch the actual Thunderbird binary in the background
+    /usr/bin/thunderbird &
+fi
