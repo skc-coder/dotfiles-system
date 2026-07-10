@@ -55,3 +55,6 @@
 [2026-07-03 21:11] REJECTED_PACKAGE: requests (uv)
 [2026-07-03 21:11] REJECTED_PACKAGE: beautifulsoup4 (uv)
 [2026-07-03 21:11] REJECTED_PACKAGE: playwright (uv)
+[2026-07-10 08:48] REJECTED_PACKAGE: firefox (dnf)
+[2026-07-10 08:48] REJECTED_PACKAGE: com.ktechpit.torrhunt (flatpak)
+[2026-07-10 08:48] REJECTED_PACKAGE: oriongtk.0.3.0.flatpak (flatpak)
