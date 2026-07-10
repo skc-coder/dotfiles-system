@@ -10,5 +10,5 @@ while true; do
     pkill -9 -f -i "vinegar"
     pkill -9 -f -i "grapejuice"
     pkill -9 -f -i "sober"
-    sleep 1
+    sleep 120
 done
