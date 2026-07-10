@@ -150,6 +150,9 @@ if [ -d "${DOTFILES_DIR}/system" ]; then
     if [ -f "$HOME/.config/systemd/user/dotfiles-backup.timer" ]; then
         systemctl --user enable --now dotfiles-backup.timer || true
     fi
+    if [ -f "$HOME/.config/systemd/user/healthwatch.service" ]; then
+        systemctl --user enable --now healthwatch.service || true
+    fi
 fi
 
 # 10. Automatically append shell hooks to shell profiles

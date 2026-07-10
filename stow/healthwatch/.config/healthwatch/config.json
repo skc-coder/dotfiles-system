@@ -1,0 +1,6 @@
+{
+    "eye_interval_minutes": 20,
+    "exercise_interval_minutes": 50,
+    "eye_sound_path": "/home/skc/dev/dotfiles/system/eye_rest.mp3",
+    "exercise_sound_path": "/home/skc/dev/dotfiles/system/exercise.mp3"
+}
