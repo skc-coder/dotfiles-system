@@ -38,6 +38,9 @@ rsync_exclude = [
     "**/Crash Reports**",
     "**/.git**"
 ]
+repos = [
+    "~/Documents/prashn-sangrah"
+]
 
 [appimage]
 # Mode for new AppImages: "log_only" (just log path) or "backup_copy" (copy to dotfiles/AppImages)
