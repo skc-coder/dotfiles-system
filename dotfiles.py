@@ -245,7 +245,7 @@ def log_manual_installation(type_prefix, name):
 
 # Git backup helper
 def generate_commit_message(diff_summary):
-    enabled = CONFIG.get("gemini", {}).get("enabled", True)
+    enabled = CONFIG.get("gemini", {}).get("enabled", False)
     if not enabled:
         return f"auto: {datetime.now().strftime('%Y-%m-%d %H:%M')} | system backup"
 
@@ -844,7 +844,7 @@ def run_single_git_backup(repo_path, dry_run):
     if diff_summary:
         # Check config to see if Gemini is toggled for this repo
         # Standard configuration check
-        gemini_enabled = CONFIG.get("gemini", {}).get("enabled", True)
+        gemini_enabled = CONFIG.get("gemini", {}).get("enabled", False)
         repo_overrides = CONFIG.get("gemini", {}).get("repos", {})
         
         # Check if this specific repo overrides it

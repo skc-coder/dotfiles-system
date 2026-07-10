@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# megasync - Wrapper script for MEGAsync under Sway
+
+# Check if megasync is already running
+if pgrep -x "megasync" > /dev/null; then
+    # Toggle scratchpad visibility in Sway
+    swaymsg '[app_id="(?i)megasync"] scratchpad show' || swaymsg '[class="(?i)megasync"] scratchpad show'
+else
+    # Launch the actual MEGAsync binary in the background
+    /usr/bin/megasync &
+fi

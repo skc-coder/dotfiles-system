@@ -3,7 +3,7 @@
 
 [gemini]
 # API keys are now loaded from ~/Documents/api_keys.toml for security and key rolling.
-enabled = true
+enabled = false
 
 # Per-repository override for Gemini-generated commit messages.
 # Key is the absolute path to the repository, value is a boolean (true to enable, false to disable).

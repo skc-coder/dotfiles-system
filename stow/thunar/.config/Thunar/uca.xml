@@ -30,7 +30,7 @@
 	<name>Paste Clipboard to File</name>
 	<submenu>Sentry Tools</submenu>
 	<icon>edit-paste</icon>
-	<command>/home/skc/dev/dotfiles/scripts/paste_file.sh %f</command>
+	<command>/home/skc/.local/bin/paste_file.sh %f</command>
 	<description>Create a new file from clipboard text</description>
 	<patterns>*</patterns>
 	<directories/>
@@ -40,7 +40,7 @@
 	<name>Compress PDF</name>
 	<submenu>Sentry Tools</submenu>
 	<icon>document-properties</icon>
-	<command>/home/skc/dev/dotfiles/scripts/pdf_tools.sh compress %F</command>
+	<command>/home/skc/.local/bin/pdf_tools.sh compress %F</command>
 	<description>Compress PDF file quality</description>
 	<patterns>*.pdf</patterns>
 	<other-files/>
@@ -50,7 +50,7 @@
 	<name>Split PDF Pages</name>
 	<submenu>Sentry Tools</submenu>
 	<icon>format-justify-fill</icon>
-	<command>/home/skc/dev/dotfiles/scripts/pdf_tools.sh split %F</command>
+	<command>/home/skc/.local/bin/pdf_tools.sh split %F</command>
 	<description>Extract pages from PDF</description>
 	<patterns>*.pdf</patterns>
 	<other-files/>
@@ -60,7 +60,7 @@
 	<name>Convert PDF to Images</name>
 	<submenu>Sentry Tools</submenu>
 	<icon>image-x-generic</icon>
-	<command>/home/skc/dev/dotfiles/scripts/pdf_tools.sh to_image %F</command>
+	<command>/home/skc/.local/bin/pdf_tools.sh to_image %F</command>
 	<description>Convert PDF pages to png/jpg/webp</description>
 	<patterns>*.pdf</patterns>
 	<other-files/>
@@ -70,7 +70,7 @@
 	<name>Merge PDFs</name>
 	<submenu>Sentry Tools</submenu>
 	<icon>list-add</icon>
-	<command>/home/skc/dev/dotfiles/scripts/pdf_tools.sh merge %F</command>
+	<command>/home/skc/.local/bin/pdf_tools.sh merge %F</command>
 	<description>Merge multiple PDFs into one</description>
 	<patterns>*.pdf</patterns>
 	<other-files/>
@@ -80,7 +80,7 @@
 	<name>Convert Image Format</name>
 	<submenu>Sentry Tools</submenu>
 	<icon>image-x-generic</icon>
-	<command>/home/skc/dev/dotfiles/scripts/image_tools.sh convert %F</command>
+	<command>/home/skc/.local/bin/image_tools.sh convert %F</command>
 	<description>Convert image to png/jpg/webp</description>
 	<patterns>*.png;*.jpg;*.jpeg;*.webp;*.bmp;*.gif</patterns>
 	<image-files/>
@@ -90,7 +90,7 @@
 	<name>Resize Images</name>
 	<submenu>Sentry Tools</submenu>
 	<icon>zoom-fit-best</icon>
-	<command>/home/skc/dev/dotfiles/scripts/image_tools.sh resize %F</command>
+	<command>/home/skc/.local/bin/image_tools.sh resize %F</command>
 	<description>Change resolution of selected images</description>
 	<patterns>*.png;*.jpg;*.jpeg;*.webp;*.bmp;*.gif</patterns>
 	<image-files/>
@@ -100,7 +100,7 @@
 	<name>Compress Images</name>
 	<submenu>Sentry Tools</submenu>
 	<icon>document-properties</icon>
-	<command>/home/skc/dev/dotfiles/scripts/image_tools.sh compress %F</command>
+	<command>/home/skc/.local/bin/image_tools.sh compress %F</command>
 	<description>Reduce image file size</description>
 	<patterns>*.png;*.jpg;*.jpeg;*.webp;*.bmp;*.gif</patterns>
 	<image-files/>
@@ -110,7 +110,7 @@
 	<name>Extract Archive Here</name>
 	<submenu>Sentry Tools</submenu>
 	<icon>package-x-generic</icon>
-	<command>/home/skc/dev/dotfiles/scripts/archive_tools.sh extract %F</command>
+	<command>/home/skc/.local/bin/archive_tools.sh extract %F</command>
 	<description>Decompress archive here</description>
 	<patterns>*.zip;*.tar;*.gz;*.tgz;*.xz;*.txz;*.bz2;*.tbz2;*.7z;*.rar</patterns>
 	<other-files/>
@@ -120,7 +120,7 @@
 	<name>Create Archive...</name>
 	<submenu>Sentry Tools</submenu>
 	<icon>package-x-generic</icon>
-	<command>/home/skc/dev/dotfiles/scripts/archive_tools.sh create %F</command>
+	<command>/home/skc/.local/bin/archive_tools.sh create %F</command>
 	<description>Compress selected files</description>
 	<patterns>*</patterns>
 	<directories/>
