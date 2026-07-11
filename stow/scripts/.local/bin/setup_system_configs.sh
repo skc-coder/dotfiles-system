@@ -3,7 +3,7 @@
 
 set -e
 
-DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+DOTFILES_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/../../../../" && pwd)"
 echo "=== Setting up Browser Policies and Special Applications ==="
 
 # 1. Install Browser Policies
