@@ -27,7 +27,8 @@
       "{74145f27-f039-47ce-a470-a662b129930a}": { "installation_mode": "force_installed", "install_url": "https://addons.mozilla.org/firefox/downloads/latest/clearurls/latest.xpi" },
       "jid1-BoFifL9Vbdl2zQ@jetpack": { "installation_mode": "force_installed", "install_url": "https://addons.mozilla.org/firefox/downloads/latest/decentraleyes/latest.xpi" },
       "vimium-c@gdh1995.cn": { "installation_mode": "force_installed", "install_url": "https://addons.mozilla.org/firefox/downloads/latest/vimium-c/latest.xpi" },
-      "refined-github@sindresorhus.com": { "installation_mode": "force_installed", "install_url": "https://addons.mozilla.org/firefox/downloads/latest/refined-github/latest.xpi" }
+      "refined-github@sindresorhus.com": { "installation_mode": "force_installed", "install_url": "https://addons.mozilla.org/firefox/downloads/latest/refined-github/latest.xpi" },
+      "youtube-recommended-videos@unhook.app": { "installation_mode": "force_installed", "install_url": "https://addons.mozilla.org/firefox/downloads/latest/youtube-recommended-videos/latest.xpi" }
     }
   }
 }
