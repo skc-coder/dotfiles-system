@@ -15,7 +15,11 @@
       "datareporting.healthreport.uploadEnabled": { "Value": false, "Status": "locked" },
       "network.captive-portal-service.enabled": { "Value": false, "Status": "locked" },
       "network.connectivity-service.enabled": { "Value": false, "Status": "locked" },
-      "media.peerconnection.enabled": { "Value": false, "Status": "locked" }
+      "media.peerconnection.enabled": { "Value": false, "Status": "locked" },
+      "browser.newtabpage.activity-stream.feeds.section.topstories": { "Value": false, "Status": "locked" },
+      "browser.newtabpage.activity-stream.showSponsored": { "Value": false, "Status": "locked" },
+      "browser.newtabpage.activity-stream.showSponsoredTopSites": { "Value": false, "Status": "locked" },
+      "browser.newtabpage.activity-stream.feeds.topsites": { "Value": false, "Status": "locked" }
     },
     "ExtensionSettings": {
       "*": { "installation_mode": "allowed" },
