@@ -25,3 +25,28 @@
 
 # Brave Search SafeSearch
 15.197.160.66 search.brave.com
+
+# --- OS-Level Content Filtering ---
+
+# Block Reddit
+0.0.0.0 reddit.com
+0.0.0.0 www.reddit.com
+0.0.0.0 old.reddit.com
+0.0.0.0 redditmedia.com
+0.0.0.0 preview.redd.it
+
+# Block Adult Websites
+0.0.0.0 pornhub.com
+0.0.0.0 www.pornhub.com
+0.0.0.0 xvideos.com
+0.0.0.0 www.xvideos.com
+0.0.0.0 xnxx.com
+0.0.0.0 www.xnxx.com
+0.0.0.0 redtube.com
+0.0.0.0 www.redtube.com
+0.0.0.0 xhamster.com
+0.0.0.0 www.xhamster.com
+0.0.0.0 chaturbate.com
+0.0.0.0 www.chaturbate.com
+0.0.0.0 onlyfans.com
+0.0.0.0 www.onlyfans.com
