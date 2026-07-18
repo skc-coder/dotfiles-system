@@ -50,3 +50,8 @@
 0.0.0.0 www.chaturbate.com
 0.0.0.0 onlyfans.com
 0.0.0.0 www.onlyfans.com
+
+# Whitelist Merlin AI (Bypass DNS blocks and cache propagation delays)
+104.26.12.192 getmerlin.in
+104.26.12.192 www.getmerlin.in
+104.26.12.192 api.getmerlin.in
