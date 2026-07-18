@@ -1,7 +1,5 @@
 {
   "MetricsReportingEnabled": false,
-  "DnsOverHttpsMode": "secure",
-  "DnsOverHttpsTemplates": "https://doh.cleanbrowsing.org/doh/adult-filter/{?dns}",
   "UrlKeyedAnonymizedDataCollectionEnabled": false,
   "SafeBrowsingExtendedReportingEnabled": false,
   "BraveP3AEnabled": false,

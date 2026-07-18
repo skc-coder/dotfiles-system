@@ -1,10 +1,5 @@
 {
   "policies": {
-    "DNSOverHTTPS": {
-      "Enabled": true,
-      "ProviderURL": "https://doh.cleanbrowsing.org/doh/adult-filter/",
-      "Locked": true
-    },
     "DisableTelemetry": true,
     "DisablePocket": true,
     "DisableFirefoxStudies": true,
