@@ -27,6 +27,45 @@ sudo cp "${DOTFILES_DIR}/system/brave_policies.json" /etc/brave/policies/managed
 echo "Brave policies installed."
 
 
+# 1b. Configure NextDNS (system-wide DNS-over-TLS & Locked resolv.conf)
+echo "Configuring NextDNS..."
+
+# Configure systemd-resolved for NextDNS over TLS
+sudo mkdir -p /etc/systemd/resolved.conf.d
+sudo tee /etc/systemd/resolved.conf.d/dns.conf <<EOF
+[Resolve]
+DNS=45.90.28.0#88683e.dns.nextdns.io 45.90.30.0#88683e.dns.nextdns.io 2a07:a8c0::88:683e#88683e.dns.nextdns.io 2a07:a8c1::88:683e#88683e.dns.nextdns.io
+DNSOverTLS=yes
+Domains=~.
+EOF
+
+# Disable NetworkManager DNS management to prevent VPN leaks
+sudo mkdir -p /etc/NetworkManager/conf.d
+sudo tee /etc/NetworkManager/conf.d/no-dns.conf <<EOF
+[main]
+dns=none
+EOF
+
+# Lock resolv.conf to Local stub
+if [ -f /etc/resolv.conf ] || [ -L /etc/resolv.conf ]; then
+    sudo chattr -i /etc/resolv.conf 2>/dev/null || true
+    sudo rm -f /etc/resolv.conf
+fi
+
+sudo tee /etc/resolv.conf <<EOF
+# Locked resolv.conf pointing to local systemd-resolved stub.
+# systemd-resolved forwards queries via DNS-over-TLS to NextDNS.
+nameserver 127.0.0.53
+options edns0 trust-ad
+EOF
+
+sudo chattr +i /etc/resolv.conf
+
+# Restart Services
+sudo systemctl restart NetworkManager systemd-resolved
+echo "NextDNS setup completed."
+
+
 # 2. Install Special Applications (from todo.txt)
 echo "Installing special applications..."
 

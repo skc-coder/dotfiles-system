@@ -178,4 +178,9 @@ if [ -f "${DOTFILES_DIR}/scripts/setup_system_configs.sh" ]; then
     bash "${DOTFILES_DIR}/scripts/setup_system_configs.sh"
 fi
 
+if [ -f "${DOTFILES_DIR}/browser/setup.sh" ]; then
+    echo "Running browser environment setup..."
+    bash "${DOTFILES_DIR}/browser/setup.sh"
+fi
+
 echo "=== Sentry/Dotfiles Restoration completed successfully! ==="
