@@ -58,3 +58,4 @@
 [2026-07-10 08:48] REJECTED_PACKAGE: firefox (dnf)
 [2026-07-10 08:48] REJECTED_PACKAGE: com.ktechpit.torrhunt (flatpak)
 [2026-07-10 08:48] REJECTED_PACKAGE: oriongtk.0.3.0.flatpak (flatpak)
+[2026-07-20 19:10] MANUAL: Imported waybar into stow package waybar
