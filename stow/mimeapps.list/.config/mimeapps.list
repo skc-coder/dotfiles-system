@@ -36,6 +36,7 @@ application/rss+xml=userapp-Thunderbird-N88NR3.desktop;
 application/x-extension-rss=userapp-Thunderbird-N88NR3.desktop;
 application/pdf=xreader.desktop;
 x-scheme-handler/net.thunderbird=userapp-Thunderbird-0PQCS3.desktop;
+audio/x-mpegurl=vlc.desktop;org.x.editor.desktop;nvim.desktop;
 
 [Default Applications]
 text/html=brave-browser.desktop
