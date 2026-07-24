@@ -1,5 +1,5 @@
 [Unit]
-Description=Background Game Blocker (Minecraft and Roblox)
+Description=Background Game Blocker (Roblox)
 After=default.target
 
 [Service]
