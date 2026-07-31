@@ -130,4 +130,34 @@
 	<text-files/>
 	<video-files/>
 </action>
+<action>
+	<unique-id>16885376510012</unique-id>
+	<name>Favorites - Add</name>
+	<submenu>Favorite</submenu>
+	<icon>emblem-favorite</icon>
+	<command>sh -c &apos;for file do gio set -t stringv &quot;$file&quot; metadata::emblems emblem-favorite; ln -sf -t &quot;$HOME/Favorites&quot; &quot;$file&quot;; done&apos; _ %F</command>
+	<description>Add &apos;favorite&apos; emblem &amp; make symlink</description>
+	<patterns>*</patterns>
+	<directories/>
+	<audio-files/>
+	<image-files/>
+	<other-files/>
+	<text-files/>
+	<video-files/>
+</action>
+<action>
+	<unique-id>16885376510013</unique-id>
+	<name>Favorites - Remove</name>
+	<submenu>Favorite</submenu>
+	<icon>emblem-favorite</icon>
+	<command>sh -c &apos;for file do gio set -d &quot;$file&quot; metadata::emblems; name=$(basename &quot;$file&quot;); rm -f &quot;$HOME/Favorites/$name&quot;; done&apos; _ %F</command>
+	<description>Remove &apos;favorite&apos; emblem &amp; delete symlink</description>
+	<patterns>*</patterns>
+	<directories/>
+	<audio-files/>
+	<image-files/>
+	<other-files/>
+	<text-files/>
+	<video-files/>
+</action>
 </actions>
