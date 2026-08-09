@@ -15,10 +15,11 @@
     <value type="string" value="computer:///"/>
     <value type="string" value="network:///"/>
   </property>
-  <property name="last-details-view-zoom-level" type="string" value="THUNAR_ZOOM_LEVEL_300_PERCENT"/>
-  <property name="last-details-view-column-widths" type="string" value="50,50,115,108,79,268,50,50,559,50,50,69,50,141"/>
-  <property name="last-sort-column" type="string" value="THUNAR_COLUMN_NAME"/>
-  <property name="last-sort-order" type="string" value="GTK_SORT_ASCENDING"/>
+  <property name="last-details-view-zoom-level" type="string" value="THUNAR_ZOOM_LEVEL_150_PERCENT"/>
+  <property name="last-details-view-column-widths" type="string" value="50,50,115,108,79,966,50,50,484,50,50,64,50,477"/>
+  <property name="last-sort-column" type="string" value="THUNAR_COLUMN_DATE_MODIFIED"/>
+  <property name="last-sort-order" type="string" value="GTK_SORT_DESCENDING"/>
   <property name="last-splitview-separator-position" type="int" value="-1"/>
   <property name="misc-expandable-folders" type="bool" value="true"/>
+  <property name="last-compact-view-zoom-level" type="string" value="THUNAR_ZOOM_LEVEL_50_PERCENT"/>
 </channel>
