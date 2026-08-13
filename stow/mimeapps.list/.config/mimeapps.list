@@ -1,5 +1,5 @@
 [Added Associations]
-video/x-matroska=vlc.desktop;
+video/x-matroska=vlc.desktop;io.github.celluloid_player.Celluloid.desktop;
 x-scheme-handler/http=org.mozilla.firefox.desktop;brave-browser;
 x-scheme-handler/https=org.mozilla.firefox.desktop;brave-browser;
 x-scheme-handler/chrome=org.mozilla.firefox.desktop;brave-browser;
@@ -38,6 +38,9 @@ application/pdf=xreader.desktop;
 x-scheme-handler/net.thunderbird=userapp-Thunderbird-0PQCS3.desktop;
 audio/x-mpegurl=vlc.desktop;org.x.editor.desktop;nvim.desktop;
 text/vnd.trolltech.linguist=dev.zed.Zed.desktop;
+x-scheme-handler/mailto=userapp-Thunderbird-FZTTT3.desktop;
+x-scheme-handler/mid=userapp-Thunderbird-FZTTT3.desktop;
+message/rfc822=userapp-Thunderbird-FZTTT3.desktop;
 
 [Default Applications]
 text/html=brave-browser.desktop
@@ -68,3 +71,8 @@ application/rss+xml=userapp-Thunderbird-N88NR3.desktop
 application/x-extension-rss=userapp-Thunderbird-N88NR3.desktop
 x-scheme-handler/net.thunderbird=userapp-Thunderbird-0PQCS3.desktop
 text/x-python=dev.zed.Zed.desktop
+application/x-rpm=gnome-software-local-file-packagekit.desktop
+x-scheme-handler/mailto=userapp-Thunderbird-FZTTT3.desktop
+x-scheme-handler/mid=userapp-Thunderbird-FZTTT3.desktop
+message/rfc822=userapp-Thunderbird-FZTTT3.desktop
+video/x-matroska=io.github.celluloid_player.Celluloid.desktop
