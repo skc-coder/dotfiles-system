@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+
+# Safe AI Terminal Command Helper (`ai-cmd`)
+
+if [ -z "$1" ]; then
+    echo -e "\033[1;33mUsage:\033[0m ai-cmd \"description of command you want to run\""
+    echo "Example: ai-cmd \"find all pdf files modified in last 7 days\""
+    exit 1
+fi
+
+PROMPT="$*"
+
+echo -e "\033[1;36m🔍 Analyzing request:\033[0m \"$PROMPT\""
+
+# Rule-based safe command generator & fallback template helper
+case "$PROMPT" in
+    *"find"*|*"search"*|*"pdf"*)
+        CMD="find ~/ -name \"*.pdf\" -mtime -7"
+        EXPLANATION="Searches your home directory for files ending in .pdf modified in the last 7 days."
+        ;;
+    *"compress"*|*"video"*|*"mp4"*)
+        CMD="ffmpeg -i input.mp4 -vcodec libx265 -crf 28 output.mp4"
+        EXPLANATION="Compresses input.mp4 using H.265 codec at CRF 28 quality."
+        ;;
+    *"disk"*|*"space"*|*"size"*)
+        CMD="du -sh * | sort -h"
+        EXPLANATION="Lists sizes of files and folders in current directory, sorted by human-readable size."
+        ;;
+    *"kill"*|*"process"*|*"port"*)
+        CMD="sudo lsof -i :8080"
+        EXPLANATION="Lists processes running on port 8080."
+        ;;
+    *)
+        CMD="find . -maxdepth 2 -type f"
+        EXPLANATION="Generic search command for files in current directory."
+        ;;
+esac
+
+echo ""
+echo -e "\033[1;32mProposed Command:\033[0m"
+echo -e "  \033[1;37m$CMD\033[0m"
+echo ""
+echo -e "\033[1;34mExplanation:\033[0m $EXPLANATION"
+echo ""
+
+# Safety check for destructive commands
+if echo "$CMD" | grep -E -q "rm -rf|mkfs|dd|chmod 777|> /dev/sd"; then
+    echo -e "\033[1;31m⚠️ HIGH SAFETY WARNING: This command contains potentially destructive actions!\033[0m"
+fi
+
+read -p "Do you want to run this command now? (y/N): " choice
+case "$choice" in
+    [yY][eE][sS]|[yY])
+        echo -e "\033[1;32mExecuting:\033[0m $CMD"
+        eval "$CMD"
+        ;;
+    *)
+        echo -e "\033[1;33mExecution cancelled.\033[0m Command copied to clipboard!"
+        echo -n "$CMD" | wl-copy
+        ;;
+esac
