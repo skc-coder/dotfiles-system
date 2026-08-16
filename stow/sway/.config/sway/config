@@ -132,7 +132,6 @@ bindsym $mod+e exec $explorer
 ## Lock / exit / reload
 bindsym $mod+Shift+BackSpace exec swaylock -f
 bindsym $mod+Shift+r reload
-bindsym $mod+Shift+e exec swaynag -t warning -m "Exit Sway?" -B "Yes" "swaymsg exit"
 bindsym $mod+q kill
 
 ## Focus movement (hjkl)
@@ -222,7 +221,7 @@ bar {
 # Custom Rofi & Utility Shortcuts
 bindsym $mod+Shift+e exec ~/.local/bin/rofi-power-menu.sh
 bindsym $mod+Period exec ~/.local/bin/rofi-emoji.sh
-bindsym $mod+h exec ~/.local/bin/rofi-hub.sh
+bindsym $mod+Shift+h exec ~/.local/bin/rofi-hub.sh
 bindsym $mod+u [app_id="scratchpad_term"] scratchpad show || exec kitty --class scratchpad_term
 
 for_window [app_id="scratchpad_term"] floating enable, resize set 900 600, move position center, move scratchpad
