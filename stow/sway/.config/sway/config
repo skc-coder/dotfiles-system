@@ -46,6 +46,7 @@ exec systemctl --user start sway-session.target
 exec copyq
 exec thunar --daemon
 exec ~/.local/bin/wallpaper-scheduler.sh
+exec ~/.local/bin/battery-monitor.sh
 
 exec swayidle -w \
     timeout 900 'swaylock -f' \
