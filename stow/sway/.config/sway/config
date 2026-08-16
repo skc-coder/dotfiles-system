@@ -221,7 +221,7 @@ bar {
 # Custom Rofi & Utility Shortcuts
 bindsym $mod+Shift+e exec ~/.local/bin/rofi-power-menu.sh
 bindsym $mod+Period exec ~/.local/bin/rofi-emoji.sh
-bindsym $mod+Shift+h exec ~/.local/bin/rofi-hub.sh
+bindsym $mod+Shift+k exec ~/.local/bin/sway-keybindings-manager.sh
 bindsym $mod+u [app_id="scratchpad_term"] scratchpad show || exec kitty --class scratchpad_term
 
 for_window [app_id="scratchpad_term"] floating enable, resize set 900 600, move position center, move scratchpad
