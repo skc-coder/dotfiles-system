@@ -243,6 +243,8 @@ for_window [app_id="nm-connection-editor"] floating enable, resize set 700 500, 
 for_window [class="Nm-connection-editor"] floating enable, resize set 700 500, move position center
 for_window [app_id="pavucontrol"] floating enable, resize set 800 550, move position center
 for_window [class="Pavucontrol"] floating enable, resize set 800 550, move position center
+for_window [app_id="zenity"] floating enable, move position center
+for_window [class="Zenity"] floating enable, move position center
 
 # MEGAsync & Thunderbird Window Behavior
 for_window [app_id="(?i)megasync"] floating enable, resize set 900 650, move position center
