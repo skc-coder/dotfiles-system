@@ -235,13 +235,21 @@ for_window [class="copyq"] floating enable
 exec_always gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 exec_always gsettings set org.gnome.desktop.interface gtk-theme 'Mint-Y-Dark'
 
-# MEGAsync startup and rules
-for_window [app_id="(?i)megasync"] floating enable, move scratchpad
-for_window [class="(?i)megasync"] floating enable, move scratchpad
-exec ~/.local/bin/megasync
+# Window Rules (Dialogs & Floating Popups)
+for_window [app_id="blueman-manager"] floating enable, resize set 700 500, move position center
+for_window [class="Blueman-manager"] floating enable, resize set 700 500, move position center
+for_window [app_id="nm-connection-editor"] floating enable, resize set 700 500, move position center
+for_window [class="Nm-connection-editor"] floating enable, resize set 700 500, move position center
+for_window [app_id="pavucontrol"] floating enable, resize set 800 550, move position center
+for_window [class="Pavucontrol"] floating enable, resize set 800 550, move position center
 
-# Thunderbird startup and rules
-for_window [app_id="(?i)thunderbird"] floating enable, move scratchpad
-for_window [class="(?i)thunderbird"] floating enable, move scratchpad
-exec ~/.local/bin/thunderbird
+# MEGAsync & Thunderbird Window Behavior
+for_window [app_id="(?i)megasync"] floating enable, resize set 900 650, move position center
+for_window [class="(?i)megasync"] floating enable, resize set 900 650, move position center
+for_window [app_id="(?i)thunderbird"] floating disable
+for_window [class="(?i)thunderbird"] floating disable
+
+exec ~/.local/bin/megasync &
+exec ~/.local/bin/thunderbird &
+
 
