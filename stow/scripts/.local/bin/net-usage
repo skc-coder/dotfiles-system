@@ -1,0 +1,171 @@
+#!/usr/bin/env python3
+import sys
+import os
+import json
+import sqlite3
+import argparse
+from datetime import datetime, date, timedelta
+
+DB_PATH = os.path.expanduser("~/.config/net-tracker/usage.db")
+PROC_NET_DEV = "/proc/net/dev"
+EXCLUDE_INTERFACES = {"lo", "docker0", "veth"}
+
+def init_db():
+    os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
+    conn = sqlite3.connect(DB_PATH)
+    cur = conn.cursor()
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS daily_usage (
+            date TEXT PRIMARY KEY,
+            rx_bytes INTEGER DEFAULT 0,
+            tx_bytes INTEGER DEFAULT 0,
+            last_rx_counter INTEGER DEFAULT 0,
+            last_tx_counter INTEGER DEFAULT 0,
+            last_updated TEXT
+        )
+    """)
+    conn.commit()
+    conn.close()
+
+def get_current_raw_counters():
+    rx_total = 0
+    tx_total = 0
+    if not os.path.exists(PROC_NET_DEV):
+        return 0, 0
+    with open(PROC_NET_DEV, "r") as f:
+        lines = f.readlines()
+    for line in lines[2:]:
+        parts = line.strip().split(":")
+        if len(parts) != 2:
+            continue
+        iface = parts[0].strip()
+        if iface in EXCLUDE_INTERFACES or iface.startswith("veth") or iface.startswith("br-"):
+            continue
+        fields = parts[1].split()
+        if len(fields) >= 9:
+            rx = int(fields[0])
+            tx = int(fields[8])
+            rx_total += rx
+            tx_total += tx
+    return rx_total, tx_total
+
+def update_usage():
+    init_db()
+    today_str = date.today().isoformat()
+    now_str = datetime.now().isoformat()
+    raw_rx, raw_tx = get_current_raw_counters()
+
+    conn = sqlite3.connect(DB_PATH)
+    cur = conn.cursor()
+    
+    cur.execute("SELECT rx_bytes, tx_bytes, last_rx_counter, last_tx_counter, date FROM daily_usage ORDER BY date DESC LIMIT 1")
+    row = cur.fetchone()
+
+    if not row:
+        # First run ever
+        cur.execute("""
+            INSERT INTO daily_usage (date, rx_bytes, tx_bytes, last_rx_counter, last_tx_counter, last_updated)
+            VALUES (?, 0, 0, ?, ?, ?)
+        """, (today_str, raw_rx, raw_tx, now_str))
+    else:
+        last_rx_b, last_tx_b, last_rx_cnt, last_tx_cnt, last_date = row
+        if last_date == today_str:
+            delta_rx = raw_rx - last_rx_cnt if raw_rx >= last_rx_cnt else raw_rx
+            delta_tx = raw_tx - last_tx_cnt if raw_tx >= last_tx_cnt else raw_tx
+            new_rx = last_rx_b + delta_rx
+            new_tx = last_tx_b + delta_tx
+            cur.execute("""
+                UPDATE daily_usage
+                SET rx_bytes = ?, tx_bytes = ?, last_rx_counter = ?, last_tx_counter = ?, last_updated = ?
+                WHERE date = ?
+            """, (new_rx, new_tx, raw_rx, raw_tx, now_str, today_str))
+        else:
+            # Day changed or laptop rebooted on new day
+            delta_rx = raw_rx if raw_rx < last_rx_cnt else (raw_rx - last_rx_cnt)
+            delta_tx = raw_tx if raw_tx < last_tx_cnt else (raw_tx - last_tx_cnt)
+            cur.execute("""
+                INSERT OR REPLACE INTO daily_usage (date, rx_bytes, tx_bytes, last_rx_counter, last_tx_counter, last_updated)
+                VALUES (?, ?, ?, ?, ?, ?)
+            """, (today_str, delta_rx, delta_tx, raw_rx, raw_tx, now_str))
+
+    conn.commit()
+    conn.close()
+
+def format_bytes(bytes_val):
+    for unit in ['B', 'KB', 'MB', 'GB', 'TB']:
+        if bytes_val < 1024.0:
+            return f"{bytes_val:6.2f} {unit}"
+        bytes_val /= 1024.0
+    return f"{bytes_val:6.2f} PB"
+
+def generate_report():
+    update_usage()
+    conn = sqlite3.connect(DB_PATH)
+    cur = conn.cursor()
+
+    today = date.today()
+    this_month_prefix = today.strftime("%Y-%m")
+    
+    first_day_this_month = today.replace(day=1)
+    last_month_date = first_day_this_month - timedelta(days=1)
+    last_month_prefix = last_month_date.strftime("%Y-%m")
+
+    cur.execute("SELECT date, rx_bytes, tx_bytes FROM daily_usage ORDER BY date ASC")
+    rows = cur.fetchall()
+    conn.close()
+
+    print("=" * 65)
+    print(" 📊 INTERNET DATA USAGE TRACKER REPORT")
+    print(f" Report Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print("=" * 65)
+
+    last_month_rows = [r for r in rows if r[0].startswith(last_month_prefix)]
+    this_month_rows = [r for r in rows if r[0].startswith(this_month_prefix)]
+
+    print(f"\n🗓️  LAST MONTH ({last_month_date.strftime('%B %Y')}):")
+    print("-" * 65)
+    if not last_month_rows:
+        print("  (No daily history recorded for last month. Tracker service initialized today!)")
+    else:
+        print(f"  {'Date':<12} | {'Download (Rx)':<14} | {'Upload (Tx)':<14} | {'Total':<14}")
+        print("  " + "-" * 61)
+        lm_rx, lm_tx = 0, 0
+        for d, rx, tx in last_month_rows:
+            tot = rx + tx
+            lm_rx += rx
+            lm_tx += tx
+            print(f"  {d:<12} | {format_bytes(rx):<14} | {format_bytes(tx):<14} | {format_bytes(tot):<14}")
+        print("  " + "-" * 61)
+        print(f"  {'TOTAL':<12} | {format_bytes(lm_rx):<14} | {format_bytes(lm_tx):<14} | {format_bytes(lm_rx + lm_tx):<14}")
+
+    print(f"\n🗓️  THIS MONTH ({today.strftime('%B %Y')}):")
+    print("-" * 65)
+    if not this_month_rows:
+        print("  (No data recorded for this month yet.)")
+    else:
+        print(f"  {'Date':<12} | {'Download (Rx)':<14} | {'Upload (Tx)':<14} | {'Total':<14}")
+        print("  " + "-" * 61)
+        tm_rx, tm_tx = 0, 0
+        for d, rx, tx in this_month_rows:
+            tot = rx + tx
+            tm_rx += rx
+            tm_tx += tx
+            print(f"  {d:<12} | {format_bytes(rx):<14} | {format_bytes(tx):<14} | {format_bytes(tot):<14}")
+        print("  " + "-" * 61)
+        print(f"  {'TOTAL':<12} | {format_bytes(tm_rx):<14} | {format_bytes(tm_tx):<14} | {format_bytes(tm_rx + tm_tx):<14}")
+
+    print("\n" + "=" * 65 + "\n")
+
+def main():
+    parser = argparse.ArgumentParser(description="Internet Data Usage Tracker")
+    parser.add_argument("--update", action="store_true", help="Record current usage snapshot")
+    parser.add_argument("--report", action="store_true", help="Show usage report")
+    args = parser.parse_args()
+
+    if args.update:
+        update_usage()
+    else:
+        generate_report()
+
+if __name__ == "__main__":
+    main()
