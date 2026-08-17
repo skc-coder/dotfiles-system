@@ -14,8 +14,7 @@ get_time() { date +%s; }
 play_sound() {
     local freq=$1
     if command -v pw-cat &>/dev/null; then
-        # Generate quick sine wave audio alert via pw-cat / paplay or system bell
-        paplay /usr/share/sounds/freedesktop/stereo/complete.oga 2>/dev/null || printf "\a"
+        (paplay /usr/share/sounds/freedesktop/stereo/complete.oga 2>/dev/null || printf "\a") &
     else
         printf "\a"
     fi
