@@ -45,12 +45,12 @@
         "tooltip-format": "{app}: {title}"
     },
     "custom/pomodoro": {
-        "exec": "$HOME/.local/bin/pomodoro-engine.sh status",
+        "exec": "/home/skc/.local/bin/pomodoro-engine.sh status",
         "return-type": "json",
         "interval": 1,
         "signal": 9,
-        "on-click": "$HOME/.local/bin/pomodoro-engine.sh toggle",
-        "on-click-right": "$HOME/.local/bin/pomodoro-engine.sh stop"
+        "on-click": "/home/skc/.local/bin/pomodoro-engine.sh toggle",
+        "on-click-right": "/home/skc/.local/bin/pomodoro-engine.sh stop"
     },
     "idle_inhibitor": {
         "format": "{icon}",
