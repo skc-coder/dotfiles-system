@@ -59,6 +59,7 @@ if command -v tesseract &>/dev/null; then
             fi
         fi
     fi
+    notify-send -a "Screen Snipper" -i dialog-warning "Extraction Failed" "No QR code, barcode, or readable text found in image."
+else
+    notify-send -a "Screen Snipper" -i dialog-error "Missing Dependency" "tesseract is not installed!\nRun: sudo dnf install -y tesseract tesseract-langpack-eng zbar"
 fi
-
-notify-send -a "Screen Snipper" -i dialog-warning "Extraction Failed" "No QR code, barcode, or readable text found."

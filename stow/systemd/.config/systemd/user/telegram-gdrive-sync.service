@@ -6,7 +6,6 @@ Wants=network-online.target
 [Service]
 Type=simple
 WorkingDirectory=/home/skc/Documents/antigravity/radiant-borg
-ExecStartPre=/bin/sleep 60
 ExecStart=/home/skc/.local/bin/uv run python main.py
 Restart=on-failure
 RestartSec=30s
