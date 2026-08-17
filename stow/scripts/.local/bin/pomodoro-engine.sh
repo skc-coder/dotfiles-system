@@ -29,17 +29,23 @@ disable_dnd() {
     :
 }
 
+update_waybar() {
+    pkill -RTMIN+9 waybar 2>/dev/null || true
+}
+
 cmd_start() {
     local now
     now=$(get_time)
     local end_time=$((now + WORK_MINS * 60))
     echo "WORK:$end_time" > "$STATE_FILE"
+    update_waybar
     notify-send -a "Pomodoro Engine" -i appointment-new "Focus Session Started 🎯" "${WORK_MINS}m deep work timer running."
     play_sound 440
 }
 
 cmd_stop() {
     rm -f "$STATE_FILE"
+    update_waybar
     notify-send -a "Pomodoro Engine" -i process-stop "Pomodoro Reset 🛑" "Timer stopped."
 }
 
