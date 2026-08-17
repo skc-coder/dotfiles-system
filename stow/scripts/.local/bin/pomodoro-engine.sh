@@ -79,7 +79,7 @@ cmd_status() {
             disable_dnd
             play_sound 880
             notify-send -a "Pomodoro Engine" -i dialog-information "Work Session Done! 🎉" "Take a ${REST_MINS} minute rest break."
-            echo "{\"text\": \"☕ Rest ${REST_MINS}:00\", \"class\": \"rest\", \"tooltip\": \"Rest break running\"}"
+            echo "{\"text\": \"☕ Rest ${REST_MINS}:00\", \"class\": \"break\", \"tooltip\": \"Rest break running\"}"
         else
             # Rest finished -> Reset to idle
             rm -f "$STATE_FILE"
@@ -98,7 +98,7 @@ cmd_status() {
     if [[ "$mode" == "WORK" ]]; then
         echo "{\"text\": \"🎯 ${formatted}\", \"class\": \"work\", \"tooltip\": \"Focus Mode Active (${WORK_MINS}m)\"}"
     else
-        echo "{\"text\": \"☕ ${formatted}\", \"class\": \"rest\", \"tooltip\": \"Rest Break Active (${REST_MINS}m)\"}"
+        echo "{\"text\": \"☕ ${formatted}\", \"class\": \"break\", \"tooltip\": \"Rest Break Active (${REST_MINS}m)\"}"
     fi
 }
 
