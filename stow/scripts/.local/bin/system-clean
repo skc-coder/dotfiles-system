@@ -2,27 +2,27 @@
 
 # Automatic System Cleaner & Maintenance Script (`system-clean`)
 
-echo -e "\033[1;36m🧹 सुरक्षित सिस्टम सफाई और रखरखाव शुरू हो रहा है...\033[0m"
+echo -e "\033[1;36m🧹 Starting Safe System Cleanup & Maintenance...\033[0m"
 echo ""
 
 # 1. Clean DNF package manager cache
-echo -e "\033[1;33m[1/5] डीएनएफ (DNF) पैकेज मैनेजर कैशे साफ़ किया जा रहा है...\033[0m"
+echo -e "\033[1;33m[1/5] Cleaning DNF package manager caches...\033[0m"
 sudo dnf clean all 2>/dev/null || true
 
 # 2. Vacuum systemd journal logs to max 100M
-echo -e "\033[1;33m[2/5] सिस्टम जर्नल लॉग फ़ाइलें साफ़ की जा रही हैं (>100M)...\033[0m"
+echo -e "\033[1;33m[2/5] Cleaning system journal log files (>100M)...\033[0m"
 sudo journalctl --vacuum-size=100M 2>/dev/null || true
 
 # 3. Clean thumbnail cache
-echo -e "\033[1;33m[3/5] यूज़र थंबनेल कैशे हटाया जा रहा है...\033[0m"
+echo -e "\033[1;33m[3/5] Clearing user thumbnail cache...\033[0m"
 rm -rf ~/.cache/thumbnails/* 2>/dev/null || true
 
 # 4. Clean user temp files
-echo -e "\033[1;33m[4/5] अस्थायी (Temp) फ़ाइलें साफ़ की जा रही हैं...\033[0m"
+echo -e "\033[1;33m[4/5] Clearing temporary user cache files...\033[0m"
 rm -rf ~/.cache/tmp/* /tmp/wallpaper.log /tmp/fan_mode_state 2>/dev/null || true
 
 # 5. Report disk space
 echo ""
-echo -e "\033[1;32m✅ सफाई सफलतापूर्वक पूर्ण हुई! (Cleanup Complete)\033[0m"
-echo -e "\033[1;34mवर्तमान डिस्क उपयोग (Disk Usage):\033[0m"
+echo -e "\033[1;32m✅ Cleanup Complete!\033[0m"
+echo -e "\033[1;34mCurrent Disk Usage:\033[0m"
 df -h / | tail -n 1
