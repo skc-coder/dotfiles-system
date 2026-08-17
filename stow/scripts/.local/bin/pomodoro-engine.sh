@@ -22,15 +22,11 @@ play_sound() {
 }
 
 enable_dnd() {
-    if command -v makoctl &>/dev/null; then
-        makoctl mode -a do-not-disturb 2>/dev/null || true
-    fi
+    :
 }
 
 disable_dnd() {
-    if command -v makoctl &>/dev/null; then
-        makoctl mode -r do-not-disturb 2>/dev/null || true
-    fi
+    :
 }
 
 cmd_start() {
@@ -38,15 +34,13 @@ cmd_start() {
     now=$(get_time)
     local end_time=$((now + WORK_MINS * 60))
     echo "WORK:$end_time" > "$STATE_FILE"
-    enable_dnd
-    notify-send -a "Pomodoro Engine" -i appointment-new "Focus Session Started 🎯" "${WORK_MINS}m deep work timer running. Notifications muted."
+    notify-send -a "Pomodoro Engine" -i appointment-new "Focus Session Started 🎯" "${WORK_MINS}m deep work timer running."
     play_sound 440
 }
 
 cmd_stop() {
     rm -f "$STATE_FILE"
-    disable_dnd
-    notify-send -a "Pomodoro Engine" -i process-stop "Pomodoro Reset 🛑" "Timer stopped. Notifications unmuted."
+    notify-send -a "Pomodoro Engine" -i process-stop "Pomodoro Reset 🛑" "Timer stopped."
 }
 
 cmd_toggle() {

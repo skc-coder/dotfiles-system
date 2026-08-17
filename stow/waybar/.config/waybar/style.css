@@ -119,25 +119,52 @@ window#waybar {
     padding: 2px 10px;
 }
 
+@keyframes pomodoro-pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(243, 139, 168, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 6px rgba(243, 139, 168, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(243, 139, 168, 0);
+    }
+}
+
+@keyframes break-pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(166, 227, 161, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 6px rgba(166, 227, 161, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(166, 227, 161, 0);
+    }
+}
+
 #custom-pomodoro {
-    background-color: @maroon;
-    color: @crust;
+    background-color: @surface0;
+    color: @subtext1;
     font-weight: bold;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#custom-pomodoro.idle {
+    background-color: @surface0;
+    color: @subtext1;
 }
 
 #custom-pomodoro.work {
     background-color: @red;
     color: @crust;
+    animation: pomodoro-pulse 2s infinite;
 }
 
 #custom-pomodoro.break {
     background-color: @green;
     color: @crust;
-}
-
-#custom-pomodoro.paused {
-    background-color: @yellow;
-    color: @crust;
+    animation: break-pulse 2s infinite;
 }
 
 #bluetooth {
