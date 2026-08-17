@@ -115,19 +115,19 @@ def generate_report():
     conn.close()
 
     print("=" * 65)
-    print(" 📊 INTERNET DATA USAGE TRACKER REPORT")
-    print(f" Report Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print(" 📊 इंटरनेट डेटा उपयोग ट्रैकर रिपोर्ट (Internet Data Usage Report)")
+    print(f" रिपोर्ट जनरेट समय: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 65)
 
     last_month_rows = [r for r in rows if r[0].startswith(last_month_prefix)]
     this_month_rows = [r for r in rows if r[0].startswith(this_month_prefix)]
 
-    print(f"\n🗓️  LAST MONTH ({last_month_date.strftime('%B %Y')}):")
+    print(f"\n🗓️  पिछला महीना - LAST MONTH ({last_month_date.strftime('%B %Y')}):")
     print("-" * 65)
     if not last_month_rows:
-        print("  (No daily history recorded for last month. Tracker service initialized today!)")
+        print("  (पिछले महीने का कोई रिकॉर्ड नहीं मिला। ट्रैकर आज शुरू किया गया है!)")
     else:
-        print(f"  {'Date':<12} | {'Download (Rx)':<14} | {'Upload (Tx)':<14} | {'Total':<14}")
+        print(f"  {'दिनांक (Date)':<12} | {'डाउनलोड (Rx)':<14} | {'अपलोड (Tx)':<14} | {'कुल (Total)':<14}")
         print("  " + "-" * 61)
         lm_rx, lm_tx = 0, 0
         for d, rx, tx in last_month_rows:
@@ -136,14 +136,14 @@ def generate_report():
             lm_tx += tx
             print(f"  {d:<12} | {format_bytes(rx):<14} | {format_bytes(tx):<14} | {format_bytes(tot):<14}")
         print("  " + "-" * 61)
-        print(f"  {'TOTAL':<12} | {format_bytes(lm_rx):<14} | {format_bytes(lm_tx):<14} | {format_bytes(lm_rx + lm_tx):<14}")
+        print(f"  {'कुल (TOTAL)':<12} | {format_bytes(lm_rx):<14} | {format_bytes(lm_tx):<14} | {format_bytes(lm_rx + lm_tx):<14}")
 
-    print(f"\n🗓️  THIS MONTH ({today.strftime('%B %Y')}):")
+    print(f"\n🗓️  इस महीने - THIS MONTH ({today.strftime('%B %Y')}):")
     print("-" * 65)
     if not this_month_rows:
-        print("  (No data recorded for this month yet.)")
+        print("  (इस महीने का अभी तक कोई डेटा रिकॉर्ड नहीं हुआ है।)")
     else:
-        print(f"  {'Date':<12} | {'Download (Rx)':<14} | {'Upload (Tx)':<14} | {'Total':<14}")
+        print(f"  {'दिनांक (Date)':<12} | {'डाउनलोड (Rx)':<14} | {'अपलोड (Tx)':<14} | {'कुल (Total)':<14}")
         print("  " + "-" * 61)
         tm_rx, tm_tx = 0, 0
         for d, rx, tx in this_month_rows:
@@ -152,7 +152,7 @@ def generate_report():
             tm_tx += tx
             print(f"  {d:<12} | {format_bytes(rx):<14} | {format_bytes(tx):<14} | {format_bytes(tot):<14}")
         print("  " + "-" * 61)
-        print(f"  {'TOTAL':<12} | {format_bytes(tm_rx):<14} | {format_bytes(tm_tx):<14} | {format_bytes(tm_rx + tm_tx):<14}")
+        print(f"  {'कुल (TOTAL)':<12} | {format_bytes(tm_rx):<14} | {format_bytes(tm_tx):<14} | {format_bytes(tm_rx + tm_tx):<14}")
 
     print("\n" + "=" * 65 + "\n")
 

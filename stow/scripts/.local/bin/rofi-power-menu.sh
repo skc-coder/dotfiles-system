@@ -2,24 +2,24 @@
 
 # Rofi Power / Session Menu Script for Sway
 
-options="⚡ Shutdown\n🔄 Reboot\n🌙 Suspend\n🔒 Lock\n🚪 Logout"
+options="⚡ बंद करें (Shutdown)\n🔄 पुनरारंभ करें (Reboot)\n🌙 स्लीप (Suspend)\n🔒 स्क्रीन लॉक (Lock)\n🚪 लॉग आउट (Logout)"
 
-chosen=$(echo -e "$options" | rofi -dmenu -p "Power Menu" -i)
+chosen=$(echo -e "$options" | rofi -dmenu -p "पावर मेनू (Power Menu)" -i)
 
 case "$chosen" in
-    *"Lock"*)
+    *"लॉक"*|*"Lock"*)
         swaylock -f
         ;;
-    *"Logout"*)
+    *"लॉग आउट"*|*"Logout"*)
         swaymsg exit
         ;;
-    *"Suspend"*)
+    *"स्लीप"*|*"Suspend"*)
         systemctl suspend
         ;;
-    *"Reboot"*)
+    *"पुनरारंभ"*|*"Reboot"*)
         systemctl reboot
         ;;
-    *"Shutdown"*)
+    *"बंद"*|*"Shutdown"*)
         systemctl poweroff
         ;;
 esac

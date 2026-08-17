@@ -2,24 +2,24 @@
 
 # Rofi Hub Script Launcher
 
-options="🧹 Clear System Caches & Clean Disk\n🛡️ Toggle VPN\n🎧 Audio Output Switcher\n🌀 Toggle Fan Profile\n📊 System Info"
+options="🧹 सिस्टम कैशे और डिस्क सफाई (Clean Disk)\n🛡️ वीपीएन चालू/बंद (Toggle VPN)\n🎧 ऑडियो आउटपुट (Audio Switcher)\n🌀 पंखा प्रोफ़ाइल (Fan Profile)\n📊 सिस्टम जानकारी (System Info)"
 
-chosen=$(echo -e "$options" | rofi -dmenu -p "Quick Hub" -i)
+chosen=$(echo -e "$options" | rofi -dmenu -p "त्वरित हब (Quick Hub)" -i)
 
 case "$chosen" in
-    *"VPN"*)
+    *"वीपीएन"*|*"VPN"*)
         ~/.local/bin/vpn-toggle.sh
         ;;
-    *"Audio"*)
+    *"ऑडियो"*|*"Audio"*)
         pavucontrol &
         ;;
-    *"Fan"*)
+    *"पंखा"*|*"Fan"*)
         /home/skc/dev/dotfiles/scripts/fan-toggle.sh
         ;;
-    *"Clear"*|*"Clean"*)
-        kitty --title "System Clean" -e ~/.local/bin/system-clean
+    *"सफाई"*|*"Clean"*)
+        kitty --title "सिस्टम सफाई" -e ~/.local/bin/system-clean
         ;;
-    *"System Info"*)
+    *"जानकारी"*|*"System Info"*)
         kitty -e htop &
         ;;
 esac
