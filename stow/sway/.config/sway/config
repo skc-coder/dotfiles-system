@@ -221,7 +221,7 @@ bar {
 # Custom Rofi & Utility Shortcuts
 bindsym $mod+Shift+e exec ~/.local/bin/rofi-power-menu.sh
 bindsym $mod+Period exec ~/.local/bin/rofi-emoji.sh
-bindsym $mod+Shift+k exec ~/.local/bin/sway-keybindings-manager.sh
+bindsym $mod+question exec ~/.local/bin/sway-keybindings-manager.sh
 bindsym $mod+p exec ~/.local/bin/rofi-file-search.sh
 bindsym $mod+a exec ~/.local/bin/rofi-audio-switcher.sh
 bindsym $mod+slash exec ~/.local/bin/rofi-quick-runner.sh

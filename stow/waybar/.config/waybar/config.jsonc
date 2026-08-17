@@ -47,6 +47,7 @@
     "custom/pomodoro": {
         "exec": "/home/skc/.local/bin/pomodoro-engine.sh status",
         "return-type": "json",
+        "format": "{}",
         "interval": 1,
         "signal": 9,
         "on-click": "/home/skc/.local/bin/pomodoro-engine.sh toggle",
