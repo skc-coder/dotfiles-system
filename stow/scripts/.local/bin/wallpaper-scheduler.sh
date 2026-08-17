@@ -16,10 +16,11 @@ change_wallpaper() {
 
     # Kill existing swaybg processes so swaybg reloads the image instantly without caching issues
     pkill swaybg 2>/dev/null || true
-    swaybg -o '*' -i "$SELECTED" -m fill &
+    swaybg -o '*' -i "$SELECTED" -m fill >/dev/null 2>&1 &
+    disown
 }
 
 while true; do
     change_wallpaper
-    sleep 10
+    sleep 86400
 done
