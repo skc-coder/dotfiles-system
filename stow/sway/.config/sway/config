@@ -47,6 +47,8 @@ exec copyq
 exec thunar --daemon
 exec ~/.local/bin/wallpaper-scheduler.sh
 exec ~/.local/bin/battery-monitor.sh
+exec ~/.local/bin/voice-dictate --daemon
+
 
 exec swayidle -w \
     timeout 900 'swaylock -f' \
