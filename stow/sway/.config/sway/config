@@ -243,6 +243,11 @@ bindsym Mod4+Shift+W exec ~/.local/bin/wallpaper-selector.sh
 for_window [app_id="copyq"] floating enable
 for_window [class="copyq"] floating enable
 
+# Voice Dictation Shortcut
+bindsym Mod1+h exec ~/.local/bin/voice-dictate --toggle
+bindsym Mod4+Shift+d exec ~/.local/bin/voice-dictate --toggle
+
+
 # Global Dark Mode
 exec_always gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 exec_always gsettings set org.gnome.desktop.interface gtk-theme 'Mint-Y-Dark'
