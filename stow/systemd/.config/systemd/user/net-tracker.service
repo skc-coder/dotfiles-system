@@ -1,0 +1,10 @@
+[Unit]
+Description=Internet Data Usage Tracker Service
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/home/skc/.local/bin/net-usage --update
+
+[Install]
+WantedBy=default.target

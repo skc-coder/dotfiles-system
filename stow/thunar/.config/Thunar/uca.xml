@@ -160,4 +160,19 @@
 	<text-files/>
 	<video-files/>
 </action>
+<action>
+	<unique-id>1786958628250</unique-id>
+	<name>Send via Mail Sentry</name>
+	<submenu>Sentry Tools</submenu>
+	<icon>mail-send</icon>
+	<command>/home/skc/.local/bin/thunar-mail-sentry %F</command>
+	<description>Send selected file(s) to shekharium@gmail.com via Mail Sentry</description>
+	<patterns>*</patterns>
+	<directories/>
+	<audio-files/>
+	<image-files/>
+	<other-files/>
+	<text-files/>
+	<video-files/>
+</action>
 </actions>

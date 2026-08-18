@@ -1,0 +1,10 @@
+[Unit]
+Description=Internet Data Usage Tracker 15-Min Timer
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=15min
+Unit=net-tracker.service
+
+[Install]
+WantedBy=timers.target
