@@ -245,12 +245,9 @@ bindsym Mod4+Shift+W exec ~/.local/bin/wallpaper-selector.sh
 for_window [app_id="copyq"] floating enable
 for_window [class="copyq"] floating enable
 
-# Voice Dictation Shortcuts
-# Alt+H: Normal Mode (Auto-stops after 1.8s silence)
-bindsym Mod1+h exec ~/.local/bin/voice-dictate --toggle --model small
-# Alt+Shift+H / Super+Alt+H: Ramble Mode (Records continuously until pressed again)
-bindsym Mod1+Shift+h exec ~/.local/bin/voice-dictate --toggle --ramble --model small
-bindsym Mod4+Mod1+h exec ~/.local/bin/voice-dictate --toggle --ramble --model small
+# Voice Dictation Shortcut
+bindsym Mod1+h exec ~/.local/bin/voice-dictate --toggle
+
 
 
 
