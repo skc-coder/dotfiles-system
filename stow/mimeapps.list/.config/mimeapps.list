@@ -41,6 +41,8 @@ text/vnd.trolltech.linguist=dev.zed.Zed.desktop;
 x-scheme-handler/mailto=userapp-Thunderbird-FZTTT3.desktop;
 x-scheme-handler/mid=userapp-Thunderbird-FZTTT3.desktop;
 message/rfc822=userapp-Thunderbird-FZTTT3.desktop;
+image/webp=eom.desktop;
+image/png=eom.desktop;
 
 [Default Applications]
 text/html=brave-browser.desktop
@@ -76,3 +78,4 @@ x-scheme-handler/mailto=userapp-Thunderbird-FZTTT3.desktop
 x-scheme-handler/mid=userapp-Thunderbird-FZTTT3.desktop
 message/rfc822=userapp-Thunderbird-FZTTT3.desktop
 video/x-matroska=io.github.celluloid_player.Celluloid.desktop
+image/png=eom.desktop
