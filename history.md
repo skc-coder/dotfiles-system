@@ -1,33 +1,22 @@
-# Project History & Guidelines
+# Project Change & Task History
 
-## Overall Plan & Features
-- [x] Dotfiles setup & system configuration management
-- [x] Shell hooks and environment bootstrapping
-- [x] Mandatory `history.md` rule configuration added to global `AGENTS.md`
+## [2026-08-22] Document Photo Processing & Scan Guidelines
 
-## DOs and DON'Ts
-### DOs
-- Always maintain `history.md` with timestamped entries for features implemented or problems fixed.
-- Record problem descriptions, fixes attempted/applied, and inter-session context.
-- Use `uv` for Python environments and dependencies.
-- Commit changes regularly with standard commit messages.
+### User Request
+- Process candidate photograph to remove dark background, replace with a soft light off-white tone (not full white).
+- Save image in documentation meeting standard online application document upload requirements.
+- Document full scan and upload guidelines for Photograph, Signature, and Left Thumb Impression.
 
-### DON'Ts
-- Do NOT leave half-baked code or truncated files.
-- Do NOT bypass `history.md` updates when implementing features or fixing bugs.
-- Do NOT pollute global Python environments.
+### Implementation Summary
+1. **Photo Processing**:
+   - Extracted subject using GrabCut edge blending.
+   - Replaced background with a clean light off-white/light gray tone (`#F0F2F5`).
+   - Resized image to `200 x 230` pixels.
+   - Encoded JPEG at optimized quality to obtain `32.79 KB` (strictly inside the `20KB - 50KB` limit).
+   - Saved output to [/home/skc/dev/dotfiles/docs/photo_processing/passport_photo.jpg](file:///home/skc/dev/dotfiles/docs/photo_processing/passport_photo.jpg).
 
-## Inter-Session AI Context
-- **Global Rule updated**: `AGENTS.md` in `~/.gemini/config/AGENTS.md` now includes Rule 12 (`Mandatory history.md Tracking Rule`).
-- **Workspace**: `/home/skc/dev/dotfiles`
+2. **Documentation**:
+   - Created [/home/skc/dev/dotfiles/docs/photo_processing/README.md](file:///home/skc/dev/dotfiles/docs/photo_processing/README.md) detailing all parameters for Photo (200x230, 20-50KB), Signature (140x60, 10-20KB), and Left Thumb Impression (240x240, 20-50KB, 200 DPI).
 
----
-
-## Event Log
-
-### [2026-08-19 11:42 IST] Rule Definition & Initial Setup
-- **Feature / Problem**: User requested rule enforcement to always create and maintain a `history.md` file listing timestamps, features/fixes, problem descriptions, fixes tried, overall plans, DOs & DON'Ts, and inter-session context.
-- **Description**: Standardize tracking across all AI coding sessions so context and project history are preserved.
-- **Fix / Action**: 
-  1. Updated global guidelines in `~/.gemini/config/AGENTS.md` with Rule 12 (`Mandatory history.md Tracking Rule`).
-  2. Created `history.md` for current workspace (`/home/skc/dev/dotfiles`).
+3. **Automation Scripts**:
+   - Maintained Python script at [/home/skc/dev/dotfiles/docs/photo_processing/fast_process.py](file:///home/skc/dev/dotfiles/docs/photo_processing/fast_process.py) for reproducible batch runs.
