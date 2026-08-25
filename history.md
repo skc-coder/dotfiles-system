@@ -20,3 +20,16 @@
 
 3. **Automation Scripts**:
    - Maintained Python script at [/home/skc/dev/dotfiles/docs/photo_processing/fast_process.py](file:///home/skc/dev/dotfiles/docs/photo_processing/fast_process.py) for reproducible batch runs.
+
+## [2026-08-25] Pomodoro Waybar Tick Sound Implementation
+
+### User Request
+- Implement a ticking sound in the Waybar Pomodoro timer during active focus work sessions.
+
+### Implementation Summary
+1. **Audio Synthesis**:
+   - Created auto-generating 12ms crisp mechanical click waveform (`/tmp/tick.wav`) using Python `wave` module.
+2. **Pomodoro Engine Update**:
+   - Modified [/home/skc/dev/dotfiles/stow/scripts/.local/bin/pomodoro-engine.sh](file:///home/skc/dev/dotfiles/stow/scripts/.local/bin/pomodoro-engine.sh).
+   - Added `ensure_tick_sound` and non-blocking `play_tick` function using `pw-play`/`paplay`/`aplay`.
+   - Triggered `play_tick` on every 1-second status tick execution when state mode is `WORK`.

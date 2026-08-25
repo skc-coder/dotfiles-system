@@ -11,13 +11,34 @@ REST_MINS=5
 
 get_time() { date +%s; }
 
-play_sound() {
-    local freq=$1
-    if command -v pw-cat &>/dev/null; then
-        (paplay /usr/share/sounds/freedesktop/stereo/complete.oga 2>/dev/null || printf "\a") &
-    else
-        printf "\a"
+ensure_tick_sound() {
+    if [[ ! -f /tmp/tick.wav ]]; then
+        python3 -c "
+import wave, math, struct
+sample_rate = 44100
+duration = 0.012
+num_samples = int(sample_rate * duration)
+data = bytearray()
+for i in range(num_samples):
+    t = i / sample_rate
+    freq = 3200
+    env = math.exp(-i / (num_samples * 0.15))
+    val = math.sin(2 * math.pi * freq * t) * env
+    sample = int(val * 12000)
+    data.extend(struct.pack('<h', sample))
+
+with wave.open('/tmp/tick.wav', 'wb') as f:
+    f.setnchannels(1)
+    f.setsampwidth(2)
+    f.setframerate(sample_rate)
+    f.writeframes(data)
+" 2>/dev/null || true
     fi
+}
+
+play_tick() {
+    ensure_tick_sound
+    (pw-play /tmp/tick.wav 2>/dev/null || paplay /tmp/tick.wav 2>/dev/null || aplay /tmp/tick.wav 2>/dev/null) &
 }
 
 enable_dnd() {
@@ -95,6 +116,8 @@ cmd_status() {
     formatted=$(printf "%02d:%02d" "$mins" "$secs")
 
     if [[ "$mode" == "WORK" ]]; then
+        # Play crisp tick sound every second during active work session
+        play_tick
         echo "{\"text\": \"🎯 ${formatted}\", \"class\": \"work\", \"tooltip\": \"Focus Mode Active (${WORK_MINS}m)\"}"
     else
         echo "{\"text\": \"☕ ${formatted}\", \"class\": \"break\", \"tooltip\": \"Rest Break Active (${REST_MINS}m)\"}"
