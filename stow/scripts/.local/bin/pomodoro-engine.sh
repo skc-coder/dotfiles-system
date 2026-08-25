@@ -9,36 +9,39 @@ STATE_FILE="/tmp/pomodoro_state"
 WORK_MINS=25
 REST_MINS=5
 
+MP3_FILE="/home/skc/.local/share/pomodoro-timer.mp3"
+PID_FILE="/tmp/pomodoro_audio.pid"
+
 get_time() { date +%s; }
 
-ensure_tick_sound() {
-    if [[ ! -f /tmp/tick.wav ]]; then
-        python3 -c "
-import wave, math, struct
-sample_rate = 44100
-duration = 0.012
-num_samples = int(sample_rate * duration)
-data = bytearray()
-for i in range(num_samples):
-    t = i / sample_rate
-    freq = 3200
-    env = math.exp(-i / (num_samples * 0.15))
-    val = math.sin(2 * math.pi * freq * t) * env
-    sample = int(val * 12000)
-    data.extend(struct.pack('<h', sample))
-
-with wave.open('/tmp/tick.wav', 'wb') as f:
-    f.setnchannels(1)
-    f.setsampwidth(2)
-    f.setframerate(sample_rate)
-    f.writeframes(data)
-" 2>/dev/null || true
+play_audio() {
+    stop_audio
+    if [[ -f "$MP3_FILE" ]]; then
+        if command -v mpv &>/dev/null; then
+            mpv --no-video --loop=no "$MP3_FILE" &>/dev/null &
+            echo $! > "$PID_FILE"
+        elif command -v ffplay &>/dev/null; then
+            ffplay -nodisp -autoexit "$MP3_FILE" &>/dev/null &
+            echo $! > "$PID_FILE"
+        elif command -v pw-play &>/dev/null; then
+            pw-play "$MP3_FILE" &>/dev/null &
+            echo $! > "$PID_FILE"
+        elif command -v paplay &>/dev/null; then
+            paplay "$MP3_FILE" &>/dev/null &
+            echo $! > "$PID_FILE"
+        fi
     fi
 }
 
-play_tick() {
-    ensure_tick_sound
-    (pw-play /tmp/tick.wav 2>/dev/null || paplay /tmp/tick.wav 2>/dev/null || aplay /tmp/tick.wav 2>/dev/null) &
+stop_audio() {
+    if [[ -f "$PID_FILE" ]]; then
+        local pid
+        pid=$(cat "$PID_FILE")
+        pkill -P "$pid" 2>/dev/null || true
+        kill -9 "$pid" 2>/dev/null || true
+        rm -f "$PID_FILE"
+    fi
+    pkill -f "pomodoro-timer.mp3" 2>/dev/null || true
 }
 
 enable_dnd() {
@@ -59,14 +62,15 @@ cmd_start() {
     local end_time=$((now + WORK_MINS * 60))
     echo "WORK:$end_time" > "$STATE_FILE"
     update_waybar
-    notify-send -a "Pomodoro Engine" -i appointment-new "Focus Session Started 🎯" "${WORK_MINS}m deep work timer running."
-    play_sound 440
+    play_audio
+    notify-send -a "Pomodoro Engine" -i appointment-new "Focus Session Started 🎯" "${WORK_MINS}m ticking pomodoro audio started."
 }
 
 cmd_stop() {
     rm -f "$STATE_FILE"
+    stop_audio
     update_waybar
-    notify-send -a "Pomodoro Engine" -i process-stop "Pomodoro Reset 🛑" "Timer stopped."
+    notify-send -a "Pomodoro Engine" -i process-stop "Pomodoro Reset 🛑" "Timer & sound stopped."
 }
 
 cmd_toggle() {
@@ -97,13 +101,12 @@ cmd_status() {
             local new_end=$((now + REST_MINS * 60))
             echo "REST:$new_end" > "$STATE_FILE"
             disable_dnd
-            play_sound 880
             notify-send -a "Pomodoro Engine" -i dialog-information "Work Session Done! 🎉" "Take a ${REST_MINS} minute rest break."
             echo "{\"text\": \"☕ Rest ${REST_MINS}:00\", \"class\": \"break\", \"tooltip\": \"Rest break running\"}"
         else
             # Rest finished -> Reset to idle
             rm -f "$STATE_FILE"
-            play_sound 440
+            stop_audio
             notify-send -a "Pomodoro Engine" -i dialog-information "Rest Finished! 💪" "Ready for the next focus sprint."
             echo '{"text": "🍅 Ready", "class": "idle", "tooltip": "Click to start focus session"}'
         fi
@@ -116,8 +119,6 @@ cmd_status() {
     formatted=$(printf "%02d:%02d" "$mins" "$secs")
 
     if [[ "$mode" == "WORK" ]]; then
-        # Play crisp tick sound every second during active work session
-        play_tick
         echo "{\"text\": \"🎯 ${formatted}\", \"class\": \"work\", \"tooltip\": \"Focus Mode Active (${WORK_MINS}m)\"}"
     else
         echo "{\"text\": \"☕ ${formatted}\", \"class\": \"break\", \"tooltip\": \"Rest Break Active (${REST_MINS}m)\"}"
