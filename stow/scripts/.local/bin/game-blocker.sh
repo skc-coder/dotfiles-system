@@ -4,10 +4,10 @@
 # 2. Limits Minecraft (Official, Prism, Lunar, MultiMC, etc.) to 1 hour (3600 seconds) daily.
 # 3. Sends a notification 2 minutes before the limit is reached.
 
-BLOCKED_PATTERN="roblox|sober|vinegar|grapejuice"
+BLOCKED_PATTERN="roblox|sober|vinegar|grapejuice|discord|vesktop|webcord|armcord|com\.discordapp"
 MINECRAFT_PATTERN="minecraft"
-DAILY_LIMIT_SECONDS=3600
-WARN_BEFORE_SECONDS=120 # 2 minutes before limit (3480 seconds)
+DAILY_LIMIT_SECONDS=0
+WARN_BEFORE_SECONDS=0 # No warning needed for 0-hour limit
 
 STATE_DIR="$HOME/.local/state/game-blocker"
 mkdir -p "$STATE_DIR"
@@ -31,8 +31,11 @@ while true; do
         echo "0" > "$USAGE_FILE"
     fi
 
-    # 1. Immediately kill permanently blocked games (Roblox / Sober)
+    # 1. Immediately kill permanently blocked games & apps (Roblox / Sober / Discord)
     pkill -9 -f -i "$BLOCKED_PATTERN" 2>/dev/null
+    pkill -9 -f "com.discordapp.Discord" 2>/dev/null
+    pkill -9 -f "/app/discord/Discord" 2>/dev/null
+    killall -9 Discord discord com.discordapp.Discord vesktop webcord armcord 2>/dev/null
 
     # Read current usage
     CURRENT_USAGE=$(cat "$USAGE_FILE" 2>/dev/null || echo 0)
@@ -45,7 +48,7 @@ while true; do
             # Limit reached! Kill immediately.
             pkill -9 -f -i "$MINECRAFT_PATTERN" 2>/dev/null
             notify_user "Minecraft Time Limit Reached" "Daily 1-hour limit reached. Minecraft closed for today!" "critical"
-            sleep 2
+            sleep 0.5
             continue
         fi
 
@@ -59,11 +62,10 @@ while true; do
             notify_user "Minecraft Warning" "You have 2 minutes remaining of your 1-hour daily Minecraft limit!" "critical"
         fi
 
-        # Sleep 1 second when attached to active session for fine-grained accuracy
-        sleep 1
+        sleep 0.5
     else
-        # When idle, check every 2 seconds to save CPU
-        sleep 2
+        # Fast 0.2s poll loop so blocked apps get instantly terminated on launch
+        sleep 0.2
     fi
 done
 
