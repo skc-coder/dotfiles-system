@@ -5,7 +5,7 @@
 # - Short Breaks (5 min each) after Sessions 1, 2, 3
 # - Long Break (30 min) after Session 4
 # - Uses Universfield Attention Chime on state transitions & starts work automatically
-# State file format: MODE:END_TIME:CYCLE (e.g. WORK:1787654321:1)
+# Commands: start | stop | status | toggle | menu | set [work1..4|rest1..3|longrest]
 # ==============================================================================
 
 STATE_FILE="/tmp/pomodoro_state"
@@ -38,7 +38,7 @@ play_audio() {
             pw-play "$TICK_MP3" &>/dev/null &
             echo $! > "$PID_FILE"
         elif command -v paplay &>/dev/null; then
-            paplay "$MP3_FILE" &>/dev/null &
+            paplay "$TICK_MP3" &>/dev/null &
             echo $! > "$PID_FILE"
         fi
     fi
@@ -112,9 +112,48 @@ cmd_toggle() {
     fi
 }
 
+cmd_set() {
+    local target="${1,,}"
+    case "$target" in
+        work1|1|w1) start_work_session 1 ;;
+        work2|2|w2) start_work_session 2 ;;
+        work3|3|w3) start_work_session 3 ;;
+        work4|4|w4) start_work_session 4 ;;
+        rest1|r1|break1|b1) start_break_session 1 ;;
+        rest2|r2|break2|b2) start_break_session 2 ;;
+        rest3|r3|break3|b3) start_break_session 3 ;;
+        longrest|lr|longbreak|b4|rest4) start_break_session 4 ;;
+        stop) cmd_stop ;;
+        *) echo "Usage: $0 set {work1|work2|work3|work4|rest1|rest2|rest3|longrest|stop}" ;;
+    esac
+}
+
+cmd_menu() {
+    if ! command -v rofi &>/dev/null; then
+        notify-send -a "Pomodoro Engine" -i dialog-error "Error" "Rofi menu launcher not installed."
+        exit 1
+    fi
+
+    local options="🎯 Focus Session 1 (25m)\n🎯 Focus Session 2 (25m)\n🎯 Focus Session 3 (25m)\n🎯 Focus Session 4 (25m)\n☕ Short Rest 1 (5m)\n☕ Short Rest 2 (5m)\n☕ Short Rest 3 (5m)\n🌴 Long Rest (30m)\n🛑 Stop / Reset Pomodoro"
+    local selected
+    selected=$(echo -e "$options" | rofi -dmenu -p "🍅 Select Pomodoro Session" -i)
+
+    case "$selected" in
+        *"Focus Session 1"*) cmd_set work1 ;;
+        *"Focus Session 2"*) cmd_set work2 ;;
+        *"Focus Session 3"*) cmd_set work3 ;;
+        *"Focus Session 4"*) cmd_set work4 ;;
+        *"Short Rest 1"*) cmd_set rest1 ;;
+        *"Short Rest 2"*) cmd_set rest2 ;;
+        *"Short Rest 3"*) cmd_set rest3 ;;
+        *"Long Rest"*) cmd_set longrest ;;
+        *"Stop / Reset"*) cmd_stop ;;
+    esac
+}
+
 cmd_status() {
     if [[ ! -f "$STATE_FILE" ]]; then
-        echo '{"text": "🍅 Off", "class": "idle", "tooltip": "Click to start Standard 4-Session Pomodoro Cycle"}'
+        echo '{"text": "🍅 Off", "class": "idle", "tooltip": "Left-click: Start Session 1\nRight-click: Select Session Menu"}'
         exit 0
     fi
 
@@ -130,19 +169,16 @@ cmd_status() {
 
     if [[ $diff -le 0 ]]; then
         if [[ "$mode" == "WORK" ]]; then
-            # Work finished -> auto start break
             start_break_session "$cycle"
         elif [[ "$mode" == "SHORT_BREAK" ]]; then
-            # Short Break finished -> auto start next work session
             local next_cycle=$((cycle + 1))
             start_work_session "$next_cycle"
         elif [[ "$mode" == "LONG_BREAK" ]]; then
-            # Long break finished -> cycle complete, reset
             rm -f "$STATE_FILE"
             stop_audio
             play_chime
             notify-send -a "Pomodoro Engine" -i trophy "Full Pomodoro Cycle Completed! 🏆" "Great job! Click to start a new cycle."
-            echo '{"text": "🏆 Done", "class": "idle", "tooltip": "Cycle Complete! Click to start new session"}'
+            echo '{"text": "🏆 Done", "class": "idle", "tooltip": "Cycle Complete! Right-click for menu"}'
             exit 0
         fi
         state_data=$(cat "$STATE_FILE" 2>/dev/null)
@@ -156,11 +192,11 @@ cmd_status() {
     formatted=$(printf "%02d:%02d" "$mins" "$secs")
 
     if [[ "$mode" == "WORK" ]]; then
-        echo "{\"text\": \"🎯 [${cycle}/4] ${formatted}\", \"class\": \"work\", \"tooltip\": \"Session ${cycle} of 4 (${WORK_MINS}m)\"}"
+        echo "{\"text\": \"🎯 [${cycle}/4] ${formatted}\", \"class\": \"work\", \"tooltip\": \"Session ${cycle} of 4 (${WORK_MINS}m)\nRight-click: Select Session Menu\"}"
     elif [[ "$mode" == "SHORT_BREAK" ]]; then
-        echo "{\"text\": \"☕ [Rest ${cycle}] ${formatted}\", \"class\": \"break\", \"tooltip\": \"Short Break after Session ${cycle} (${SHORT_BREAK_MINS}m)\"}"
+        echo "{\"text\": \"☕ [Rest ${cycle}] ${formatted}\", \"class\": \"break\", \"tooltip\": \"Short Break after Session ${cycle} (${SHORT_BREAK_MINS}m)\nRight-click: Select Session Menu\"}"
     elif [[ "$mode" == "LONG_BREAK" ]]; then
-        echo "{\"text\": \"🌴 [Long Rest] ${formatted}\", \"class\": \"break\", \"tooltip\": \"Long Break after Cycle (${LONG_BREAK_MINS}m)\"}"
+        echo "{\"text\": \"🌴 [Long Rest] ${formatted}\", \"class\": \"break\", \"tooltip\": \"Long Break after Cycle (${LONG_BREAK_MINS}m)\nRight-click: Select Session Menu\"}"
     fi
 }
 
@@ -168,6 +204,8 @@ case "${1:-status}" in
     start) cmd_start ;;
     stop) cmd_stop ;;
     toggle) cmd_toggle ;;
+    set) cmd_set "$2" ;;
+    menu) cmd_menu ;;
     status) cmd_status ;;
-    *) echo "Usage: $0 {start|stop|toggle|status}" ;;
+    *) echo "Usage: $0 {start|stop|toggle|set <session>|menu|status}" ;;
 esac
