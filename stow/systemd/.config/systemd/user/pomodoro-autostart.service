@@ -1,0 +1,12 @@
+[Unit]
+Description=Auto-start Pomodoro Timer 1 minute after login
+After=graphical-session.target
+
+[Service]
+Type=simple
+ExecStartPre=/usr/bin/sleep 60
+ExecStart=/home/skc/.local/bin/pomodoro-engine.sh start
+Restart=no
+
+[Install]
+WantedBy=default.target

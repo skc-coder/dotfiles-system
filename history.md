@@ -49,3 +49,7 @@
    - Updated [/home/skc/dev/dotfiles/stow/scripts/.local/bin/pomodoro-engine.sh](file:///home/skc/dev/dotfiles/stow/scripts/.local/bin/pomodoro-engine.sh) with session cycle tracking (`MODE:END_TIME:CYCLE`).
    - Plays `play_chime` on every transition (Work start, Break start, Work resume).
    - Automatically loops through 4 Focus Sessions + 3 Short Breaks (5 min) + 1 Long Break (30 min).
+
+3. **Systemd Delayed Autostart**:
+   - Created [/home/skc/dev/dotfiles/stow/systemd/.config/systemd/user/pomodoro-autostart.service](file:///home/skc/dev/dotfiles/stow/systemd/.config/systemd/user/pomodoro-autostart.service).
+   - Configured 60-second delay post-login/boot (`ExecStartPre=/usr/bin/sleep 60`) to automatically start Session 1 [1/4] with Universfield chime sound. Enabled systemd user service.
