@@ -33,3 +33,19 @@
    - Modified [/home/skc/dev/dotfiles/stow/scripts/.local/bin/pomodoro-engine.sh](file:///home/skc/dev/dotfiles/stow/scripts/.local/bin/pomodoro-engine.sh).
    - Added `ensure_tick_sound` and non-blocking `play_tick` function using `pw-play`/`paplay`/`aplay`.
    - Triggered `play_tick` on every 1-second status tick execution when state mode is `WORK`.
+
+## [2026-08-26] Multi-Session Pomodoro & Universfield Chime Integration
+
+### User Request
+- Use `/home/skc/dev/universfield-attention-chime-123107.mp3` sound effect for breaks/transitions.
+- Implement full multi-session standard Pomodoro workflow (4 work sessions of 25m, 5m short breaks, 30m long break after session 4).
+- Display active session number in Waybar (`🎯 [1/4] 24:59`, `☕ [Rest 1] 04:59`, `🌴 [Long Rest] 29:59`).
+- Automatically start next focus session after short breaks with the transition chime.
+
+### Implementation Summary
+1. **Audio Asset Storage**:
+   - Copied sound file to `~/.local/share/universfield-chime.mp3` and dotfiles stow path at [stow/scripts/.local/share/universfield-chime.mp3](file:///home/skc/dev/dotfiles/stow/scripts/.local/share/universfield-chime.mp3).
+2. **Pomodoro Engine Redesign**:
+   - Updated [/home/skc/dev/dotfiles/stow/scripts/.local/bin/pomodoro-engine.sh](file:///home/skc/dev/dotfiles/stow/scripts/.local/bin/pomodoro-engine.sh) with session cycle tracking (`MODE:END_TIME:CYCLE`).
+   - Plays `play_chime` on every transition (Work start, Break start, Work resume).
+   - Automatically loops through 4 Focus Sessions + 3 Short Breaks (5 min) + 1 Long Break (30 min).

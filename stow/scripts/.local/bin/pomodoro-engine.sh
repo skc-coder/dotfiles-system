@@ -1,30 +1,41 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# Hardcore Pomodoro Work/Rest Engine with Sway DND Integration
-# Commands: start | stop | status | toggle
-# State file stored in /tmp/pomodoro_state
+# Complete Standard Multi-Session Pomodoro Engine for Waybar
+# - 4 Work Sessions (25 min each)
+# - Short Breaks (5 min each) after Sessions 1, 2, 3
+# - Long Break (30 min) after Session 4
+# - Uses Universfield Attention Chime on state transitions & starts work automatically
+# State file format: MODE:END_TIME:CYCLE (e.g. WORK:1787654321:1)
 # ==============================================================================
 
 STATE_FILE="/tmp/pomodoro_state"
 WORK_MINS=25
-REST_MINS=5
+SHORT_BREAK_MINS=5
+LONG_BREAK_MINS=30
 
-MP3_FILE="/home/skc/.local/share/pomodoro-timer.mp3"
+TICK_MP3="/home/skc/.local/share/pomodoro-timer.mp3"
+CHIME_MP3="/home/skc/.local/share/universfield-chime.mp3"
 PID_FILE="/tmp/pomodoro_audio.pid"
 
 get_time() { date +%s; }
 
+play_chime() {
+    if [[ -f "$CHIME_MP3" ]]; then
+        (pw-play "$CHIME_MP3" 2>/dev/null || paplay "$CHIME_MP3" 2>/dev/null || mpv --no-video "$CHIME_MP3" 2>/dev/null) &
+    fi
+}
+
 play_audio() {
     stop_audio
-    if [[ -f "$MP3_FILE" ]]; then
+    if [[ -f "$TICK_MP3" ]]; then
         if command -v mpv &>/dev/null; then
-            mpv --no-video --loop=no "$MP3_FILE" &>/dev/null &
+            mpv --no-video --loop=no "$TICK_MP3" &>/dev/null &
             echo $! > "$PID_FILE"
         elif command -v ffplay &>/dev/null; then
-            ffplay -nodisp -autoexit "$MP3_FILE" &>/dev/null &
+            ffplay -nodisp -autoexit "$TICK_MP3" &>/dev/null &
             echo $! > "$PID_FILE"
         elif command -v pw-play &>/dev/null; then
-            pw-play "$MP3_FILE" &>/dev/null &
+            pw-play "$TICK_MP3" &>/dev/null &
             echo $! > "$PID_FILE"
         elif command -v paplay &>/dev/null; then
             paplay "$MP3_FILE" &>/dev/null &
@@ -44,33 +55,53 @@ stop_audio() {
     pkill -f "pomodoro-timer.mp3" 2>/dev/null || true
 }
 
-enable_dnd() {
-    :
-}
-
-disable_dnd() {
-    :
-}
-
 update_waybar() {
     pkill -RTMIN+9 waybar 2>/dev/null || true
 }
 
-cmd_start() {
+start_work_session() {
+    local cycle=${1:-1}
     local now
     now=$(get_time)
     local end_time=$((now + WORK_MINS * 60))
-    echo "WORK:$end_time" > "$STATE_FILE"
+    echo "WORK:$end_time:$cycle" > "$STATE_FILE"
     update_waybar
+    play_chime
     play_audio
-    notify-send -a "Pomodoro Engine" -i appointment-new "Focus Session Started 🎯" "${WORK_MINS}m ticking pomodoro audio started."
+    notify-send -a "Pomodoro Engine" -i appointment-new "Focus Session ${cycle}/4 Started 🎯" "Focus for ${WORK_MINS} minutes."
+}
+
+start_break_session() {
+    local cycle=$1
+    local now
+    now=$(get_time)
+    stop_audio
+    play_chime
+
+    if [[ $cycle -ge 4 ]]; then
+        # Long Break 30 mins after session 4
+        local end_time=$((now + LONG_BREAK_MINS * 60))
+        echo "LONG_BREAK:$end_time:$cycle" > "$STATE_FILE"
+        update_waybar
+        notify-send -a "Pomodoro Engine" -i dialog-information "Session 4 Complete! 🎉" "Enjoy a 30-minute Long Break."
+    else
+        # Short Break 5 mins after sessions 1, 2, 3
+        local end_time=$((now + SHORT_BREAK_MINS * 60))
+        echo "SHORT_BREAK:$end_time:$cycle" > "$STATE_FILE"
+        update_waybar
+        notify-send -a "Pomodoro Engine" -i dialog-information "Session ${cycle}/4 Finished! ☕" "Take a ${SHORT_BREAK_MINS}-minute break."
+    fi
+}
+
+cmd_start() {
+    start_work_session 1
 }
 
 cmd_stop() {
     rm -f "$STATE_FILE"
     stop_audio
     update_waybar
-    notify-send -a "Pomodoro Engine" -i process-stop "Pomodoro Reset 🛑" "Timer & sound stopped."
+    notify-send -a "Pomodoro Engine" -i process-stop "Pomodoro Stopped 🛑" "Timer & audio reset."
 }
 
 cmd_toggle() {
@@ -83,34 +114,40 @@ cmd_toggle() {
 
 cmd_status() {
     if [[ ! -f "$STATE_FILE" ]]; then
-        echo '{"text": "🍅 Off", "class": "idle", "tooltip": "Click to start 25m Focus Session"}'
+        echo '{"text": "🍅 Off", "class": "idle", "tooltip": "Click to start Standard 4-Session Pomodoro Cycle"}'
         exit 0
     fi
 
     local state_data
     state_data=$(cat "$STATE_FILE")
-    local mode="${state_data%%:*}"
-    local target_time="${state_data##*:}"
+    
+    IFS=':' read -r mode target_time cycle <<< "$state_data"
+    cycle=${cycle:-1}
+
     local now
     now=$(get_time)
     local diff=$((target_time - now))
 
     if [[ $diff -le 0 ]]; then
         if [[ "$mode" == "WORK" ]]; then
-            # Work finished -> Start Rest
-            local new_end=$((now + REST_MINS * 60))
-            echo "REST:$new_end" > "$STATE_FILE"
-            disable_dnd
-            notify-send -a "Pomodoro Engine" -i dialog-information "Work Session Done! 🎉" "Take a ${REST_MINS} minute rest break."
-            echo "{\"text\": \"☕ Rest ${REST_MINS}:00\", \"class\": \"break\", \"tooltip\": \"Rest break running\"}"
-        else
-            # Rest finished -> Reset to idle
+            # Work finished -> auto start break
+            start_break_session "$cycle"
+        elif [[ "$mode" == "SHORT_BREAK" ]]; then
+            # Short Break finished -> auto start next work session
+            local next_cycle=$((cycle + 1))
+            start_work_session "$next_cycle"
+        elif [[ "$mode" == "LONG_BREAK" ]]; then
+            # Long break finished -> cycle complete, reset
             rm -f "$STATE_FILE"
             stop_audio
-            notify-send -a "Pomodoro Engine" -i dialog-information "Rest Finished! 💪" "Ready for the next focus sprint."
-            echo '{"text": "🍅 Ready", "class": "idle", "tooltip": "Click to start focus session"}'
+            play_chime
+            notify-send -a "Pomodoro Engine" -i trophy "Full Pomodoro Cycle Completed! 🏆" "Great job! Click to start a new cycle."
+            echo '{"text": "🏆 Done", "class": "idle", "tooltip": "Cycle Complete! Click to start new session"}'
+            exit 0
         fi
-        exit 0
+        state_data=$(cat "$STATE_FILE" 2>/dev/null)
+        IFS=':' read -r mode target_time cycle <<< "$state_data"
+        diff=$((target_time - now))
     fi
 
     local mins=$((diff / 60))
@@ -119,9 +156,11 @@ cmd_status() {
     formatted=$(printf "%02d:%02d" "$mins" "$secs")
 
     if [[ "$mode" == "WORK" ]]; then
-        echo "{\"text\": \"🎯 ${formatted}\", \"class\": \"work\", \"tooltip\": \"Focus Mode Active (${WORK_MINS}m)\"}"
-    else
-        echo "{\"text\": \"☕ ${formatted}\", \"class\": \"break\", \"tooltip\": \"Rest Break Active (${REST_MINS}m)\"}"
+        echo "{\"text\": \"🎯 [${cycle}/4] ${formatted}\", \"class\": \"work\", \"tooltip\": \"Session ${cycle} of 4 (${WORK_MINS}m)\"}"
+    elif [[ "$mode" == "SHORT_BREAK" ]]; then
+        echo "{\"text\": \"☕ [Rest ${cycle}] ${formatted}\", \"class\": \"break\", \"tooltip\": \"Short Break after Session ${cycle} (${SHORT_BREAK_MINS}m)\"}"
+    elif [[ "$mode" == "LONG_BREAK" ]]; then
+        echo "{\"text\": \"🌴 [Long Rest] ${formatted}\", \"class\": \"break\", \"tooltip\": \"Long Break after Cycle (${LONG_BREAK_MINS}m)\"}"
     fi
 }
 
