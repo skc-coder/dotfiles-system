@@ -15,19 +15,19 @@ echo "Syncing custom extensions from GitHub..."
 # ytmaster
 if [ -d "$EXT_DIR/ytmaster" ]; then
     echo "Updating ytmaster extension..."
-    git -C "$EXT_DIR/ytmaster" pull || true
+    GIT_TERMINAL_PROMPT=0 git -C "$EXT_DIR/ytmaster" pull || true
 else
     echo "Cloning ytmaster extension..."
-    git clone https://github.com/skc-coder/ytmaster "$EXT_DIR/ytmaster"
+    GIT_TERMINAL_PROMPT=0 git clone https://github.com/skc-coder/ytmaster "$EXT_DIR/ytmaster" || true
 fi
 
 # webtools (formerly searchfocus)
 if [ -d "$EXT_DIR/webtools" ]; then
     echo "Updating webtools extension..."
-    git -C "$EXT_DIR/webtools" pull || true
+    GIT_TERMINAL_PROMPT=0 git -C "$EXT_DIR/webtools" pull || true
 else
     echo "Cloning webtools extension..."
-    git clone https://github.com/skc-coder/webtools "$EXT_DIR/webtools"
+    GIT_TERMINAL_PROMPT=0 git clone https://github.com/skc-coder/webtools "$EXT_DIR/webtools" || true
 fi
 
 # 2. Install managed policies (requires sudo)
