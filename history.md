@@ -65,9 +65,10 @@
 
 ### Implementation Summary
 1. **Policy File Updates**:
-   - Updated [browser/policy/brave-policy.json](file:///home/skc/dev/dotfiles/browser/policy/brave-policy.json) and [system/brave_policies.json](file:///home/skc/dev/dotfiles/system/brave_policies.json): changed `hfjngjjnngpljjlppgbbgkhfnhhphjhk` from `force_installed` to `normal_installed`.
-   - Updated [browser/policy/chromium-policy.json](file:///home/skc/dev/dotfiles/browser/policy/chromium-policy.json) and [system/chrome_policies.json](file:///home/skc/dev/dotfiles/system/chrome_policies.json): changed `hfjngjjnngpljjlppgbbgkhfnhhphjhk` from `force_installed` to `normal_installed`.
-   - Updated [browser/policy/firefox-policies.json](file:///home/skc/dev/dotfiles/browser/policy/firefox-policies.json) and [system/firefox_policies.json](file:///home/skc/dev/dotfiles/system/firefox_policies.json): changed `vimium-c@gdh1995.cn` from `force_installed` to `normal_installed`.
+   - Replaced old Vimium ID with official Chrome Web Store Vimium extension ID (`dbepggeogbaibhgnhhndojpepiihcmeb`) across Chrome & Brave policies:
+     - [browser/policy/brave-policy.json](file:///home/skc/dev/dotfiles/browser/policy/brave-policy.json) & [system/brave_policies.json](file:///home/skc/dev/dotfiles/system/brave_policies.json)
+     - [browser/policy/chromium-policy.json](file:///home/skc/dev/dotfiles/browser/policy/chromium-policy.json) & [system/chrome_policies.json](file:///home/skc/dev/dotfiles/system/chrome_policies.json)
+   - Updated Firefox policy [browser/policy/firefox-policies.json](file:///home/skc/dev/dotfiles/browser/policy/firefox-policies.json) and [system/firefox_policies.json](file:///home/skc/dev/dotfiles/system/firefox_policies.json) for `vimium-c@gdh1995.cn`.
+   - Set `installation_mode` to `normal_installed` (optional by default, allowing full uninstallation).
 2. **Git & Remote Push**:
-   - Committed changes with message `feat(browser): update Vimium policies to normal_installed (optional)`.
-   - Pushed changes directly to GitHub remote repository (`main -> main`).
+   - Committed changes and pushed directly to GitHub (`main -> main`).
