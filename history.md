@@ -57,3 +57,17 @@
 4. **Session Selection Menu**:
    - Added `cmd_menu` (Rofi launcher) and `cmd_set` (`work1..4`, `rest1..3`, `longrest`) in [/home/skc/dev/dotfiles/stow/scripts/.local/bin/pomodoro-engine.sh](file:///home/skc/dev/dotfiles/stow/scripts/.local/bin/pomodoro-engine.sh).
    - Updated Waybar config [config.jsonc](file:///home/skc/dev/dotfiles/stow/waybar/.config/waybar/config.jsonc): **Right-click** on Waybar Pomodoro triggers `swaymsg exec /home/skc/.local/bin/pomodoro-engine.sh menu` to spawn Rofi smoothly within Sway compositor context.
+
+## [2026-08-26] Make Vimium Policy Optional Across Browsers
+
+### User Request
+- Change Vimium policy mode in Chrome, Brave, and Firefox so that Vimium is optional (`normal_installed`) rather than forced, allowing standard uninstallation.
+
+### Implementation Summary
+1. **Policy File Updates**:
+   - Updated [browser/policy/brave-policy.json](file:///home/skc/dev/dotfiles/browser/policy/brave-policy.json) and [system/brave_policies.json](file:///home/skc/dev/dotfiles/system/brave_policies.json): changed `hfjngjjnngpljjlppgbbgkhfnhhphjhk` from `force_installed` to `normal_installed`.
+   - Updated [browser/policy/chromium-policy.json](file:///home/skc/dev/dotfiles/browser/policy/chromium-policy.json) and [system/chrome_policies.json](file:///home/skc/dev/dotfiles/system/chrome_policies.json): changed `hfjngjjnngpljjlppgbbgkhfnhhphjhk` from `force_installed` to `normal_installed`.
+   - Updated [browser/policy/firefox-policies.json](file:///home/skc/dev/dotfiles/browser/policy/firefox-policies.json) and [system/firefox_policies.json](file:///home/skc/dev/dotfiles/system/firefox_policies.json): changed `vimium-c@gdh1995.cn` from `force_installed` to `normal_installed`.
+2. **Git & Remote Push**:
+   - Committed changes with message `feat(browser): update Vimium policies to normal_installed (optional)`.
+   - Pushed changes directly to GitHub remote repository (`main -> main`).
