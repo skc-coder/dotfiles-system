@@ -153,7 +153,7 @@ cmd_menu() {
 
 cmd_status() {
     if [[ ! -f "$STATE_FILE" ]]; then
-        echo '{"text": "🍅 Off", "class": "idle", "tooltip": "Left-click: Start Session 1\nRight-click: Select Session Menu"}'
+        echo '{"text": "🍅 Off", "class": "idle", "tooltip": "Left-click: Select Session Menu"}'
         exit 0
     fi
 
