@@ -136,7 +136,7 @@ cmd_menu() {
 
     local options="🎯 Focus Session 1 (25m)\n🎯 Focus Session 2 (25m)\n🎯 Focus Session 3 (25m)\n🎯 Focus Session 4 (25m)\n☕ Short Rest 1 (5m)\n☕ Short Rest 2 (5m)\n☕ Short Rest 3 (5m)\n🌴 Long Rest (30m)\n🛑 Stop / Reset Pomodoro"
     local selected
-    selected=$(echo -e "$options" | rofi -dmenu -p "🍅 Select Pomodoro Session" -i)
+    selected=$(echo -e "$options" | WAYLAND_DISPLAY="${WAYLAND_DISPLAY:-wayland-1}" DISPLAY="${DISPLAY:-:0}" rofi -dmenu -p "🍅 Select Session" -i 2>/dev/null)
 
     case "$selected" in
         *"Focus Session 1"*) cmd_set work1 ;;

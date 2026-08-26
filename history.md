@@ -55,5 +55,5 @@
    - Configured 60-second delay post-login/boot (`ExecStartPre=/usr/bin/sleep 60`) to automatically start Session 1 [1/4] with Universfield chime sound. Enabled systemd user service.
 
 4. **Session Selection Menu**:
-   - Added `cmd_menu` (Rofi launcher) and `cmd_set` (`work1..4`, `rest1..3`, `longrest`) in [/home/skc/dev/dotfiles/stow/scripts/.local/bin/pomodoro-engine.sh](file:///home/skc/dev/dotfiles/stow/scripts/.local/bin/pomodoro-engine.sh).
-   - Updated Waybar config [config.jsonc](file:///home/skc/dev/dotfiles/stow/waybar/.config/waybar/config.jsonc): **Left-click** on Waybar Pomodoro now opens the Rofi session selection menu directly.
+   - Added `cmd_menu` (Rofi launcher with Wayland environment passthrough) and `cmd_set` (`work1..4`, `rest1..3`, `longrest`) in [/home/skc/dev/dotfiles/stow/scripts/.local/bin/pomodoro-engine.sh](file:///home/skc/dev/dotfiles/stow/scripts/.local/bin/pomodoro-engine.sh).
+   - Updated Waybar config [config.jsonc](file:///home/skc/dev/dotfiles/stow/waybar/.config/waybar/config.jsonc): **Right-click** on Waybar Pomodoro opens the Rofi session selection menu.

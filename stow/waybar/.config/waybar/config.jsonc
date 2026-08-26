@@ -50,8 +50,8 @@
         "format": "{}",
         "interval": 1,
         "signal": 9,
-        "on-click": "/home/skc/.local/bin/pomodoro-engine.sh menu",
-        "on-click-right": "/home/skc/.local/bin/pomodoro-engine.sh stop"
+        "on-click": "/home/skc/.local/bin/pomodoro-engine.sh toggle",
+        "on-click-right": "/home/skc/.local/bin/pomodoro-engine.sh menu"
     },
     "idle_inhibitor": {
         "format": "{icon}",
