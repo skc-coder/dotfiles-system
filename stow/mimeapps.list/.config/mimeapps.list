@@ -43,6 +43,7 @@ x-scheme-handler/mid=userapp-Thunderbird-FZTTT3.desktop;
 message/rfc822=userapp-Thunderbird-FZTTT3.desktop;
 image/webp=eom.desktop;
 image/png=eom.desktop;
+audio/mpeg=vlc.desktop;
 
 [Default Applications]
 text/html=brave-browser.desktop
