@@ -58,17 +58,14 @@
    - Added `cmd_menu` (Rofi launcher) and `cmd_set` (`work1..4`, `rest1..3`, `longrest`) in [/home/skc/dev/dotfiles/stow/scripts/.local/bin/pomodoro-engine.sh](file:///home/skc/dev/dotfiles/stow/scripts/.local/bin/pomodoro-engine.sh).
    - Updated Waybar config [config.jsonc](file:///home/skc/dev/dotfiles/stow/waybar/.config/waybar/config.jsonc): **Right-click** on Waybar Pomodoro triggers `swaymsg exec /home/skc/.local/bin/pomodoro-engine.sh menu` to spawn Rofi smoothly within Sway compositor context.
 
-## [2026-08-26] Make Vimium Policy Optional Across Browsers
+## [2026-08-30] Offline Screenshot-to-Text OCR Enhancement
 
 ### User Request
-- Change Vimium policy mode in Chrome, Brave, and Firefox so that Vimium is optional (`normal_installed`) rather than forced, allowing standard uninstallation.
+- Improve simple offline screenshot-to-text OCR extraction accuracy.
 
 ### Implementation Summary
-1. **Policy File Updates**:
-   - Replaced old Vimium ID with official Chrome Web Store Vimium extension ID (`dbepggeogbaibhgnhhndojpepiihcmeb`) across Chrome & Brave policies:
-     - [browser/policy/brave-policy.json](file:///home/skc/dev/dotfiles/browser/policy/brave-policy.json) & [system/brave_policies.json](file:///home/skc/dev/dotfiles/system/brave_policies.json)
-     - [browser/policy/chromium-policy.json](file:///home/skc/dev/dotfiles/browser/policy/chromium-policy.json) & [system/chrome_policies.json](file:///home/skc/dev/dotfiles/system/chrome_policies.json)
-   - Updated Firefox policy [browser/policy/firefox-policies.json](file:///home/skc/dev/dotfiles/browser/policy/firefox-policies.json) and [system/firefox_policies.json](file:///home/skc/dev/dotfiles/system/firefox_policies.json) for `vimium-c@gdh1995.cn`.
-   - Set `installation_mode` to `normal_installed` (optional by default, allowing full uninstallation).
-2. **Git & Remote Push**:
-   - Committed changes and pushed directly to GitHub (`main -> main`).
+1. **Image Pre-processing**:
+   - Modified [/home/skc/dev/dotfiles/stow/scripts/.local/bin/ocr_screenshot.sh](file:///home/skc/dev/dotfiles/stow/scripts/.local/bin/ocr_screenshot.sh) using ImageMagick (`convert`).
+   - Added automatic 200% upscaling, contrast normalization (`-contrast-stretch 0.15x0.05%`), grayscale conversion (`-colorspace Gray`), and edge sharpening (`-sharpen 0x1`).
+2. **Multi-PSM Fallback Loop**:
+   - Configured fallback across Tesseract Page Segmentation Modes: `PSM 6` (uniform block of text), `PSM 3` (fully automatic page segmentation), and `PSM 11` (sparse text).
