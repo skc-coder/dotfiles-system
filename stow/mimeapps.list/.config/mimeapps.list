@@ -44,6 +44,9 @@ message/rfc822=userapp-Thunderbird-FZTTT3.desktop;
 image/webp=eom.desktop;
 image/png=eom.desktop;
 audio/mpeg=vlc.desktop;
+application/x-php=dev.zed.Zed.desktop;org.kde.kate.desktop;
+application/vnd.sqlite3=sqlitebrowser.desktop;dev.zed.Zed.desktop;
+application/x-shellscript=nvim.desktop;
 
 [Default Applications]
 text/html=brave-browser.desktop
@@ -81,3 +84,4 @@ message/rfc822=userapp-Thunderbird-FZTTT3.desktop
 video/x-matroska=io.github.celluloid_player.Celluloid.desktop
 image/png=eom.desktop
 inode/directory=thunar.desktop
+application/vnd.sqlite3=sqlitebrowser.desktop
