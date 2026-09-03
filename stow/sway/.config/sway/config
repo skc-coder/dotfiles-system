@@ -48,6 +48,7 @@ exec thunar --daemon
 exec ~/.local/bin/wallpaper-scheduler.sh
 exec ~/.local/bin/battery-monitor.sh
 exec ~/.local/bin/voice-dictate --daemon
+exec ~/.local/bin/pomodoro-engine.sh start
 
 
 exec swayidle -w \
