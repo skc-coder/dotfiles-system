@@ -85,3 +85,4 @@ video/x-matroska=io.github.celluloid_player.Celluloid.desktop
 image/png=eom.desktop
 inode/directory=thunar.desktop
 application/vnd.sqlite3=sqlitebrowser.desktop
+x-scheme-handler/webcal=brave-browser.desktop
