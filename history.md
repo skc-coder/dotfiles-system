@@ -69,3 +69,16 @@
    - Added automatic 200% upscaling, contrast normalization (`-contrast-stretch 0.15x0.05%`), grayscale conversion (`-colorspace Gray`), and edge sharpening (`-sharpen 0x1`).
 2. **Multi-PSM Fallback Loop**:
    - Configured fallback across Tesseract Page Segmentation Modes: `PSM 6` (uniform block of text), `PSM 3` (fully automatic page segmentation), and `PSM 11` (sparse text).
+
+## [2026-09-03] Pomodoro Sway Login Autostart Integration
+
+### User Request
+- Ensure Pomodoro timer automatically starts immediately upon logging in.
+
+### Implementation Summary
+1. **Sway Startup Direct Execution**:
+   - Updated Sway config [/home/skc/dev/dotfiles/stow/sway/.config/sway/config](file:///home/skc/dev/dotfiles/stow/sway/.config/sway/config) to include `exec ~/.local/bin/pomodoro-engine.sh start` under startup apps.
+   - Disabled redundant/timing-out systemd user service `pomodoro-autostart.service`.
+2. **Git Tracking & Remote Sync**:
+   - Committed changes and pushed to remote GitHub repository (`main` branch).
+
