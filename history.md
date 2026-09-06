@@ -1,5 +1,17 @@
 # Project Change & Task History
 
+## [2026-09-06] Pomodoro Chime & Focus Sound Volume Reduction
+
+### User Request
+- Reduce volume of the Pomodoro transition chime and start sound as it was too loud.
+
+### Implementation Summary
+1. **Audio Volume Reduction**:
+   - Modified [/home/skc/dev/dotfiles/stow/scripts/.local/bin/pomodoro-engine.sh](file:///home/skc/dev/dotfiles/stow/scripts/.local/bin/pomodoro-engine.sh).
+   - Reduced volume to 30% (`--volume=0.3` / `--volume=30` / `19661`) across `pw-play`, `paplay`, `mpv`, and `ffplay` audio execution handlers for both transition chime (`play_chime`) and starting focus audio (`play_audio`).
+2. **Git Commit & Sync**:
+   - Committed changes and pushed to remote GitHub repository.
+
 ## [2026-08-22] Document Photo Processing & Scan Guidelines
 
 ### User Request
