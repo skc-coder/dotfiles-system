@@ -21,24 +21,24 @@ get_time() { date +%s; }
 
 play_chime() {
     if [[ -f "$CHIME_MP3" ]]; then
-        (pw-play --volume=0.3 "$CHIME_MP3" 2>/dev/null || paplay --volume=19661 "$CHIME_MP3" 2>/dev/null || mpv --no-video --volume=30 "$CHIME_MP3" 2>/dev/null) &
+        (pw-play --volume=0.1 "$CHIME_MP3" 2>/dev/null || paplay --volume=6553 "$CHIME_MP3" 2>/dev/null || mpv --no-video --volume=10 "$CHIME_MP3" 2>/dev/null) &
     fi
 }
 
 play_audio() {
     stop_audio
     if [[ -f "$TICK_MP3" ]]; then
-        if command -v mpv &>/dev/null; then
-            mpv --no-video --volume=30 --loop=no "$TICK_MP3" &>/dev/null &
+        if command -v pw-play &>/dev/null; then
+            pw-play --volume=0.1 "$TICK_MP3" &>/dev/null &
             echo $! > "$PID_FILE"
-        elif command -v ffplay &>/dev/null; then
-            ffplay -nodisp -volume 30 -autoexit "$TICK_MP3" &>/dev/null &
-            echo $! > "$PID_FILE"
-        elif command -v pw-play &>/dev/null; then
-            pw-play --volume=0.3 "$TICK_MP3" &>/dev/null &
+        elif command -v mpv &>/dev/null; then
+            mpv --no-video --volume=10 --loop=no "$TICK_MP3" &>/dev/null &
             echo $! > "$PID_FILE"
         elif command -v paplay &>/dev/null; then
-            paplay --volume=19661 "$TICK_MP3" &>/dev/null &
+            paplay --volume=6553 "$TICK_MP3" &>/dev/null &
+            echo $! > "$PID_FILE"
+        elif command -v ffplay &>/dev/null; then
+            ffplay -nodisp -volume 10 -autoexit "$TICK_MP3" &>/dev/null &
             echo $! > "$PID_FILE"
         fi
     fi
