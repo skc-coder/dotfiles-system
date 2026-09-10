@@ -1,63 +1,71 @@
-/* Windows XP Luna Classic Blue Rofi Theme */
+/* Windows XP Luna Classic Blue - Sleek Rofi Theme */
 * {
-    bg-primary: #1F59BD;
-    bg-header:  #0054E3;
-    bg-selected:#3C7BF2;
-    fg-primary: #FFFFFF;
-    fg-muted:   #C5D6F5;
-    accent:     #549D34;
-    border-col: #7CA8FF;
+    font: "Inter 12";
+    bg-main:     #0F3375;
+    bg-header:   #0054E3;
+    bg-card:     #1F59BD;
+    bg-selected: #3C7BF2;
+    fg-primary:  #FFFFFF;
+    fg-muted:    #C5D6F5;
+    accent:      #549D34;
+    border-col:  #5C94FF;
 
     background-color: transparent;
     text-color:       @fg-primary;
-    margin:           0;
-    padding:          0;
+    margin:           0px;
+    padding:          0px;
 }
 
 window {
-    background-color: @bg-primary;
+    background-color: @bg-main;
     border:           2px;
     border-color:     @border-col;
-    border-radius:    4px;
-    width:            600px;
-    padding:          10px;
+    border-radius:    6px;
+    width:            650px;
+    padding:          16px;
 }
 
 mainbox {
     children: [ inputbar, listview ];
-    spacing:  10px;
+    spacing:  14px;
 }
 
 inputbar {
     background-color: @bg-header;
-    border-radius:    3px;
-    padding:          8px;
+    border:           1px;
+    border-color:     @border-col;
+    border-radius:    4px;
+    padding:          10px 14px;
     children:         [ prompt, entry ];
 }
 
 prompt {
-    text-color: @accent;
-    margin:     0px 8px 0px 0px;
+    text-color:  @accent;
+    font:        "Inter Bold 12";
+    margin:      0px 10px 0px 0px;
 }
 
 entry {
-    placeholder:       "Type to search...";
+    placeholder:       "Search applications...";
     placeholder-color: @fg-muted;
+    text-color:        @fg-primary;
 }
 
 listview {
-    lines:   10;
-    columns: 1;
-    spacing: 4px;
+    lines:        8;
+    columns:      1;
+    spacing:      6px;
+    scrollbar:    false;
 }
 
 element {
-    padding:       6px 10px;
-    border-radius: 3px;
+    padding:       8px 12px;
+    border-radius: 4px;
+    background-color: @bg-card;
 }
 
 element normal.normal {
-    background-color: transparent;
+    background-color: @bg-card;
     text-color:       @fg-primary;
 }
 
@@ -66,4 +74,13 @@ element selected.normal {
     text-color:       #FFFFFF;
     border:           1px;
     border-color:     @accent;
+}
+
+element-icon {
+    size: 24px;
+    margin: 0px 10px 0px 0px;
+}
+
+element-text {
+    vertical-align: 0.5;
 }
