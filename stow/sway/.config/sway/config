@@ -39,7 +39,7 @@ exec blueman-applet
 # exec waybar
 exec gammastep
 exec_always sh -c 'echo 1 | sudo tee /sys/devices/platform/asus-nb-wmi/fan_boost_mode > /dev/null && echo 1 > /tmp/fan_mode_state'
-exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway GTK_THEME=Windows-XP-Luna
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway GTK_THEME=Windows-XP-Luna QT_STYLE_OVERRIDE=kvantum QT_QPA_PLATFORMTHEME=kvantum
 exec systemctl --user start sway-session.target
 exec copyq
 exec thunar --daemon
