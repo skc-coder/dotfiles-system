@@ -1,29 +1,29 @@
-/* Windows XP Royale Dark Palette for Waybar */
-@define-color base   #111726;
-@define-color mantle #0C101A;
-@define-color crust  #06080E;
+/* Windows 7 Aero Glass Palette for Waybar */
+@define-color base   rgba(15, 23, 42, 0.75);
+@define-color mantle rgba(30, 58, 138, 0.85);
+@define-color crust  rgba(3, 7, 18, 0.9);
 
 @define-color text     #FFFFFF;
-@define-color subtext0 #E1E6F0;
-@define-color subtext1 #A9B8D4;
+@define-color subtext0 #F3F4F6;
+@define-color subtext1 #E5E7EB;
 
-@define-color surface0 #1A2238;
-@define-color surface1 #264C84;
-@define-color surface2 #2A3654;
+@define-color surface0 rgba(59, 130, 246, 0.4);
+@define-color surface1 rgba(96, 165, 250, 0.5);
+@define-color surface2 rgba(147, 197, 253, 0.6);
 
-@define-color overlay0 #4A6EA5;
+@define-color overlay0 #93C5FD;
 
-@define-color blue      #1F59BD;
-@define-color lavender  #7A96DF;
-@define-color sapphire  #2B5DC4;
-@define-color sky       #FF8C00;
-@define-color teal      #3DBA67;
-@define-color green     #549D34;
-@define-color yellow    #F1A80A;
-@define-color peach     #FF8C00;
-@define-color maroon    #D13438;
-@define-color red       #E81123;
-@define-color mauve     #9B51E0;
-@define-color pink      #F0719B;
-@define-color flamingo  #FF8B8B;
-@define-color rosewater #FCE8E6;
+@define-color blue      #3B82F6;
+@define-color lavender  #93C5FD;
+@define-color sapphire  #1D4ED8;
+@define-color sky       #38BDF8;
+@define-color teal      #2DD4BF;
+@define-color green     #22C55E;
+@define-color yellow    #EAB308;
+@define-color peach     #F97316;
+@define-color maroon    #EF4444;
+@define-color red       #DC2626;
+@define-color mauve     #A855F7;
+@define-color pink      #EC4899;
+@define-color flamingo  #F43F5E;
+@define-color rosewater #FEE2E2;

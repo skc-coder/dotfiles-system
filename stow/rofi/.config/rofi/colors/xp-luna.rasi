@@ -1,14 +1,14 @@
-/* Windows XP Royale Dark Rofi Theme */
+/* Windows 7 Aero Glass Rofi Theme */
 * {
-    font: "Inter 12";
-    bg-main:     #111726;
-    bg-header:   #1A2238;
-    bg-card:     #172033;
-    bg-selected: #264C84;
+    font: "Segoe UI, Inter 12";
+    bg-main:     rgba(15, 23, 42, 0.85);
+    bg-header:   rgba(30, 58, 138, 0.9);
+    bg-card:     rgba(30, 41, 59, 0.7);
+    bg-selected: rgba(59, 130, 246, 0.6);
     fg-primary:  #FFFFFF;
-    fg-muted:    #A9B8D4;
-    accent:      #FF8C00;
-    border-col:  #2A3654;
+    fg-muted:    #CBD5E1;
+    accent:      #60A5FA;
+    border-col:  rgba(147, 197, 253, 0.4);
 
     background-color: transparent;
     text-color:       @fg-primary;
@@ -20,7 +20,7 @@ window {
     background-color: @bg-main;
     border:           2px;
     border-color:     @border-col;
-    border-radius:    6px;
+    border-radius:    10px;
     width:            650px;
     padding:          16px;
 }
@@ -34,19 +34,19 @@ inputbar {
     background-color: @bg-header;
     border:           1px;
     border-color:     @border-col;
-    border-radius:    4px;
+    border-radius:    6px;
     padding:          10px 14px;
     children:         [ prompt, entry ];
 }
 
 prompt {
     text-color:  @accent;
-    font:        "Inter Bold 12";
+    font:        "Segoe UI Bold, Inter Bold 12";
     margin:      0px 10px 0px 0px;
 }
 
 entry {
-    placeholder:       "Search applications...";
+    placeholder:       "Search programs and files...";
     placeholder-color: @fg-muted;
     text-color:        @fg-primary;
 }
@@ -60,7 +60,7 @@ listview {
 
 element {
     padding:       8px 12px;
-    border-radius: 4px;
+    border-radius: 6px;
     background-color: @bg-card;
 }
 
