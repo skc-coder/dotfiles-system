@@ -1,26 +1,26 @@
-/* Windows XP Luna Blue Color Palette for Waybar */
-@define-color base   #1F59BD;
-@define-color mantle #16469C;
-@define-color crust  #0F3375;
+/* Windows XP Royale Dark Palette for Waybar */
+@define-color base   #111726;
+@define-color mantle #0C101A;
+@define-color crust  #06080E;
 
 @define-color text     #FFFFFF;
-@define-color subtext0 #E0E8F8;
-@define-color subtext1 #C5D6F5;
+@define-color subtext0 #E1E6F0;
+@define-color subtext1 #A9B8D4;
 
-@define-color surface0 #2C6AE3;
-@define-color surface1 #3C7BF2;
-@define-color surface2 #5C94FF;
+@define-color surface0 #1A2238;
+@define-color surface1 #264C84;
+@define-color surface2 #2A3654;
 
-@define-color overlay0 #7CA8FF;
+@define-color overlay0 #4A6EA5;
 
-@define-color blue      #3880F5;
+@define-color blue      #1F59BD;
 @define-color lavender  #7A96DF;
 @define-color sapphire  #2B5DC4;
-@define-color sky       #549D34;
+@define-color sky       #FF8C00;
 @define-color teal      #3DBA67;
 @define-color green     #549D34;
 @define-color yellow    #F1A80A;
-@define-color peach     #E57E25;
+@define-color peach     #FF8C00;
 @define-color maroon    #D13438;
 @define-color red       #E81123;
 @define-color mauve     #9B51E0;

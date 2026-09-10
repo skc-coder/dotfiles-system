@@ -24,8 +24,8 @@ tooltip label {
 }
 
 window#waybar {
-    background: linear-gradient(to bottom, #2c6ae3 0%, #1f59bd 70%, #16469c 100%);
-    border-top: 2px solid #5c94ff;
+    background: linear-gradient(to bottom, #1a2238 0%, #111726 70%, #0c101a 100%);
+    border-top: 2px solid #2a3654;
     color: @text;
     transition-property: background-color;
     transition-duration: .5s;

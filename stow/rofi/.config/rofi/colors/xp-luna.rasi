@@ -1,14 +1,14 @@
-/* Windows XP Luna Classic Blue - Sleek Rofi Theme */
+/* Windows XP Royale Dark Rofi Theme */
 * {
     font: "Inter 12";
-    bg-main:     #0F3375;
-    bg-header:   #0054E3;
-    bg-card:     #1F59BD;
-    bg-selected: #3C7BF2;
+    bg-main:     #111726;
+    bg-header:   #1A2238;
+    bg-card:     #172033;
+    bg-selected: #264C84;
     fg-primary:  #FFFFFF;
-    fg-muted:    #C5D6F5;
-    accent:      #549D34;
-    border-col:  #5C94FF;
+    fg-muted:    #A9B8D4;
+    accent:      #FF8C00;
+    border-col:  #2A3654;
 
     background-color: transparent;
     text-color:       @fg-primary;
