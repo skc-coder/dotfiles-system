@@ -1,8 +1,8 @@
-# Windows 7 Aero Glass Color Scheme for Sway
+# Steam-Inspired High-Density Gray Dark Theme for Sway
 # Class                 Border  BG      Text    Indicator Child Border
-client.focused          #3B82F6 #1E3A8A #FFFFFF #60A5FA   #3B82F6
-client.focused_inactive #1F2937 #111827 #D1D5DB #1F2937   #1F2937
-client.unfocused        #111827 #030712 #9CA3AF #111827   #111827
-client.urgent           #EF4444 #DC2626 #FFFFFF #EF4444   #EF4444
-client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
-client.background       #0f172a
+client.focused          #3880F5 #161B22 #FFFFFF #3880F5   #3880F5
+client.focused_inactive #30363D #0D1117 #8B949E #30363D   #30363D
+client.unfocused        #21262D #0D1117 #6E7681 #21262D   #21262D
+client.urgent           #F85149 #DA3633 #FFFFFF #F85149   #F85149
+client.placeholder      #000000 #0C0C0C #FFFFFF #000000   #0C0C0C
+client.background       #0D1117

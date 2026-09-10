@@ -1,14 +1,14 @@
-/* Windows 7 Aero Glass Rofi Theme */
+/* Steam UI Dark Slate Rofi Theme */
 * {
-    font: "Segoe UI, Inter 12";
-    bg-main:     rgba(15, 23, 42, 0.85);
-    bg-header:   rgba(30, 58, 138, 0.9);
-    bg-card:     rgba(30, 41, 59, 0.7);
-    bg-selected: rgba(59, 130, 246, 0.6);
-    fg-primary:  #FFFFFF;
-    fg-muted:    #CBD5E1;
-    accent:      #60A5FA;
-    border-col:  rgba(147, 197, 253, 0.4);
+    font: "Inter 12";
+    bg-main:     #0D1117;
+    bg-header:   #161B22;
+    bg-card:     #161B22;
+    bg-selected: #21262D;
+    fg-primary:  #F0F6FC;
+    fg-muted:    #8B949E;
+    accent:      #58A6FF;
+    border-col:  #30363D;
 
     background-color: transparent;
     text-color:       @fg-primary;
@@ -18,16 +18,16 @@
 
 window {
     background-color: @bg-main;
-    border:           2px;
+    border:           1px;
     border-color:     @border-col;
-    border-radius:    10px;
-    width:            650px;
-    padding:          16px;
+    border-radius:    8px;
+    width:            620px;
+    padding:          14px;
 }
 
 mainbox {
     children: [ inputbar, listview ];
-    spacing:  14px;
+    spacing:  12px;
 }
 
 inputbar {
@@ -35,18 +35,18 @@ inputbar {
     border:           1px;
     border-color:     @border-col;
     border-radius:    6px;
-    padding:          10px 14px;
+    padding:          8px 12px;
     children:         [ prompt, entry ];
 }
 
 prompt {
     text-color:  @accent;
-    font:        "Segoe UI Bold, Inter Bold 12";
-    margin:      0px 10px 0px 0px;
+    font:        "Inter SemiBold 12";
+    margin:      0px 8px 0px 0px;
 }
 
 entry {
-    placeholder:       "Search programs and files...";
+    placeholder:       "Search applications...";
     placeholder-color: @fg-muted;
     text-color:        @fg-primary;
 }
@@ -54,18 +54,18 @@ entry {
 listview {
     lines:        8;
     columns:      1;
-    spacing:      6px;
+    spacing:      4px;
     scrollbar:    false;
 }
 
 element {
     padding:       8px 12px;
     border-radius: 6px;
-    background-color: @bg-card;
+    background-color: transparent;
 }
 
 element normal.normal {
-    background-color: @bg-card;
+    background-color: transparent;
     text-color:       @fg-primary;
 }
 
@@ -77,7 +77,7 @@ element selected.normal {
 }
 
 element-icon {
-    size: 24px;
+    size: 22px;
     margin: 0px 10px 0px 0px;
 }
 

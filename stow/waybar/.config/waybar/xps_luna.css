@@ -1,29 +1,29 @@
-/* Windows 7 Aero Glass Palette for Waybar */
-@define-color base   rgba(15, 23, 42, 0.75);
-@define-color mantle rgba(30, 58, 138, 0.85);
-@define-color crust  rgba(3, 7, 18, 0.9);
+/* Steam UI / Dark Slate High-Density Waybar Theme */
+@define-color base   #0D1117;
+@define-color mantle #161B22;
+@define-color crust  #010409;
 
-@define-color text     #FFFFFF;
-@define-color subtext0 #F3F4F6;
-@define-color subtext1 #E5E7EB;
+@define-color text     #F0F6FC;
+@define-color subtext0 #C9D1D9;
+@define-color subtext1 #8B949E;
 
-@define-color surface0 rgba(59, 130, 246, 0.4);
-@define-color surface1 rgba(96, 165, 250, 0.5);
-@define-color surface2 rgba(147, 197, 253, 0.6);
+@define-color surface0 #21262D;
+@define-color surface1 #30363D;
+@define-color surface2 #3880F5;
 
-@define-color overlay0 #93C5FD;
+@define-color overlay0 #6E7681;
 
-@define-color blue      #3B82F6;
-@define-color lavender  #93C5FD;
-@define-color sapphire  #1D4ED8;
-@define-color sky       #38BDF8;
-@define-color teal      #2DD4BF;
-@define-color green     #22C55E;
-@define-color yellow    #EAB308;
-@define-color peach     #F97316;
-@define-color maroon    #EF4444;
-@define-color red       #DC2626;
-@define-color mauve     #A855F7;
-@define-color pink      #EC4899;
-@define-color flamingo  #F43F5E;
-@define-color rosewater #FEE2E2;
+@define-color blue      #3880F5;
+@define-color lavender  #A5D6FF;
+@define-color sapphire  #1F6FEB;
+@define-color sky       #58A6FF;
+@define-color teal      #39D353;
+@define-color green     #238636;
+@define-color yellow    #D29922;
+@define-color peach     #F0883E;
+@define-color maroon    #DA3633;
+@define-color red       #F85149;
+@define-color mauve     #BC8CFF;
+@define-color pink      #F778BA;
+@define-color flamingo  #FF7B72;
+@define-color rosewater #FFA6A1;

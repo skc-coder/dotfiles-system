@@ -1,34 +1,34 @@
-/* Windows XP Luna Colors Import */
+/* Steam UI / Slate Dark Colors Import */
 @import "xps_luna.css";
 
 * {
     font-family: "Inter", "CaskaydiaMono Nerd Font", "Font Awesome 6 Free", sans-serif;
-    font-size: 13px;
-    font-weight: bold;
+    font-size: 12px;
+    font-weight: 600;
     min-height: 0;
     border: none;
     border-radius: 0;
 }
 
 tooltip {
-    background: linear-gradient(to bottom, #2c6ae3 0%, #1f59bd 100%);
-    border: 1px solid #7ca8ff;
-    border-radius: 4px;
-    padding: 8px 12px;
+    background-color: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 6px 10px;
 }
 
 tooltip label {
-    color: #ffffff;
+    color: #f0f6fc;
     font-size: 12px;
     padding: 2px 4px;
 }
 
 window#waybar {
-    background: linear-gradient(to bottom, #1a2238 0%, #111726 70%, #0c101a 100%);
-    border-top: 2px solid #2a3654;
+    background-color: #0d1117;
+    border-bottom: 1px solid #30363d;
     color: @text;
     transition-property: background-color;
-    transition-duration: .5s;
+    transition-duration: .3s;
 }
 
 #workspaces {
@@ -40,36 +40,34 @@ window#waybar {
 
 #workspaces button {
     padding: 2px 8px;
+    color: #8b949e;
     background-color: transparent;
-    color: @subtext0;
-    border-radius: 6px;
-    margin: 2px 2px;
+    border-bottom: 2px solid transparent;
     transition: all 0.2s ease-in-out;
 }
 
 #workspaces button:hover {
-    background-color: #3C7BF2;
-    color: #FFFFFF;
+    background-color: #21262d;
+    color: #f0f6fc;
 }
 
 #workspaces button.focused, #workspaces button.active {
-    background-color: #549D34;
-    color: #FFFFFF;
-    border: 1px solid #7CA8FF;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.4);
+    background-color: #161b22;
+    color: #58a6ff;
+    border-bottom: 2px solid #3880f5;
 }
 
 #workspaces button.urgent {
-    background-color: #E81123;
-    color: #FFFFFF;
+    background-color: #f85149;
+    color: #ffffff;
 }
 
 #mode {
-    background-color: #F1A80A;
-    color: #000000;
-    padding: 2px 10px;
+    background-color: #d29922;
+    color: #0d1117;
+    padding: 2px 8px;
     border-radius: 4px;
-    margin: 4px 2px;
+    margin: 3px 2px;
 }
 
 #clock,
@@ -84,13 +82,12 @@ window#waybar {
 #idle_inhibitor,
 #scratchpad,
 #custom-pomodoro {
-    padding: 2px 12px;
-    margin: 4px 3px;
+    padding: 2px 10px;
+    margin: 3px 2px;
     border-radius: 4px;
-    background-color: #0F3375;
-    color: #FFFFFF;
-    border: 1px solid #3C7BF2;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+    background-color: #161b22;
+    color: #f0f6fc;
+    border: 1px solid #30363d;
 }
 
 #idle_inhibitor {
