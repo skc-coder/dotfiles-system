@@ -1,5 +1,21 @@
 # Project Change & Task History
 
+## [2026-09-10] Modular Windows XP (Luna Classic Blue) Theme Integration
+
+### User Request
+- Apply Windows XP colors, install XP icons, and customize Sway, Waybar, Rofi, Kitty, and GTK modularly.
+
+### Implementation Summary
+1. **Installed Theme & Icon Assets**:
+   - Cloned `B00merang-Project/Windows-XP` GTK Theme into `~/.local/share/themes/Windows-XP-Luna`.
+   - Cloned `B00merang-Artwork/Windows-XP` Icon Pack into `~/.local/share/icons/Windows-XP`.
+   - Applied settings via `gsettings` (`GTK_THEME=Windows-XP-Luna`, `icon-theme=Windows-XP`).
+2. **Modular Color Systems**:
+   - **Sway Window Manager**: Created [/home/skc/dev/dotfiles/stow/sway/.config/sway/colors/xps_luna.colors](file:///home/skc/dev/dotfiles/stow/sway/.config/sway/colors/xps_luna.colors) and included it in [/home/skc/dev/dotfiles/stow/sway/.config/sway/config](file:///home/skc/dev/dotfiles/stow/sway/.config/sway/config).
+   - **Waybar**: Created [/home/skc/dev/dotfiles/stow/waybar/.config/waybar/xps_luna.css](file:///home/skc/dev/dotfiles/stow/waybar/.config/waybar/xps_luna.css) and updated [/home/skc/dev/dotfiles/stow/waybar/.config/waybar/style.css](file:///home/skc/dev/dotfiles/stow/waybar/.config/waybar/style.css) with Luna taskbar gradients.
+   - **Rofi Launcher**: Created [/home/skc/dev/dotfiles/stow/rofi/.config/rofi/colors/xp-luna.rasi](file:///home/skc/dev/dotfiles/stow/rofi/.config/rofi/colors/xp-luna.rasi) and updated [/home/skc/dev/dotfiles/stow/rofi/.config/rofi/config.rasi](file:///home/skc/dev/dotfiles/stow/rofi/.config/rofi/config.rasi).
+   - **Kitty Terminal**: Created [/home/skc/dev/dotfiles/stow/kitty/.config/kitty/themes/xp-luna.conf](file:///home/skc/dev/dotfiles/stow/kitty/.config/kitty/themes/xp-luna.conf) and updated [/home/skc/dev/dotfiles/stow/kitty/.config/kitty/kitty.conf](file:///home/skc/dev/dotfiles/stow/kitty/.config/kitty/kitty.conf).
+
 ## [2026-09-06] Pomodoro Chime & Focus Sound Volume Reduction
 
 ### User Request

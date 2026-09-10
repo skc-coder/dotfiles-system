@@ -1,0 +1,8 @@
+# Windows XP Luna Classic Blue Color Scheme for Sway
+# Class                 Border  BG      Text    Indicator Child Border
+client.focused          #0054E3 #2B5DC4 #FFFFFF #3880F5   #0054E3
+client.focused_inactive #7A96DF #3A6EA5 #ECEFF4 #7A96DF   #7A96DF
+client.unfocused        #4A6EA5 #284B78 #D8DEE9 #4A6EA5   #4A6EA5
+client.urgent           #D13438 #E81123 #FFFFFF #D13438   #D13438
+client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+client.background       #ffffff

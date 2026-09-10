@@ -1,0 +1,69 @@
+/* Windows XP Luna Classic Blue Rofi Theme */
+* {
+    bg-primary: #1F59BD;
+    bg-header:  #0054E3;
+    bg-selected:#3C7BF2;
+    fg-primary: #FFFFFF;
+    fg-muted:   #C5D6F5;
+    accent:     #549D34;
+    border-col: #7CA8FF;
+
+    background-color: transparent;
+    text-color:       @fg-primary;
+    margin:           0;
+    padding:          0;
+}
+
+window {
+    background-color: @bg-primary;
+    border:           2px;
+    border-color:     @border-col;
+    border-radius:    4px;
+    width:            600px;
+    padding:          10px;
+}
+
+mainbox {
+    children: [ inputbar, listview ];
+    spacing:  10px;
+}
+
+inputbar {
+    background-color: @bg-header;
+    border-radius:    3px;
+    padding:          8px;
+    children:         [ prompt, entry ];
+}
+
+prompt {
+    text-color: @accent;
+    margin:     0px 8px 0px 0px;
+}
+
+entry {
+    placeholder:       "Type to search...";
+    placeholder-color: @fg-muted;
+}
+
+listview {
+    lines:   10;
+    columns: 1;
+    spacing: 4px;
+}
+
+element {
+    padding:       6px 10px;
+    border-radius: 3px;
+}
+
+element normal.normal {
+    background-color: transparent;
+    text-color:       @fg-primary;
+}
+
+element selected.normal {
+    background-color: @bg-selected;
+    text-color:       #FFFFFF;
+    border:           1px;
+    border-color:     @accent;
+}
