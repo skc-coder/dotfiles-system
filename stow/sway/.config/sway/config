@@ -15,11 +15,12 @@ set $right l
 
 set $term kitty
 set $menu rofi -show drun
-set $web brave-browser
+# set $web brave-browser
+set $web firefox-nightly
 set $explorer thunar
 
 ### Appearance (minimal + modern)
-output * bg /home/skc/.config/sway/current_wallpaper fill
+output * bg /home/skc/Pictures/Wallpapers/737474.png fill
 
 gaps inner 8
 gaps outer 4
