@@ -108,5 +108,21 @@
    - Updated Sway config [/home/skc/dev/dotfiles/stow/sway/.config/sway/config](file:///home/skc/dev/dotfiles/stow/sway/.config/sway/config) to include `exec ~/.local/bin/pomodoro-engine.sh start` under startup apps.
    - Disabled redundant/timing-out systemd user service `pomodoro-autostart.service`.
 2. **Git Tracking & Remote Sync**:
+
+## [2026-09-16] System Audio Issues & Pomodoro Background Loop Cleanup
+
+### User Request
+- Fix system sound issues caused by background Pomodoro timer audio processes.
+
+### Implementation Summary
+1. **Root Cause Analysis**:
+   - Identified background `grep` tasks and an active Pomodoro timer state triggering background audio process loops (`pw-play` / `paplay`) while playing `/home/skc/.local/share/pomodoro-timer.mp3`.
+   - PID tracker file `/tmp/pomodoro_audio.pid` had active background audio instances remaining alive.
+
+2. **System Audio Recovery**:
+   - Stopped Pomodoro timer engine state (`/home/skc/.local/bin/pomodoro-engine.sh stop`).
+   - Cleaned up lingering audio processes and `/tmp/pomodoro_*` state files.
+   - Tested PipeWire audio output via `pw-play` to ensure full system audio clarity and volume level.
+
    - Committed changes and pushed to remote GitHub repository (`main` branch).
 
