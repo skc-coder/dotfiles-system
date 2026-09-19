@@ -89,6 +89,10 @@ if [ -d "${DOTFILES_DIR}/stow" ]; then
         echo "Stowing package: $pkg_name"
         stow -d "${DOTFILES_DIR}/stow" -t "$HOME" "$pkg_name" || true
     done
+    if command -v fc-cache &> /dev/null; then
+        echo "Updating font cache..."
+        fc-cache -fv || true
+    fi
 fi
 
 # 7. Restore system files

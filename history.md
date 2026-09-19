@@ -1,5 +1,21 @@
 # Project Change & Task History
 
+## [2026-09-19] Custom Font Extraction, Installation, and Dotfiles Stow Integration
+
+### User Request
+- Install custom downloaded fonts from `/home/skc/Downloads/mega/` and store them in dotfiles so they persist across system reinstalls.
+
+### Implementation Summary
+1. **Extracted 13 Font Packages**:
+   - Extracted font archives from `/home/skc/Downloads/mega/` (`baskervville`, `behind-the-nineties`, `cmu`, `dejavu-serif`, `eb-garamond`, `libre-baskerville`, `lora`, `merriweather`, `noto-serif`, `piston-black`, `rapunled`, `the-godfather`, `windraw-aesthetic`).
+   - Cleaned up archive residue (`__MACOSX`) and structured fonts into `stow/fonts/.local/share/fonts/<Font-Name>/` (97 font files total).
+2. **GNU Stow & System Font Cache Update**:
+   - Linked font directories into `$HOME/.local/share/fonts/` using GNU Stow.
+   - Refreshed system font cache using `fc-cache -fv`. Verified font registration via `fc-list`.
+3. **Bootstrap Automation**:
+   - Updated [/home/skc/dev/dotfiles/bootstrap.sh](file:///home/skc/dev/dotfiles/bootstrap.sh) to automatically run `fc-cache -fv` after stowing configs on fresh OS installations.
+
+
 ## [2026-09-10] Modular Windows XP (Luna Classic Blue) Theme Integration
 
 ### User Request
