@@ -106,6 +106,16 @@
 	<image-files/>
 </action>
 <action>
+	<unique-id>16885376510014</unique-id>
+	<name>Convert Images to PDF</name>
+	<submenu>Sentry Tools</submenu>
+	<icon>application-pdf</icon>
+	<command>/home/skc/.local/bin/image_tools.sh to_pdf %F</command>
+	<description>Combine selected images into a single PDF document</description>
+	<patterns>*.png;*.jpg;*.jpeg;*.webp;*.bmp;*.gif</patterns>
+	<image-files/>
+</action>
+<action>
 	<unique-id>16885376510010</unique-id>
 	<name>Extract Archive Here</name>
 	<submenu>Sentry Tools</submenu>

@@ -53,6 +53,80 @@ case "$action" in
         fi
         ;;
         
+    to_pdf)
+        if [ $# -lt 1 ]; then exit 1; fi
+        out_file=$(zenity --file-selection --save --confirm-overwrite --title="Save PDF As..." --filename="images_combined.pdf")
+        if [ -n "$out_file" ]; then
+            if [[ "$out_file" != *.pdf ]]; then
+                out_file="${out_file}.pdf"
+            fi
+            python3 -c "
+import sys, re
+from PIL import Image
+
+image_paths = sys.argv[2:]
+def natural_sort_key(path):
+    import os
+    basename = os.path.basename(path)
+    return [int(text) if text.isdigit() else text.lower() for text in re.split(r'(\d+)', basename)]
+
+image_paths.sort(key=natural_sort_key)
+if image_paths:
+    img_list = []
+    first_img = None
+    for p in image_paths:
+        try:
+            img = Image.open(p).convert('RGB')
+            if first_img is None:
+                first_img = img
+            else:
+                img_list.append(img)
+        except Exception as e:
+            print(f'Error opening {p}: {e}')
+    if first_img:
+        first_img.save(sys.argv[1], save_all=True, append_images=img_list)
+" "$out_file" "$@"
+            notify-send -a "Image Tools" "Image to PDF Complete" "Saved PDF as $(basename "$out_file")"
+        fi
+        ;;
+
+    to_pdf)
+        if [ $# -lt 1 ]; then exit 1; fi
+        out_file=$(zenity --file-selection --save --confirm-overwrite --title="Save PDF As..." --filename="images_combined.pdf")
+        if [ -n "$out_file" ]; then
+            if [[ "$out_file" != *.pdf ]]; then
+                out_file="${out_file}.pdf"
+            fi
+            python3 -c "
+import sys, re
+from PIL import Image
+
+image_paths = sys.argv[2:]
+def natural_sort_key(path):
+    import os
+    basename = os.path.basename(path)
+    return [int(text) if text.isdigit() else text.lower() for text in re.split(r'(\d+)', basename)]
+
+image_paths.sort(key=natural_sort_key)
+if image_paths:
+    img_list = []
+    first_img = None
+    for p in image_paths:
+        try:
+            img = Image.open(p).convert('RGB')
+            if first_img is None:
+                first_img = img
+            else:
+                img_list.append(img)
+        except Exception as e:
+            print(f'Error opening {p}: {e}')
+    if first_img:
+        first_img.save(sys.argv[1], save_all=True, append_images=img_list)
+" "$out_file" "$@"
+            notify-send -a "Image Tools" "Image to PDF Complete" "Saved PDF as $(basename "$out_file")"
+        fi
+        ;;
+
     *)
         echo "Unknown action: $action"
         exit 1
