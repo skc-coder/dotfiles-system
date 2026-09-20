@@ -1,5 +1,20 @@
 # Project Change & Task History
 
+## [2026-09-20] Image to PDF Sentry Tool Implementation
+
+### User Request
+- Implement "Convert Images to PDF" Sentry Tool for Thunar file manager, and convert images in `/home/skc/Downloads/book/images/` to PDF.
+
+### Implementation Summary
+1. **Converted Target Images**:
+   - Converted all 164 images in `/home/skc/Downloads/book/images/` into natural numerically sorted PDF document: [/home/skc/Downloads/book/images/converted_book.pdf](file:///home/skc/Downloads/book/images/converted_book.pdf).
+2. **Sentry Tool Context Menu Action**:
+   - Added `to_pdf` action handler in [/home/skc/.local/bin/image_tools.sh](file:///home/skc/.local/bin/image_tools.sh) supporting Zenity file selection, natural numerical image sorting (1, 2, ..., 10, 100), and Pillow PDF rendering.
+   - Added **Convert Images to PDF** custom action in [/home/skc/.config/Thunar/uca.xml](file:///home/skc/.config/Thunar/uca.xml) under **Sentry Tools** context menu.
+3. **Dotfiles Git Sync & Remote Push**:
+   - Updated dotfiles source repository files [/home/skc/dev/dotfiles/stow/scripts/.local/bin/image_tools.sh](file:///home/skc/dev/dotfiles/stow/scripts/.local/bin/image_tools.sh) and [/home/skc/dev/dotfiles/stow/thunar/.config/Thunar/uca.xml](file:///home/skc/dev/dotfiles/stow/thunar/.config/Thunar/uca.xml).
+   - Committed and pushed changes to remote repository `skc-coder/dotfiles-system`.
+
 ## [2026-09-19] Custom Font Extraction, Installation, and Dotfiles Stow Integration
 
 ### User Request
