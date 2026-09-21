@@ -1,5 +1,22 @@
 # Project Change & Task History
 
+## [2026-09-21] Sway Persistent Floating Toggle Shortcut
+
+### User Request
+- Implement a shortcut that toggles floating mode for the currently focused window and saves a persistent `for_window` rule in Sway dotfiles so it automatically launches in floating mode next time.
+
+### Implementation Summary
+1. **Created Persistence Script**:
+   - Built [/home/skc/dev/dotfiles/stow/scripts/.local/bin/sway-toggle-persist-floating.sh](file:///home/skc/dev/dotfiles/stow/scripts/.local/bin/sway-toggle-persist-floating.sh).
+   - Extracts focused window `app_id` (or X11 `class`), toggles float state immediately, appends `for_window [<app_id|class>] floating enable, move position center` rule to `~/.config/sway/config`, and reloads Sway.
+   - Handles toggling OFF floating persistence if triggered on an already persistent app.
+2. **Configured Sway Keybinding**:
+   - Updated [/home/skc/dev/dotfiles/stow/sway/.config/sway/config](file:///home/skc/dev/dotfiles/stow/sway/.config/sway/config):
+     - `bindsym $mod+Shift+space exec ~/.local/bin/sway-toggle-persist-floating.sh`
+     - `bindsym $mod+Ctrl+space floating toggle` (one-off temp floating toggle)
+3. **Git Sync & Push**:
+   - Staged, committed, and pushed changes to remote `skc-coder/dotfiles-system`.
+
 ## [2026-09-21] Rofi Dynamic Browser Selector & Sway Keybindings
 
 ### User Request
