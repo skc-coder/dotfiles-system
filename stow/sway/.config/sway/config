@@ -282,3 +282,5 @@ exec ~/.local/bin/megasync &
 exec ~/.local/bin/thunderbird &
 
 
+for_window [app_id="brave-browser"] floating enable, move position center
+for_window [app_id="md.obsidian.Obsidian"] floating enable, move position center
