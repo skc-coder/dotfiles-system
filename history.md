@@ -1,5 +1,22 @@
 # Project Change & Task History
 
+## [2026-09-21] Thunar Configuration Folder Consolidation
+
+### User Request
+- Ensure all Thunar file manager configurations (custom actions `uca.xml`, shortcuts `accels.scm`, preferences `thunar.xml`, helpers) are consolidated in one clean single package directory in dotfiles.
+
+### Implementation Summary
+1. **Verified Structure**:
+   - Confirmed all Thunar settings are unified inside `stow/thunar/.config/`:
+     - `Thunar/uca.xml` (SENTRY tools context menu actions: Image to PDF, OCR, Archive extraction).
+     - `Thunar/accels.scm` (Keyboard shortcuts).
+     - `xfce4/xfconf/xfce-perchannel-xml/thunar.xml` (View layout & panel preferences).
+     - `xfce4/helpers.rc` & `help.rc`.
+2. **Re-stowed & Verified Links**:
+   - Re-stowed `stow/thunar` into `~/$HOME` via GNU Stow and verified hardlink/inode integrity.
+3. **GitHub Issue Tracker**:
+   - Created and closed GitHub issue [#7](https://github.com/skc-coder/dotfiles-system/issues/7).
+
 ## [2026-09-21] Scripts Folder Categorization Restructure
 
 ### User Request
