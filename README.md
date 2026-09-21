@@ -1,95 +1,97 @@
 # Dotfiles System & Sway Productivity Suite
 
-Personal Linux dotfiles and Sway productivity suite, managed with GNU Stow and Python (`uv`).
+Personal Linux dotfiles, system configuration, package lists, and Sway Wayland productivity tools. Everything is tracked with Git, automated via Python (`uv`), and managed using GNU Stow for 1-command fresh laptop restoration.
 
-## Setup & Installation
+---
+
+## 🚀 Quick Setup on a New Laptop (1-Command Restoration)
+
+When setting up a fresh Linux (Fedora / RHEL / Arch / Debian) laptop, run the single command below:
 
 ```bash
-git clone https://github.com/skc-coder/dotfiles-system.git
-cd dotfiles-system
-stow -R sway waybar scripts -t ~
-uv venv && source .venv/bin/activate
-uv pip install -e .
+git clone https://github.com/skc-coder/dotfiles-system.git ~/dev/dotfiles
+cd ~/dev/dotfiles
+./bootstrap.sh
 ```
 
-## Running the Code
+### What `./bootstrap.sh` Does Automatically:
+1. **Installs `uv` & Python Virtualenv**: Sets up python environment and installs `dotfiles` CLI.
+2. **Installs System Packages**: Automatically installs DNF, Flatpak, Pip, and UV tools from `packages/` text files.
+3. **Restores Configurations via GNU Stow**: Symlinks configs (`sway`, `waybar`, `kitty`, `rofi`, `thunar`, `scripts`, `gtk`, `fonts`) into your `~/$HOME` directory.
+4. **Refreshes Font Cache**: Runs `fc-cache -fv` for custom typography.
+
+---
+
+## ⚙️ Daily Usage & Dotfiles Maintenance
+
+Manage your system backups and dotfiles sync effortlessly with the `dotfiles` CLI:
 
 ```bash
-python3 dotfiles.py status
-python3 dotfiles.py backup
-```
+# Run automated full system backup (packages, configs, git repos)
+uv run python dotfiles.py backup
 
-## Update & Run
+# Re-link / update stowed configurations after modifying files
+stow -R sway waybar scripts rofi kitty -d ~/dev/dotfiles/stow -t ~
 
-```bash
-git pull && stow -R sway waybar scripts -t ~
+# Update dotfiles repository from GitHub
+git pull && ./bootstrap.sh
 ```
 
 ---
 
-## ⚡ Complete Session Feature Cheat Sheet
+## ⚡ Sway Productivity Cheat Sheet & Keyboard Shortcuts
 
-### 1. 📂 Smart File Search (`Super + P`)
-* **Shortcut**: `Mod4 + P` (`$mod+p`)
-* **Script**: `~/.local/bin/rofi-file-search.sh`
-* **Features**:
-  * Lightning fast file finder indexing `~/dev`, `~/Documents`, `~/Downloads`, `~/Pictures`, `~/Desktop`, `~/.config`.
-  * **Excludes junk/heavy folders**: Automatically ignores `.git`, `node_modules`, `.cache`, `venv`, `target`, and `.gemini`.
-  * **Smart Usage Frequency Tracker**: Tracks launch history in `~/.cache/rofi-file-search/file_freq.txt`. Using a file multiple times automatically promotes it to the top marked with `[FREQ]`.
+Below is the complete sitemap of productivity shortcuts configured in your Sway setup:
 
-### 2. 🛠️ Interactive Sway Shortcut Manager (`Super + Shift + K`)
-* **Shortcut**: `Mod4 + Shift + K` (`$mod+Shift+k`)
-* **Script**: `~/.local/bin/sway-keybindings-manager.sh`
-* **Features**:
-  * GUI popup using Rofi + Zenity to **Add**, **Edit/Change**, or **Delete** any Sway keybinding without opening a text editor.
-  * Automatically updates `~/.config/sway/config` and reloads Sway (`swaymsg reload`) live.
+### 🌐 Browser & Window Management
+* `Super + Shift + Space` : **Toggle & Save Floating Mode Persistently** (Floats window and saves permanent `for_window` rule so the app always launches floating).
+* `Super + Ctrl + Space` : **Temporary Floating Toggle** (One-off floating mode without saving rule).
+* `Super + B` / `Ctrl + B` : **Launch Default Web Browser** (Launches browser set in `~/.config/current-browser`).
+* `Super + Shift + B` / `Ctrl + Shift + B` : **Browser Selector Dropdown** (Rofi GUI to switch default browser between Brave, Chromium, Firefox, etc.).
 
-### 3. 🖥️ Floating Drop-down Scratchpad Terminal (`Super + U`)
-* **Shortcut**: `Mod4 + U` (`$mod+u`)
-* **Script**: `~/.local/bin/toggle-scratchpad-term.sh`
-* **Features**:
-  * Toggles a centered floating Kitty terminal overlay from anywhere on your desktop instantly.
-
-### 4. ⚡ Power / Session Menu (`Super + Shift + E`)
-* **Shortcut**: `Mod4 + Shift + E` (`$mod+Shift+e`)
-* **Script**: `~/.local/bin/rofi-power-menu.sh`
-* **Features**:
-  * Clean modal for `Shutdown` (top choice), `Reboot`, `Suspend`, `Lock` (swaylock), and `Logout`.
-
-### 5. 🔊 PipeWire Audio Output Switcher (`Super + A`)
-* **Shortcut**: `Mod4 + A` (`$mod+a`)
-* **Script**: `~/.local/bin/rofi-audio-switcher.sh`
-* **Features**:
-  * Instantly switch default audio output between Laptop Speakers, Headphones, or HDMI via `wpctl`.
-
-### 6. 🧮 Universal Quick Runner & Calculator (`Super + /`)
-* **Shortcut**: `Mod4 + /` (`$mod+/`)
-* **Script**: `~/.local/bin/rofi-quick-runner.sh`
-* **Features**:
-  * Evaluates math expressions (e.g., `250*1.18`) and copies results directly to clipboard.
-  * Launches URLs or web searches directly into Brave.
-
-### 7. 😃 Rofi Emoji & Symbol Picker (`Super + .`)
-* **Shortcut**: `Mod4 + .` (`$mod+.`)
-* **Script**: `~/.local/bin/rofi-emoji.sh`
-* **Features**:
-  * Instant emoji & glyph search with auto-copy to clipboard (`wl-copy`).
-
-### 8. 🕒 Waybar 12-Hour Clock
-* **Config**: `~/.config/waybar/config.jsonc`
-* **Format**: Displayed in 12-hour AM/PM format (`Mon Aug 16, 10:54 PM`).
-
-### 9. 🖼️ Sway 10-Second Wallpaper Slideshow
-* **Script**: `~/.local/bin/wallpaper-scheduler.sh`
-* **Behavior**: Runs as a daemon on Sway startup, picking random wallpapers from `~/Pictures/wallpapers` every 10 seconds.
+### 📁 Search, Tools & Navigation
+* `Super + P` : **Smart File Search** (`~/.local/bin/rofi-file-search.sh`)
+  * Fast indexing of `~/dev`, `~/Documents`, `~/Downloads`, `~/Pictures`, `~/.config`.
+  * Ignores heavy folders (`.git`, `node_modules`, `venv`, `.cache`).
+  * Tracks launch frequency and promotes frequently used files to the top.
+* `Super + Shift + K` : **Interactive Sway Keybindings Manager** (`~/.local/bin/sway-keybindings-manager.sh`)
+  * GUI popup using Rofi + Zenity to Add, Edit, or Delete Sway keybindings live.
+* `Super + U` : **Floating Scratchpad Terminal** (`~/.local/bin/toggle-scratchpad-term.sh`)
+  * Toggles a centered drop-down Kitty terminal overlay anywhere.
+* `Super + Shift + E` : **Power & Session Menu** (`~/.local/bin/rofi-power-menu.sh`)
+  * Shutdown, Reboot, Suspend, Swaylock, and Logout options.
+* `Super + A` : **Audio Output Switcher** (`~/.local/bin/rofi-audio-switcher.sh`)
+  * Switch default PipeWire audio output between Speakers, Headphones, or HDMI via `wpctl`.
+* `Super + /` : **Quick Runner & Calculator** (`~/.local/bin/rofi-quick-runner.sh`)
+  * Inline math evaluator (e.g. `250*1.18`) and quick URL/search launcher.
+* `Super + .` : **Rofi Emoji & Glyph Picker** (`~/.local/bin/rofi-emoji.sh`)
+  * Search and copy emojis directly to clipboard.
+* `Super + Shift + V` : **VPN Toggle** (`~/.local/bin/vpn-toggle.sh`)
+* `Super + Shift + W` : **Wallpaper Selector** (`~/.local/bin/wallpaper-selector.sh`)
+* `Super + Shift + O` : **OCR Screenshot Tool** (`~/.local/bin/ocr_screenshot.sh`)
 
 ---
 
-## 🎁 Bonus Cool Scripts & Tool Recommendations to Make Life Easy-Peasy
+## 📦 Directory Structure & Component Overview
 
-1. **`zoxide` (Smart `cd`)**:
-   * Installed on your system! Replaces `cd` with `z` (e.g. `z dotfiles` or `z dev`) to jump to any folder instantly based on your habits.
-2. **`fzf` (Fuzzy Finder)**:
-   * Installed on your system! Combine with shell history (`Ctrl+R`) or file browsing for instant terminal filtering.
-3. **`tldr`**:
-   * Simplified man pages. Instead of reading huge manual pages, run `tldr tar` or `tldr ffmpeg` for top practical command examples.
+| Path / Folder | Purpose & Description |
+| :--- | :--- |
+| `bootstrap.sh` | Main 1-click restoration script for fresh laptop setups. |
+| `dotfiles.py` | Python CLI for running backups, package sync, and git repo management. |
+| `stow/sway/` | Sway window manager config (`~/.config/sway/config`). |
+| `stow/waybar/` | Status bar config & styling (`~/.config/waybar/`). |
+| `stow/rofi/` | Custom Rofi launcher theme and styles (`~/.config/rofi/`). |
+| `stow/scripts/` | Executable system scripts & tools (`~/.local/bin/`). |
+| `stow/kitty/` | Kitty terminal emulator configuration. |
+| `stow/thunar/` | Thunar file manager custom SENTRY context menu actions. |
+| `packages/` | Text lists of DNF, Flatpak, Pip, and UV installed software packages. |
+| `history.md` | Chronological log of changes, updates, and feature additions. |
+
+---
+
+## 🛠️ Recommended CLI Tools Included
+
+* `zoxide` (`z`): Smart directory navigation based on history (`z dev`, `z dotfiles`).
+* `fzf`: Command-line fuzzy finder for files, history (`Ctrl+R`), and process filtering.
+* `tldr`: Practical, simplified command cheat sheets (`tldr tar`, `tldr ffmpeg`).
+* `uv`: Blazing fast Python package and virtual environment manager.
