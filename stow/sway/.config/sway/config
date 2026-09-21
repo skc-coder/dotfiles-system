@@ -169,7 +169,8 @@ bindsym $mod+Shift+l move right
 bindsym $mod+f fullscreen
 bindsym $mod+s layout toggle split
 bindsym $mod+t layout tabbed
-bindsym $mod+Shift+space floating toggle
+bindsym $mod+Shift+space exec /home/skc/.local/bin/sway-toggle-persist-floating.sh
+bindsym $mod+Ctrl+space floating toggle
 bindsym $mod+BackSpace split toggle
 
 ## Workspaces
