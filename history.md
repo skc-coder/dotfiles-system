@@ -1,5 +1,22 @@
 # Project Change & Task History
 
+## [2026-09-21] Scripts Folder Categorization Restructure
+
+### User Request
+- Restructure and organize all dotfiles system scripts into clean categorized subdirectories while preserving system PATH execution compatibility.
+
+### Implementation Summary
+1. **Created Subdirectories**:
+   - Organized 27 scattered scripts in `stow/scripts/.local/bin/` into 4 clean categories:
+     - `rofi/`: Rofi menus (`rofi-hub.sh`, `browser-selector`, `launch-browser`, `rofi-file-search.sh`, `rofi-power-menu.sh`, `rofi-quick-runner.sh`, `rofi-emoji.sh`, `rofi-audio-switcher.sh`).
+     - `sway/`: Sway window manager utilities (`sway-toggle-persist-floating.sh`, `sway-keybindings-manager.sh`, `toggle-scratchpad-term.sh`).
+     - `media/`: Wallpaper, OCR, PDF & media scripts (`wallpaper-selector.sh`, `wallpaper-scheduler.sh`, `ocr_screenshot.sh`, `image_tools.sh`, `pdf_tools.sh`, `archive_tools.sh`).
+     - `system/`: System daemons & services (`pomodoro-engine.sh`, `net-usage`, `system-clean`, `fan-toggle.sh`, `game-blocker.sh`, `ai-cmd`, `setup_system_configs.sh`).
+2. **Updated Restoration Script (`bootstrap.sh`)**:
+   - Automatically links all subfolder scripts into `~/.local/bin/` root during GNU Stow restoration so existing keybindings and commands continue working seamlessly without full path updates.
+3. **GitHub Issue Tracker**:
+   - Created and closed GitHub issue [#6](https://github.com/skc-coder/dotfiles-system/issues/6).
+
 ## [2026-09-21] Sway Persistent Floating Toggle Shortcut
 
 ### User Request
