@@ -2,11 +2,14 @@
 
 # Rofi Hub Script Launcher
 
-options="🧹 Clear System Caches & Clean Disk\n🛡️ Toggle VPN\n🎧 Audio Output Switcher\n🌀 Toggle Fan Profile\n📊 System Info"
+options="🌐 Switch Default Browser\n🧹 Clear System Caches & Clean Disk\n🛡️ Toggle VPN\n🎧 Audio Output Switcher\n🌀 Toggle Fan Profile\n📊 System Info"
 
 chosen=$(echo -e "$options" | rofi -dmenu -p "Quick Hub" -i)
 
 case "$chosen" in
+    *"Browser"*)
+        ~/.local/bin/browser-selector
+        ;;
     *"VPN"*)
         ~/.local/bin/vpn-toggle.sh
         ;;

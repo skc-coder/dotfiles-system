@@ -1,5 +1,24 @@
 # Project Change & Task History
 
+## [2026-09-21] Rofi Dynamic Browser Selector & Sway Keybindings
+
+### User Request
+- Create simple GUI dropdown selector to quickly switch default browser (e.g. Brave vs Firefox Nightly) on Fedora Sway without manually editing Sway configuration files.
+
+### Implementation Summary
+1. **Created Rofi GUI Browser Selector Script**:
+   - Created [/home/skc/dev/dotfiles/stow/scripts/.local/bin/browser-selector](file:///home/skc/dev/dotfiles/stow/scripts/.local/bin/browser-selector) to list installed browsers in Rofi dropdown and write selection to `~/.config/current-browser`.
+2. **Created Launcher Wrapper Script**:
+   - Created [/home/skc/dev/dotfiles/stow/scripts/.local/bin/launch-browser](file:///home/skc/dev/dotfiles/stow/scripts/.local/bin/launch-browser) to read current browser preference and execute target browser.
+3. **Updated Rofi Hub**:
+   - Integrated `🌐 Switch Default Browser` option into [/home/skc/dev/dotfiles/stow/scripts/.local/bin/rofi-hub.sh](file:///home/skc/dev/dotfiles/stow/scripts/.local/bin/rofi-hub.sh).
+4. **Sway Keybindings Configured**:
+   - Updated [/home/skc/dev/dotfiles/stow/sway/.config/sway/config](file:///home/skc/dev/dotfiles/stow/sway/.config/sway/config):
+     - `bindsym Ctrl+b exec ~/.local/bin/launch-browser` and `$mod+b exec ~/.local/bin/launch-browser`.
+     - `bindsym Ctrl+Shift+b exec ~/.local/bin/browser-selector` and `$mod+Shift+b exec ~/.local/bin/browser-selector`.
+5. **Git & GitHub Integration**:
+   - Created GitHub Issue [#4](https://github.com/skc-coder/dotfiles-system/issues/4).
+
 ## [2026-09-20] Image to PDF Sentry Tool Implementation
 
 ### User Request

@@ -16,7 +16,7 @@ set $right l
 set $term kitty
 set $menu rofi -show drun
 # set $web brave-browser
-set $web firefox-nightly
+set $web ~/.local/bin/launch-browser
 set $explorer thunar
 
 ### Appearance (minimal + modern)
@@ -130,7 +130,10 @@ bindsym $mod+d exec $menu
 bindsym $mod+space exec $menu
 bindsym $mod+v exec copyq toggle
 ## Apps
-bindsym $mod+b exec $web 
+bindsym $mod+b exec $web
+bindsym Ctrl+b exec $web
+bindsym $mod+Shift+b exec ~/.local/bin/browser-selector
+bindsym Ctrl+Shift+b exec ~/.local/bin/browser-selector
 bindsym $mod+e exec $explorer 
 
 ## Lock / exit / reload

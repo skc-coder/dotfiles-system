@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+# Rofi Browser Selector Tool
+STATE_FILE="$HOME/.config/current-browser"
+
+# Detect installed browsers or use standard set
+INSTALLED_BROWSERS=()
+
+type brave-browser &>/dev/null && INSTALLED_BROWSERS+=("🦁 Brave (brave-browser)")
+type brave &>/dev/null && [[ ! " ${INSTALLED_BROWSERS[*]} " =~ "brave-browser" ]] && INSTALLED_BROWSERS+=("🦁 Brave (brave)")
+type firefox-nightly &>/dev/null && INSTALLED_BROWSERS+=("🦊 Firefox Nightly (firefox-nightly)")
+type firefox &>/dev/null && INSTALLED_BROWSERS+=("🦊 Firefox (firefox)")
+type librewolf &>/dev/null && INSTALLED_BROWSERS+=("🐺 LibreWolf (librewolf)")
+type chromium &>/dev/null && INSTALLED_BROWSERS+=("🌐 Chromium (chromium)")
+type google-chrome &>/dev/null && INSTALLED_BROWSERS+=("🌐 Google Chrome (google-chrome)")
+
+if [ ${#INSTALLED_BROWSERS[@]} -eq 0 ]; then
+    INSTALLED_BROWSERS=("🦊 Firefox Nightly (firefox-nightly)" "🦁 Brave (brave-browser)")
+fi
+
+# Get current browser
+CURRENT_CMD="firefox-nightly"
+if [ -f "$STATE_FILE" ]; then
+    CURRENT_CMD=$(cat "$STATE_FILE" | xargs)
+fi
+
+OPTIONS_STR=$(printf "%s\n" "${INSTALLED_BROWSERS[@]}")
+
+CHOICE=$(echo -e "$OPTIONS_STR" | rofi -dmenu -display-backend wl -p "Default Browser (Current: $CURRENT_CMD):" -i)
+
+if [ -z "$CHOICE" ]; then
+    exit 0
+fi
+
+# Extract binary name inside parentheses
+NEW_BROWSER=$(echo "$CHOICE" | sed -n 's/.*(\(.*\)).*/\1/p')
+
+if [ -n "$NEW_BROWSER" ]; then
+    mkdir -p "$HOME/.config"
+    echo "$NEW_BROWSER" > "$STATE_FILE"
+    notify-send "Default Browser Updated" "Switched default browser to: $NEW_BROWSER" -i web-browser
+fi

@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# Launch default browser selected via Rofi Browser Selector
+STATE_FILE="$HOME/.config/current-browser"
+
+BROWSER="firefox-nightly"
+if [ -f "$STATE_FILE" ]; then
+    STATE_VAL=$(cat "$STATE_FILE" | xargs)
+    if [ -n "$STATE_VAL" ]; then
+        BROWSER="$STATE_VAL"
+    fi
+fi
+
+exec "$BROWSER" "$@"
