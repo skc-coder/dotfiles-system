@@ -169,8 +169,8 @@ bindsym $mod+Shift+l move right
 bindsym $mod+f fullscreen
 bindsym $mod+s layout toggle split
 bindsym $mod+t layout tabbed
-bindsym $mod+Shift+space exec /home/skc/.local/bin/sway-toggle-persist-floating.sh
-bindsym $mod+Ctrl+space floating toggle
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+Ctrl+space exec /home/skc/.local/bin/sway-toggle-persist-floating.sh
 bindsym $mod+BackSpace split toggle
 
 ## Workspaces
@@ -282,5 +282,3 @@ exec ~/.local/bin/megasync &
 exec ~/.local/bin/thunderbird &
 
 
-for_window [app_id="brave-browser"] floating enable, move position center
-for_window [app_id="md.obsidian.Obsidian"] floating enable, move position center
