@@ -286,3 +286,4 @@ for_window [app_id="pl.skmedix.sklauncher"] floating enable, move position cente
 for_window [app_id="FastClient"] floating enable, move position center
 for_window [app_id="thunar"] floating enable, move position center
 for_window [app_id="kitty"] floating enable, move position center
+for_window [app_id="md.obsidian.Obsidian"] floating enable, move position center
