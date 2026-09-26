@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
-# Script to set wallpaper in Sway and persist selection
-set -euo pipefail
+# Script to set wallpaper in Sway and Thunar context menu
+export WAYLAND_DISPLAY="${WAYLAND_DISPLAY:-wayland-1}"
+export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
+export SWAYSOCK="${SWAYSOCK:-$(ls /run/user/$(id -u)/sway-ipc.*.sock 2>/dev/null | head -n 1)}"
 
 IMAGE_PATH="${1:-}"
 
 if [ -z "$IMAGE_PATH" ]; then
-    echo "Usage: set-wallpaper.sh <path-to-image>"
+    notify-send "Wallpaper Error" "No image path provided." -i dialog-error
     exit 1
 fi
 
@@ -14,17 +16,16 @@ if [ ! -f "$IMAGE_PATH" ]; then
     exit 1
 fi
 
-SWAY_LINK="/home/skc/.config/sway/current_wallpaper"
+# Update 02_appearance.conf directly with exact file path
+APPEARANCE_CONF="/home/skc/.config/sway/config.d/02_appearance.conf"
+sed -i "s|^output \* bg .*|output \* bg $IMAGE_PATH fill|" "$APPEARANCE_CONF"
 
-# Create symlink for persistence across restarts
-ln -sf "$IMAGE_PATH" "$SWAY_LINK"
+# Update current_wallpaper link
+ln -sf "$IMAGE_PATH" "/home/skc/.config/sway/current_wallpaper"
 
-# Stop background wallpaper scheduler if running to prevent overriding
-pkill -f wallpaper-scheduler.sh 2>/dev/null || true
+# Kill existing swaybg & set wallpaper via swaymsg + background swaybg
+killall swaybg 2>/dev/null || true
+swaybg -i "$IMAGE_PATH" -m fill >/dev/null 2>&1 &
+swaymsg "output * bg $IMAGE_PATH fill" 2>/dev/null || true
 
-# Apply wallpaper dynamically via swaymsg
-if swaymsg "output * bg $IMAGE_PATH fill"; then
-    notify-send "Wallpaper Updated" "Set wallpaper to $(basename "$IMAGE_PATH")" -i preferences-desktop-wallpaper
-else
-    notify-send "Wallpaper Error" "Failed to update wallpaper via swaymsg." -i dialog-error
-fi
+notify-send "Wallpaper Updated" "Set wallpaper to $(basename "$IMAGE_PATH")" -i preferences-desktop-wallpaper
