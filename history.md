@@ -1,5 +1,31 @@
 # Project Change & Task History
 
+## [2026-09-26] Modular Sway Configuration & Thunar Set-Wallpaper Context Action
+
+### User Request / Problem
+- Make Sway configuration modular.
+- Fix "Set as Wallpaper" context menu action in Thunar.
+- Set wallpaper to `/home/skc/Pictures/Wallpapers/flare.jpg`.
+
+### Implementation Summary
+1. **Modular Sway Configuration**:
+   - Created `/home/skc/.config/sway/config.d/` directory and split monolithic `config` into focused modules:
+     - `01_variables.conf`: Variables, default terminal, browser, launcher, explorer.
+     - `02_appearance.conf`: Sway border, gaps, colors, global dark theme, current wallpaper link setup.
+     - `03_input.conf`: Keyboard layout, numlock, touchpad/mouse settings.
+     - `04_autostart.conf`: Polkit, Mako, CopyQ, Thunar daemon, background services, idle timer.
+     - `05_keybindings.conf`: Navigation, workspace keys, launcher, multimedia, utility scripts, screenshot shortcuts.
+     - `06_rules.conf`: Floating window rules and dimensions for scratchpad, pavucontrol, blueman, thunar, etc.
+     - `07_bar.conf`: Waybar bar integration.
+   - Simplified `/home/skc/.config/sway/config` to use `include ~/.config/sway/config.d/*.conf`.
+
+2. **Thunar "Set as Wallpaper" Context Menu Action**:
+   - Created executable script `/home/skc/.local/bin/set-wallpaper.sh` that updates Sway wallpaper dynamically via `swaymsg` and updates `~/.config/sway/current_wallpaper` symlink.
+   - Updated `/home/skc/.config/Thunar/uca.xml` to include the `Set as Wallpaper` context menu item for image files (`*.png`, `*.jpg`, `*.jpeg`, `*.webp`).
+
+3. **Wallpaper Applied**:
+   - Set current desktop wallpaper to `/home/skc/Pictures/Wallpapers/flare.jpg` and reloaded Sway configuration seamlessly.
+
 ## [2026-09-21] Thunar Configuration Folder Consolidation
 
 ### User Request

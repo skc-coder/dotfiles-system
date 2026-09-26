@@ -11,6 +11,16 @@
 	<directories/>
 </action>
 <action>
+	<unique-id>16885376510099</unique-id>
+	<name>Set as Wallpaper</name>
+	<submenu></submenu>
+	<icon>preferences-desktop-wallpaper</icon>
+	<command>/home/skc/.local/bin/set-wallpaper.sh %f</command>
+	<description>Set selected image as Sway wallpaper</description>
+	<patterns>*.png;*.jpg;*.jpeg;*.webp;*.bmp;*.gif</patterns>
+	<image-files/>
+</action>
+<action>
 	<unique-id>16885376510001</unique-id>
 	<name>Copy Path to Clipboard</name>
 	<submenu>Sentry Tools</submenu>
