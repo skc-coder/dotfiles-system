@@ -1,5 +1,19 @@
 # Project Change & Task History
 
+## [2026-09-27] Specific Window Type Floating Rule Fix
+
+### User Request
+- Ensure persistent floating rules target specific window types, popups, roles, or exact window titles (e.g. `[app_id="brave-browser" title="Picture-in-Picture"]` or `[app_id="..." window_role="pop-up"]`), NOT the entire application.
+
+### Implementation Summary
+1. **Refactored Persistence Script**:
+   - Updated [/home/skc/dev/dotfiles/stow/scripts/.local/bin/sway/sway-toggle-persist-floating.sh](file:///home/skc/dev/dotfiles/stow/scripts/.local/bin/sway/sway-toggle-persist-floating.sh).
+   - Now extracts `window_role`, `window_type`, and `title` alongside `app_id`/`class`.
+   - Generates combined Sway criteria rules like `for_window [app_id="brave-browser" title="Open File"] floating enable`.
+   - Prevents making main application windows (like main browser or Obsidian editor) floating globally.
+2. **GitHub Issue Tracker**:
+   - Created and closed GitHub Issue [#10](https://github.com/skc-coder/dotfiles-system/issues/10).
+
 ## [2026-09-26] Modular Sway Configuration & Thunar Set-Wallpaper Context Action
 
 ### User Request / Problem
