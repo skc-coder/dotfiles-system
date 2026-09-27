@@ -4,3 +4,4 @@
 
 # Include all modular configuration files from config.d/
 include ~/.config/sway/config.d/*.conf
+for_window [app_id="brave-browser"] floating enable, move position center
