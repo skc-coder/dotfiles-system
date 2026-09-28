@@ -49,11 +49,11 @@ application/vnd.sqlite3=sqlitebrowser.desktop;dev.zed.Zed.desktop;
 application/x-shellscript=nvim.desktop;
 
 [Default Applications]
-text/html=org.mozilla.firefox.desktop
-x-scheme-handler/http=org.mozilla.firefox.desktop
-x-scheme-handler/https=org.mozilla.firefox.desktop
-x-scheme-handler/about=brave-browser.desktop
-x-scheme-handler/unknown=brave-browser.desktop
+text/html=helium.desktop
+x-scheme-handler/http=helium.desktop
+x-scheme-handler/https=helium.desktop
+x-scheme-handler/about=helium.desktop
+x-scheme-handler/unknown=helium.desktop
 x-scheme-handler/chrome=org.mozilla.firefox.desktop
 application/x-extension-htm=org.mozilla.firefox.desktop
 application/x-extension-html=org.mozilla.firefox.desktop
