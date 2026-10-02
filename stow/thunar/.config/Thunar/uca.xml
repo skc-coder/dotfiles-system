@@ -52,7 +52,7 @@
 	<icon>document-properties</icon>
 	<command>/home/skc/.local/bin/pdf_tools.sh compress %F</command>
 	<description>Compress PDF file quality</description>
-	<patterns>*.pdf</patterns>
+	<patterns>*.pdf;*.PDF</patterns>
 	<other-files/>
 </action>
 <action>
@@ -62,7 +62,7 @@
 	<icon>format-justify-fill</icon>
 	<command>/home/skc/.local/bin/pdf_tools.sh split %F</command>
 	<description>Extract pages from PDF</description>
-	<patterns>*.pdf</patterns>
+	<patterns>*.pdf;*.PDF</patterns>
 	<other-files/>
 </action>
 <action>
@@ -72,7 +72,7 @@
 	<icon>image-x-generic</icon>
 	<command>/home/skc/.local/bin/pdf_tools.sh to_image %F</command>
 	<description>Convert PDF pages to png/jpg/webp</description>
-	<patterns>*.pdf</patterns>
+	<patterns>*.pdf;*.PDF</patterns>
 	<other-files/>
 </action>
 <action>
@@ -82,7 +82,7 @@
 	<icon>list-add</icon>
 	<command>/home/skc/.local/bin/pdf_tools.sh merge %F</command>
 	<description>Merge multiple PDFs into one</description>
-	<patterns>*.pdf</patterns>
+	<patterns>*.pdf;*.PDF</patterns>
 	<other-files/>
 </action>
 <action>

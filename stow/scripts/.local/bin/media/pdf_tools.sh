@@ -20,7 +20,9 @@ case "$action" in
             
             if [ -n "$quality" ]; then
                 quality_preset=$(echo "$quality" | awk '{print $1}')
-                out_file="${file%.pdf}_compressed.pdf"
+                ext="${file##*.}"
+                base="${file%.$ext}"
+                out_file="${base}_compressed.${ext}"
                 gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/"$quality_preset" \
                    -dNOPAUSE -dQUIET -dBATCH -sOutputFile="$out_file" "$file"
                 notify-send -a "PDF Tools" "PDF Compressed" "Saved as $(basename "$out_file")"
