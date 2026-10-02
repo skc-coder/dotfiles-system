@@ -4,6 +4,3 @@
 
 # Include all modular configuration files from config.d/
 include ~/.config/sway/config.d/*.conf
-for_window [app_id="brave-browser"] floating enable, move position center
-for_window [app_id="md.obsidian.Obsidian" title="Subnetting - Variable Length Subnet Masking - notevault - Obsidian 1.13.7"] floating enable, move position center
-for_window [app_id="brave-browser" title="My Courses - Brave"] floating enable, move position center
